@@ -103,13 +103,13 @@ All tokens defined in `@theme` in `globals.css`. **Never use raw hex values in c
 
 ```css
 --color-ink:        #0A0A0A
---color-paper:      #F5F2EE
+--color-paper:      #F2F2F0
 --color-paper-pure: #FFFFFF
 --color-accent:     #C8A96E   /* sparingly — max 2–3 uses per page */
 --color-accent-dim: #E8D9BC
 --color-muted:      #6B6B6B
---color-subtle:     #D4D0CA
---color-surface:    #EDEBE7
+--color-subtle:     #D0D0CE
+--color-surface:    #E8E8E6
 ```
 
 **Semantic tokens (theme-aware — use these in all components):**
@@ -135,6 +135,8 @@ Implement dark mode via:
 }
 .dark { /* same swap — for manual toggle */ }
 ```
+
+**`--color-subtle` caveat:** it is a fixed base token (`#D0D0CE`) — not a semantic one. It must be explicitly overridden in both dark mode blocks (`#2A2A2A`) and reset in `.light` (`#D0D0CE`), otherwise a dark-preference OS user in forced light mode will see the dark value bleed through.
 
 - Always use `--color-bg`, `--color-fg`, `--color-border` in components — never `--color-ink` or `--color-paper` directly.
 - Hover state is always inverted: `bg-fg text-bg` (works in both modes automatically).
@@ -208,6 +210,7 @@ Base unit: 4px. Use only the named scale. Never raw pixel values in layout.
 - Hover transitions: `--duration-fast` (150ms) + `--ease-inout`
 - Page enter: `--duration-enter` (500ms) + `--ease-out`, `opacity` + `translateY(8px)` only
 - Underline hover: width `0%` → `100%`, `--ease-linear`, `--duration-base` (250ms)
+- Theme switch: 400ms crossfade via `.theme-switching` class (see Theme Toggle section)
 - Only animate `transform` and `opacity`. Never `width`, `height`, `top`, `left`, or any layout property.
 - Wrap all enter animations in `@media (prefers-reduced-motion: no-preference)`.
 
@@ -226,8 +229,10 @@ Every section follows this structure:
 ### Component Specs
 
 **Button** — two variants only:
-- Solid: `bg-fg text-bg border-fg` → hover: `bg-accent border-accent text-ink`
-- Ghost: `bg-transparent text-fg border-fg` → hover: `bg-fg text-bg`
+- Solid: `bg-fg text-bg border-fg` → hover: `bg-bg border-fg text-fg` (neutral inversion)
+- Ghost: `bg-transparent text-fg border-fg` → hover: `bg-fg text-bg` (full inversion)
+- Solid hover and ghost default are the same visual state — they swap on interaction.
+- Sizes: sm `8px/12px text-small`, md `14px/20px text-body` (default), lg `16px/28px text-h4`
 - No uppercase on button labels. No letter-spacing on button labels.
 - Transition: `--duration-fast --ease-inout` on `background-color`, `color`, `border-color`
 
@@ -238,6 +243,25 @@ Every section follows this structure:
 **Input/Textarea:** `bg-[var(--color-paper-pure)] border border-[var(--color-border-soft)]`, focus: `border-[var(--color-border)] outline-none`. placeholder: `color-muted`.
 
 **Nav Link:** `font-display text-label uppercase tracking-widest text-fg`, hover: `color-accent`. Active: `color-accent` + underline.
+
+---
+
+## Tailwind vs Inline Styles
+
+Use **Tailwind utility classes** for all static structural and layout concerns:
+- Display, flexbox, grid (`flex`, `hidden md:flex`, `items-center`, `justify-between`)
+- Positioning (`sticky`, `relative`, `absolute`)
+- Sizing (`w-full`, `h-16`, `shrink-0`)
+- Typography modifiers (`uppercase`, `whitespace-nowrap`, `no-underline`)
+- Static color/border tokens as arbitrary values (`bg-[color:var(--color-bg)]`, `border-[color:var(--color-border)]`)
+- Responsive visibility (`hidden md:flex`, `flex md:hidden`) — **never add responsive CSS to `globals.css` for this**
+
+Use **inline `style` props** only for:
+- CSS design token values where the arbitrary-value syntax would be unwieldy (`padding: 'var(--space-5)'`, `gap: 'var(--space-6)'`)
+- State-driven dynamic values that change at runtime (`color: isActive ? 'var(--color-accent)' : 'var(--color-fg)'`)
+- CSS properties with no Tailwind equivalent (`transform`, multi-property `transition` strings)
+
+**Never add utility-style rules to `globals.css`** that Tailwind handles natively (responsive breakpoints, display, flex, etc.). `globals.css` is only for: `@theme` tokens, semantic color mode overrides, the `.theme-switching` transition block, and component class blocks like `.btn`.
 
 ---
 
@@ -319,6 +343,21 @@ MDX files live in `src/content/` — not in `src/app/`. They are read at build t
 - All pages/layouts are Server Components by default. Add `'use client'` only for `useState`, `useEffect`, event handlers, or browser APIs.
 - Use `generateStaticParams()` for all dynamic routes.
 - Read `node_modules/next/dist/docs/` before using any API you're unsure about.
+
+---
+
+## Theme Toggle
+
+Light/dark toggle is a core site feature. The implementation has three parts that must all stay in sync:
+
+**1. FOUC prevention** — an inline `<script>` in `layout.tsx <head>` reads `localStorage` and applies `.dark` or `.light` to `<html>` before React hydrates. `suppressHydrationWarning` on `<html>` is intentional — the class added by the script will differ from the server-rendered HTML.
+
+**2. `ThemeToggle` component** — `src/components/ui/ThemeToggle.tsx`. Client component. Reads current theme from DOM on mount, writes to `localStorage` under key `'theme'`, and adds/removes `.dark`/`.light` on `<html>`. Uses a `mounted` guard to avoid SSR mismatch.
+
+**3. `.theme-switching` transition pattern** — to crossfade colors without interfering with hover transitions, the toggle temporarily adds `.theme-switching` to `<html>`, swaps the theme class inside a `requestAnimationFrame` (so the browser sees the transition rule before the color change), then removes `.theme-switching` after 400ms. The CSS rule targets `.theme-switching *` with `!important` so it overrides any existing transitions during the switch.
+
+- Do not swap `.dark`/`.light` synchronously — always go through `requestAnimationFrame` so the transition fires.
+- The `!important` on `.theme-switching` overrides all child transitions including `transform`. If a component has a `transform` animation that must survive a theme switch, it must be listed explicitly in the `.theme-switching` rule in `globals.css`.
 
 ---
 

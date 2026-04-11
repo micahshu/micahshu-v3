@@ -19,7 +19,7 @@ All colors defined as CSS custom properties. Tailwind v4 maps these via `@theme`
 @theme {
   /* Base */
   --color-ink:        #0A0A0A;   /* near-black — richer than pure #000 */
-  --color-paper:      #F5F2EE;   /* warm off-white — base background */
+  --color-paper:      #F2F2F0;   /* neutral off-white — base background */
   --color-paper-pure: #FFFFFF;   /* pure white — cards, inputs */
 
   /* Accent — a single desaturated warm amber */
@@ -28,8 +28,8 @@ All colors defined as CSS custom properties. Tailwind v4 maps these via `@theme`
 
   /* Neutral scale */
   --color-muted:      #6B6B6B;   /* secondary text, captions, metadata */
-  --color-subtle:     #D4D0CA;   /* dividers, inactive borders */
-  --color-surface:    #EDEBE7;   /* card backgrounds, code blocks, section fills */
+  --color-subtle:     #D0D0CE;   /* dividers, inactive borders */
+  --color-surface:    #E8E8E6;   /* card backgrounds, code blocks, section fills */
 
   /* Semantic */
   --color-border:     var(--color-ink);      /* primary borders */
@@ -206,17 +206,19 @@ Subtle. Purposeful. Nothing bounces or springs. The tone is calm and confident.
 Two variants only: **solid** and **ghost**.
 
 ```
-Solid:   bg-ink, text-paper, border-ink       → hover: bg-accent, border-accent, text-ink
-Ghost:   bg-transparent, text-ink, border-ink → hover: bg-ink, text-paper
+Solid:   bg-fg, text-bg, border-fg            → hover: bg-bg, border-fg, text-fg  (neutral inversion)
+Ghost:   bg-transparent, text-fg, border-fg   → hover: bg-fg, text-bg             (full inversion)
+
+Note: solid hover and ghost default are the same visual state — they swap on interaction.
 
 Sizes:
-  sm:  px-space-3  py-space-2  text-small
-  md:  px-space-5  py-space-3  text-body     ← default
-  lg:  px-space-6  py-space-4  text-h4
+  sm:  px-12px  py-8px   text-small
+  md:  px-20px  py-14px  text-body     ← default
+  lg:  px-28px  py-16px  text-h4
 
 Border-radius: --border-radius-md
 No uppercase, no letter-spacing on button labels
-Transition: --duration-fast --ease-inout on background, color, border-color
+Transition: --duration-fast --ease-inout on background-color, color, border-color
 ```
 
 ### Tag / Badge
