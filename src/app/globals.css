@@ -1,26 +1,198 @@
 @import "tailwindcss";
 
+@theme {
+  /* ── Base color tokens (fixed) ── */
+  --color-ink:        #0A0A0A;
+  --color-paper:      #F2F2F0;
+  --color-paper-pure: #FFFFFF;
+  --color-accent:     #C8A96E;
+  --color-accent-dim: #E8D9BC;
+  --color-muted:      #6B6B6B;
+  --color-subtle:     #D0D0CE;
+  --color-surface:    #E8E8E6;
+
+  /* ── Fonts ── */
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body:    'Funnel Sans', sans-serif;
+
+  /* ── Type scale ── */
+  --text-hero:    clamp(72px, 10vw, 144px);
+  --text-display: clamp(48px, 6vw, 96px);
+  --text-h1:      48px;
+  --text-h2:      32px;
+  --text-h3:      22px;
+  --text-h4:      18px;
+  --text-body:    16px;
+  --text-small:   14px;
+  --text-caption: 12px;
+  --text-label:   13px;
+
+  /* ── Spacing (base unit: 4px) ── */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --space-10: 128px;
+  --space-11: 192px;
+
+  /* ── Layout containers ── */
+  --container-max:   1280px;
+  --container-prose: 720px;
+  --container-tight: 960px;
+
+  /* ── Borders ── */
+  --border-width:       1px;
+  --border-width-bold:  2px;
+  --border-radius-sm:   2px;
+  --border-radius-md:   4px;
+  --border-radius-lg:   8px;
+  --border-radius-full: 9999px;
+
+  /* ── Motion ── */
+  --duration-instant: 80ms;
+  --duration-fast:    150ms;
+  --duration-base:    250ms;
+  --duration-slow:    400ms;
+  --duration-enter:   500ms;
+  --ease-out:   cubic-bezier(0.0, 0.0, 0.2, 1.0);
+  --ease-in:    cubic-bezier(0.4, 0.0, 1.0, 1.0);
+  --ease-inout: cubic-bezier(0.4, 0.0, 0.2, 1.0);
+  --ease-linear: linear;
+
+  /* ── Breakpoints ── */
+  --breakpoint-sm:  480px;
+  --breakpoint-md:  768px;
+  --breakpoint-lg:  1024px;
+  --breakpoint-xl:  1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+/* ── Semantic color tokens — light mode (default) ── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-fg:          var(--color-ink);
+  --color-bg:          var(--color-paper);
+  --color-border:      var(--color-ink);
+  --color-border-soft: var(--color-subtle);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
+/* ── Dark mode — system preference ── */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --color-fg:          var(--color-paper);
+    --color-bg:          var(--color-ink);
+    --color-border:      var(--color-paper);
+    --color-border-soft: #2A2A2A;
+    --color-subtle:      #2A2A2A;
+    --color-paper-pure:  #141414;
+    --color-surface:     #1C1C1C;
+    --color-muted:       #888888;
+    --color-accent-dim:  #3D2E12;
   }
 }
 
+/* ── Dark mode — manual toggle (.dark class on <html>) ── */
+.dark {
+  --color-fg:          var(--color-paper);
+  --color-bg:          var(--color-ink);
+  --color-border:      var(--color-paper);
+  --color-border-soft: #2A2A2A;
+  --color-subtle:      #2A2A2A;
+  --color-paper-pure:  #141414;
+  --color-surface:     #1C1C1C;
+  --color-muted:       #888888;
+  --color-accent-dim:  #3D2E12;
+}
+
+/* ── Light mode — manual toggle override (.light class on <html>) ── */
+/* Overrides dark system preference when user explicitly picks light */
+.light {
+  --color-fg:          var(--color-ink);
+  --color-bg:          var(--color-paper);
+  --color-border:      var(--color-ink);
+  --color-border-soft: var(--color-subtle);
+  --color-subtle:      #D0D0CE;
+  --color-paper-pure:  #FFFFFF;
+  --color-surface:     #E8E8E6;
+  --color-muted:       #6B6B6B;
+  --color-accent-dim:  #E8D9BC;
+}
+
+/* ── Theme transition — fires only during mode switch, not on hover ── */
+@media (prefers-reduced-motion: no-preference) {
+  .theme-switching,
+  .theme-switching *,
+  .theme-switching *::before,
+  .theme-switching *::after {
+    transition:
+      background-color 400ms var(--ease-inout),
+      color 400ms var(--ease-inout),
+      border-color 400ms var(--ease-inout),
+      transform 400ms var(--ease-inout) !important;
+  }
+}
+
+/* ── Button ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) var(--ease-inout),
+    color           var(--duration-fast) var(--ease-inout),
+    border-color    var(--duration-fast) var(--ease-inout);
+}
+
+.btn-solid {
+  background-color: var(--color-fg);
+  color: var(--color-bg);
+  border-color: var(--color-border);
+}
+.btn-solid:hover {
+  background-color: var(--color-bg);
+  border-color: var(--color-border);
+  color: var(--color-fg);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--color-fg);
+  border-color: var(--color-border);
+}
+.btn-ghost:hover {
+  background-color: var(--color-fg);
+  color: var(--color-bg);
+}
+
+/* ── Base styles ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.65;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
