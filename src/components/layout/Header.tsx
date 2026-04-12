@@ -211,7 +211,7 @@ export default function Header() {
             className="flex items-center shrink-0 md:border-l"
             style={{ paddingInline: 'var(--space-6)', gap: 'var(--space-4)', ...cellBorderStyle }}
           >
-            <ThemeToggle />
+            <ThemeToggle disabled={pathname === '/game'} />
 
             {/* Hamburger — mobile only */}
             <button
