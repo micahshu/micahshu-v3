@@ -69,11 +69,11 @@ Base: `16px`. Scale ratio: `1.333` (perfect fourth) with manual adjustments at t
 | `--text-h1`    | `48px`    | 1.1         | 700    | body     | Page-level headings              |
 | `--text-h2`    | `32px`    | 1.2         | 700    | body     | Section headings                 |
 | `--text-h3`    | `22px`    | 1.3         | 600    | body     | Card titles, sub-sections        |
-| `--text-h4`    | `18px`    | 1.4         | 600    | body     | Labels, grouped headings         |
+| `--text-h4`    | `18px`    | 1.4         | 600    | body     | Labels, grouped headings, desktop nav links |
 | `--text-body`  | `16px`    | 1.65        | 400    | body     | All paragraph text               |
 | `--text-small` | `14px`    | 1.5         | 400    | body     | Metadata, dates, secondary info  |
 | `--text-caption` | `12px`  | 1.4         | 300    | body     | Tags, footnotes, image captions  |
-| `--text-label` | `13px`    | 1.0         | 400    | display  | Section eyebrows, nav labels     |
+| `--text-label` | `13px`    | 1.0         | 400    | display  | Section eyebrows                 |
 
 **Typographic rules:**
 - `display` font (Bebas Neue) is **uppercase only** — never mixed case
@@ -193,8 +193,8 @@ Subtle. Purposeful. Nothing bounces or springs. The tone is calm and confident.
 **Motion rules:**
 - Hover color/background transitions: `--duration-fast` + `--ease-inout`
 - Page enter animations: `--duration-enter` + `--ease-out`, `opacity` + `translateY(8px)`
-- Underline hover effect: width from `0%` to `100%` via `--ease-linear`, `--duration-base`
-- Never animate `width`, `height`, or `layout` properties — only `transform` and `opacity`
+- Sliding UI indicators (e.g. nav): `transform: translateX()` + `width`, `--duration-base` + `--ease-inout`. Animating `width` is acceptable on `position: absolute` elements that cause no layout reflow.
+- Never animate `height`, `top`, `left`, or any property that triggers layout reflow — only `transform` and `opacity` on layout elements
 - Respect `prefers-reduced-motion` — wrap all enter animations in a media query check
 
 ---
@@ -255,12 +255,21 @@ Transition: --duration-fast on border-color
 
 ### Nav Link
 
+**Desktop:**
 ```
-text-label (Bebas Neue, uppercase, tracked)
-color: ink, no underline default
-hover: color → accent
-active: color → accent, underline with accent color
-Transition: --duration-fast on color
+font-display, --text-h4, uppercase, letter-spacing: 0.08em
+Resting: color-fg, no decoration
+Active/hover: sliding bg-fg indicator behind the text; text inverts to color-bg
+Indicator animation: transform: translateX() + width, --duration-base --ease-inout
+No accent color in desktop nav — inversion only
+```
+
+**Mobile:**
+```
+font-display, --text-h3, uppercase, letter-spacing: 0.05em
+Full-width block, padding: --space-5 top/bottom
+Active: color-accent
+Resting: color-fg
 ```
 
 ---

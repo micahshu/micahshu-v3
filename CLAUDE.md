@@ -209,9 +209,10 @@ Base unit: 4px. Use only the named scale. Never raw pixel values in layout.
 
 - Hover transitions: `--duration-fast` (150ms) + `--ease-inout`
 - Page enter: `--duration-enter` (500ms) + `--ease-out`, `opacity` + `translateY(8px)` only
-- Underline hover: width `0%` → `100%`, `--ease-linear`, `--duration-base` (250ms)
+- Nav sliding indicator: `transform: translateX()` + `width`, `--duration-base` + `--ease-inout`
 - Theme switch: 400ms crossfade via `.theme-switching` class (see Theme Toggle section)
-- Only animate `transform` and `opacity`. Never `width`, `height`, `top`, `left`, or any layout property.
+- Only animate `transform` and `opacity` on layout elements. Exception: `width` is acceptable on absolutely-positioned UI indicators (e.g. the nav sliding indicator) since they cause no layout reflow.
+- Never animate `height`, `top`, `left`, or any property that triggers layout.
 - Wrap all enter animations in `@media (prefers-reduced-motion: no-preference)`.
 
 ### Section Anatomy
@@ -242,7 +243,11 @@ Every section follows this structure:
 
 **Input/Textarea:** `bg-[var(--color-paper-pure)] border border-[var(--color-border-soft)]`, focus: `border-[var(--color-border)] outline-none`. placeholder: `color-muted`.
 
-**Nav Link:** `font-display text-label uppercase tracking-widest text-fg`, hover: `color-accent`. Active: `color-accent` + underline.
+**Nav Link (desktop):** `font-display text-h4 uppercase tracking-wide text-fg`. Active and hover state use a sliding `bg-fg` indicator that animates via `transform: translateX()` + `width` behind the link text. Hovered/active link text inverts to `color-bg`. No accent color in the nav — inversion only. The indicator is absolutely positioned so animating `width` is acceptable (no layout reflow).
+
+**Nav Link (mobile):** Full-width block links, `font-display text-h3 uppercase`, active: `color-accent`.
+
+**RevealImage** — `src/components/ui/RevealImage.tsx`. Wraps Next.js `<Image>` with greyscale-by-default, color-on-hover behaviour. Use this instead of `<Image>` for all content images (project thumbnails, blog covers, about photo). Do not use it for UI/chrome images (icons, logos). Accepts all standard `<Image>` props. Transition: `filter` 150ms (`--duration-fast`) ease-in-out.
 
 ---
 
@@ -346,6 +351,24 @@ MDX files live in `src/content/` — not in `src/app/`. They are read at build t
 
 ---
 
+## Header
+
+`src/components/layout/Header.tsx` — client component.
+
+**Structure:** Three-cell ruled grid — `[logo] | [nav rail] | [theme toggle]`. Cells are separated by `1px solid var(--color-border)` vertical rules that fade in on scroll alongside the header background.
+
+**Transparent-until-scroll:** At the top of any page the header has no background and no borders. Once `window.scrollY > 8`, `background-color` and all borders fade in over `--duration-base`. The mobile menu open state also triggers the solid background immediately.
+
+**Desktop nav rail (`NavRail`):** The nav links sit inside a borderless relative container. A sliding `bg-fg` indicator (`position: absolute`) animates behind the active/hovered link using `transform: translateX()` + `width`. Link text inverts to `color-bg` when the indicator is underneath. On mouse-leave the indicator snaps back to the active route. A `ResizeObserver` on the track element keeps indicator position accurate after window resize.
+
+**Active route matching:** `href === '/'` uses exact match. All other routes use `pathname.startsWith(href)` — nested routes (e.g. `/projects/[slug]`) correctly highlight the parent nav item.
+
+**Mobile:** Logo + ThemeToggle + hamburger. Menu expands below with full-width bordered links. Body scroll is locked while the menu is open.
+
+**Adding nav items:** Edit the `NAV_LINKS` array at the top of the file — everything else (desktop indicator, mobile menu) updates automatically.
+
+---
+
 ## Theme Toggle
 
 Light/dark toggle is a core site feature. The implementation has three parts that must all stay in sync:
@@ -373,6 +396,7 @@ Light/dark toggle is a core site feature. The implementation has three parts tha
 - Do not use `--color-ink` / `--color-paper` directly in components — use semantic tokens (`--color-fg`, `--color-bg`) so dark mode works automatically
 - Do not use the `pages/` router — App Router only
 - Do not access `params` or `searchParams` synchronously
-- Do not animate `width`, `height`, `top`, `left`, or any layout property
+- Do not animate `width` on layout elements — exception: absolutely-positioned UI indicators where no reflow occurs
+- Do not animate `height`, `top`, `left`, or any property that triggers layout
 - Do not add gradients, decorative blurs, or drop shadows
 - Do not introduce external state management (Zustand, Redux, etc.) — React state only
