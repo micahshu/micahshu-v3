@@ -32,7 +32,7 @@ export default function BlogSection() {
               }}
             >
               {/* Title */}
-              <span
+              <h3
                 className="font-display uppercase text-[color:var(--color-fg)] flex-1"
                 style={{
                   fontSize: 'var(--text-h2)',
@@ -41,7 +41,7 @@ export default function BlogSection() {
                 }}
               >
                 {post.title}
-              </span>
+              </h3>
 
               {/* Meta: date + category */}
               <span

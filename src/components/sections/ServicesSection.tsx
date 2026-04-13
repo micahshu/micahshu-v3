@@ -71,12 +71,12 @@ export default function ServicesSection() {
               style={{ padding: 'var(--space-5)' }}
             >
               {/* Service name */}
-              <span
+              <h3
                 className="block font-display uppercase text-[color:var(--color-muted)]"
                 style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em', marginBottom: 'var(--space-4)' }}
               >
                 {service.name}
-              </span>
+              </h3>
 
               {/* Price */}
               <span

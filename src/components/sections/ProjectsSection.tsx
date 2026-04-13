@@ -113,12 +113,12 @@ export default function ProjectsSection() {
                     </span>
 
                     {/* Title */}
-                    <span
+                    <h3
                       className="font-display uppercase text-[color:var(--color-fg)] flex-1 text-center text-[length:var(--text-h2)] min-[1000px]:text-[length:var(--text-h1)] min-[1000px]:text-left"
                       style={{ letterSpacing: '-0.01em', lineHeight: 1 }}
                     >
                       {project.title}
-                    </span>
+                    </h3>
 
                     {/* Category — desktop only */}
                     <span

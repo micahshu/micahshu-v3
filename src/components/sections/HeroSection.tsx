@@ -33,18 +33,18 @@ export default function HeroSection() {
       <div className="flex w-full animate-hero-2 md:h-[33.333vw]" style={{ alignItems: 'stretch' }}>
         <div className="flex-1 flex items-center container-px" style={{ paddingBlock: 'var(--space-7)' }}>
           <div className="flex flex-col" style={{ gap: 'var(--space-3)' }}>
-            <h1
+            <span
               className="font-display uppercase text-[color:var(--color-muted)]"
               style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em' }}
             >
               Freelance Web Developer
-            </h1>
-            <p
+            </span>
+            <h1
               className="font-display text-[color:var(--color-fg)]"
               style={{ fontSize: 'var(--text-hero)', letterSpacing: '-0.02em', lineHeight: 0.9 }}
             >
               MICAH SHU
-            </p>
+            </h1>
             <p
               className="font-body text-[color:var(--color-muted)]"
               style={{ fontSize: 'var(--text-small)', paddingLeft: '3px' }}
