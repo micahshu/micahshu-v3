@@ -5,7 +5,7 @@ import Section from '@/components/layout/Section'
 
 export default function HomePage() {
   return (
-    <>
+    <main id="main-content">
       {/* Hero */}
       <Section>
         <Container>
@@ -156,6 +156,6 @@ export default function HomePage() {
           </div>
         </Container>
       </Section>
-    </>
+    </main>
   )
 }
