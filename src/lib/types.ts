@@ -1,9 +1,11 @@
 export interface Project {
   title: string
   slug: string
+  category: string
   description: string
   tags: string[]
   techIcons: { name: string; icon: string }[]
+  featured?: boolean
   liveUrl?: string
   image?: string
 }

@@ -14,7 +14,7 @@ Personal portfolio for Micah Shu. Minimalist editorial aesthetic — black, whit
 | Language | TypeScript (strict) |
 | Styling | Tailwind CSS v4 via `@tailwindcss/postcss` — **no `tailwind.config.ts`** |
 | Fonts | `next/font/google` — Funnel Sans + Bebas Neue only |
-| Content | MDX flat files |
+| Content | Markdown (`.md`) flat files — blog only |
 | Deployment | Vercel |
 
 ---
@@ -82,13 +82,13 @@ src/
     ui/                 # Button, Tag, Card, Input
     layout/             # Header, Footer, Section, Container
     sections/           # Homepage section components
-    mdx/                # MDX component overrides
   lib/
-    content.ts          # MDX file reading utilities (build-time only)
+    content.ts          # Markdown file reading utilities (build-time only)
     types.ts            # All shared TypeScript interfaces
+    data/
+      projects.ts       # Static project data array
   content/
-    projects/           # *.mdx — one file per project
-    blog/               # *.mdx — one file per post
+    blog/               # *.md — one file per post
 ```
 
 ---
@@ -247,7 +247,13 @@ Every section follows this structure:
 
 **Nav Link (mobile):** Full-width block links, `font-display text-h3 uppercase`, active: `color-accent`.
 
-**RevealImage** — `src/components/ui/RevealImage.tsx`. Wraps Next.js `<Image>` with greyscale-by-default, color-on-hover behaviour. Use this instead of `<Image>` for all content images (project thumbnails, blog covers, about photo). Do not use it for UI/chrome images (icons, logos). Accepts all standard `<Image>` props. Transition: `filter` 150ms (`--duration-fast`) ease-in-out.
+**RevealImage** — `src/components/ui/RevealImage.tsx`. Wraps Next.js `<Image>` with greyscale-by-default, color-on-hover behaviour. Use this instead of `<Image>` for all content images (project thumbnails, blog covers, about photo). Do not use it for UI/chrome images (icons, logos). Accepts all standard `<Image>` props plus:
+- `groupHover` — greyscale lifts on parent `.group` hover instead of self hover
+- `reveal` — image is fully hidden (`opacity-0`) by default and fades in at full color on parent `.group` hover. Use this when imagery would compete with typographic hierarchy at rest (e.g. project cards in a tight grid). Transition: `opacity` 150ms (`--duration-fast`) ease-in-out.
+
+Default (no prop): greyscale at rest, color on self-hover. Transition: `filter` 150ms.
+
+**ProjectCard image treatment** — Project card images use a browser mockup chrome bar (28px `--color-surface` strip with three dot indicators in `--color-border-soft`) above the image area. On card hover the dots transition to macOS traffic light colors (`--color-mac-red`, `--color-mac-yellow`, `--color-mac-green`). The image itself uses `reveal` mode — hidden at rest, full color on hover. `objectPosition: 'top center'` ensures the nav/header area of each screenshot is the visible crop.
 
 ---
 
@@ -326,14 +332,15 @@ const bebasNeue = Bebas_Neue({
 
 ---
 
-## MDX Content
+## Blog Content (Markdown)
 
-MDX files live in `src/content/` — not in `src/app/`. They are read at build time via Node `fs`.
+Blog posts live in `src/content/blog/` as `.md` files. They are read at build time via Node `fs`.
 
-- Install: `@next/mdx @mdx-js/loader @mdx-js/react @types/mdx gray-matter`
-- Each file has YAML frontmatter matching the relevant TypeScript interface
-- Expose `getProjects()`, `getBlogPosts()` etc. in `src/lib/content.ts`
-- Custom MDX component overrides (headings, paragraphs, links, code) live in `src/components/mdx/`
+- Packages in use: `gray-matter` (frontmatter parsing) + `react-markdown` (rendering)
+- Each file has YAML frontmatter matching the `BlogPost` TypeScript interface
+- Expose `getBlogPosts()` and `getBlogPost(slug)` in `src/lib/content.ts`
+- Render post content with `<ReactMarkdown>` in `src/app/blog/[slug]/page.tsx`
+- Projects are defined in `src/lib/data/projects.ts` as a static typed array — no file-based content
 
 ---
 
@@ -398,5 +405,5 @@ Light/dark toggle is a core site feature. The implementation has three parts tha
 - Do not access `params` or `searchParams` synchronously
 - Do not animate `width` on layout elements — exception: absolutely-positioned UI indicators where no reflow occurs
 - Do not animate `height`, `top`, `left`, or any property that triggers layout
-- Do not add gradients, decorative blurs, or drop shadows
+- Do not add gradients, decorative blurs, or drop shadows — this includes blur effects on decorative UI chrome elements like the browser mockup dots
 - Do not introduce external state management (Zustand, Redux, etc.) — React state only
