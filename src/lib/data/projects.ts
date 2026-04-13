@@ -4,6 +4,7 @@ export const projects: Project[] = [
   {
     title: 'Portfolio v2',
     slug: 'portfolio-v2',
+    featured: true,
     category: 'Front-End + Back-End',
     description:
       'Built using WordPress and the Timber framework, this portfolio site leverages modern development practices by incorporating AlpineJS for interactive functionality and Tailwind CSS for utility-first styling. The project architecture separates concerns through Timber\'s Twig templating system, while AlpineJS handles dynamic features like the project filtering system without the overhead of larger JavaScript frameworks.',
@@ -14,6 +15,7 @@ export const projects: Project[] = [
   {
     title: 'ZGM Rebuild',
     slug: 'zgm-rebuild',
+    featured: true,
     category: 'Front-End',
     description:
       'A rebuilding of my company\'s current WordPress site using the Timber framework and Tailwind CSS.',
@@ -25,6 +27,7 @@ export const projects: Project[] = [
   {
     title: 'Portfolio Site v1',
     slug: 'portfolio-v1',
+    featured: true,
     category: 'Front-End + Back-End',
     description:
       'My first professional portfolio site built using Next.js. This project features a dynamic light/dark mode theme system, allowing visitors to toggle their preferred viewing experience. While the design has some rough edges, it represents my first deep dive into modern framework web development and stands as a testament to learning through building.',

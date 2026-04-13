@@ -5,6 +5,7 @@ export interface Project {
   description: string
   tags: string[]
   techIcons: { name: string; icon: string }[]
+  featured?: boolean
   liveUrl?: string
   image?: string
 }

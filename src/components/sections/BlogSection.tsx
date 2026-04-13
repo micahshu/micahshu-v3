@@ -1,0 +1,85 @@
+import Link from 'next/link'
+import { getBlogPosts } from '@/lib/content'
+
+export default function BlogSection() {
+  const posts = getBlogPosts().slice(0, 3)
+
+  return (
+    <section className="w-full border-t border-b border-[color:var(--color-border)]">
+      <div
+        className="container-px section-py"
+        style={{ maxWidth: 'var(--container-max)', marginInline: 'auto' }}
+      >
+        {/* Eyebrow */}
+        <span
+          className="block font-display uppercase text-[color:var(--color-muted)]"
+          style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em', marginBottom: 'var(--space-5)' }}
+        >
+          Recent Writing
+        </span>
+
+        {/* Post list */}
+        <div style={{ borderTop: '1px solid var(--color-border-soft)' }}>
+          {posts.map((post) => (
+            <Link
+              key={post.slug}
+              href={`/blog/${post.slug}`}
+              className="group flex items-baseline justify-between no-underline"
+              style={{
+                paddingBlock: 'var(--space-5)',
+                borderBottom: '1px solid var(--color-border-soft)',
+                gap: 'var(--space-6)',
+              }}
+            >
+              {/* Title */}
+              <span
+                className="font-display uppercase text-[color:var(--color-fg)] flex-1"
+                style={{
+                  fontSize: 'var(--text-h2)',
+                  letterSpacing: '-0.01em',
+                  lineHeight: 1,
+                }}
+              >
+                {post.title}
+              </span>
+
+              {/* Meta: date + category */}
+              <span
+                className="font-display uppercase text-[color:var(--color-muted)] shrink-0 hidden md:block"
+                style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em' }}
+              >
+                {post.categories[0] ?? 'General'}&ensp;—&ensp;
+                {new Date(post.date).toLocaleDateString('en-US', {
+                  month: 'short',
+                  year: 'numeric',
+                })}
+              </span>
+
+              {/* Arrow */}
+              <span
+                className="shrink-0 font-body text-[color:var(--color-muted)] group-hover:text-[color:var(--color-fg)]"
+                style={{
+                  fontSize: 'var(--text-body)',
+                  transition: 'color var(--duration-fast) var(--ease-inout)',
+                }}
+              >
+                ↗
+              </span>
+            </Link>
+          ))}
+        </div>
+
+        {/* Footer CTA */}
+        <div className="flex justify-end" style={{ marginTop: 'var(--space-5)' }}>
+          <Link
+            href="/blog"
+            className="btn btn-ghost font-body no-underline"
+            style={{ fontSize: 'var(--text-small)', padding: 'var(--space-2) var(--space-4)' }}
+          >
+            View All Posts
+          </Link>
+        </div>
+      </div>
+    </section>
+  )
+}

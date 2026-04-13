@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Tag } from '@/components/ui/Tag'
 import { RevealImage } from '@/components/ui/RevealImage'
+import { BrowserBar } from '@/components/ui/BrowserBar'
 import type { Project } from '@/lib/types'
 
 interface ProjectCardProps {
@@ -25,59 +26,7 @@ export function ProjectCard({
       : 'border-t border-[color:var(--color-border-soft)] group-hover:border-[color:var(--color-border)]'
     : 'border-r border-[color:var(--color-border-soft)] group-hover:border-[color:var(--color-border)]'
 
-  const browserBar = (
-    <div
-      className="flex items-center shrink-0 border-b border-[color:var(--color-border-soft)]"
-      style={{
-        height: '28px',
-        background: 'var(--color-surface)',
-        padding: '0 var(--space-3)',
-        gap: 'var(--space-2)',
-      }}
-    >
-      <div className="flex items-center" style={{ gap: '5px' }}>
-        {(
-          [
-            'bg-[color:var(--color-border-soft)] group-hover:bg-[color:var(--color-mac-red)]',
-            'bg-[color:var(--color-border-soft)] group-hover:bg-[color:var(--color-mac-yellow)]',
-            'bg-[color:var(--color-border-soft)] group-hover:bg-[color:var(--color-mac-green)]',
-          ] as const
-        ).map((cls, i) => (
-          <span
-            key={i}
-            className={cls}
-            style={{
-              display: 'block',
-              width: '6px',
-              height: '6px',
-              borderRadius: '50%',
-              transition: `background-color var(--duration-fast) var(--ease-inout)`,
-            }}
-          />
-        ))}
-      </div>
-      <div className="flex flex-1 justify-center">
-        <div
-          className="flex items-center overflow-hidden"
-          style={{
-            height: '14px',
-            background: 'var(--color-bg)',
-            borderRadius: 'var(--border-radius-sm)',
-            padding: '0 var(--space-2)',
-            maxWidth: '180px',
-            width: '100%',
-          }}
-        >
-          <span
-            className="font-body text-[color:var(--color-muted)] truncate"
-            style={{ fontSize: '10px', lineHeight: 1 }}
-          >
-            {project.liveUrl ? new URL(project.liveUrl).hostname : '—'}
-          </span>
-        </div>
-      </div>
-    </div>
-  )
+  const browserBar = <BrowserBar liveUrl={project.liveUrl} />
 
   const imageBlock = project.image ? (
     <div
@@ -191,10 +140,10 @@ export function ProjectCard({
   return (
     <Link
       href={`/projects/${project.slug}`}
-      className="group flex no-underline bg-[color:var(--color-paper-pure)] border border-[color:var(--color-border-soft)] hover:border-[color:var(--color-border)]"
+      className="group flex no-underline bg-[color:var(--color-paper-pure)] border border-[color:var(--color-border)] hover:border-2"
       style={{
         flexDirection: isVertical ? 'column' : 'row',
-        transition: 'border-color var(--duration-fast) var(--ease-inout)',
+        transition: 'border-width var(--duration-fast) var(--ease-inout)',
       }}
     >
       {showImageFirst ? imageBlock : contentBlock}
