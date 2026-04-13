@@ -29,7 +29,7 @@ export default function ProjectsSection() {
           className="block font-display uppercase text-[color:var(--color-muted)]"
           style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em', marginBottom: 'var(--space-5)' }}
         >
-          Services
+          Projects
         </span>
 
         {/* Heading */}
@@ -41,11 +41,11 @@ export default function ProjectsSection() {
         </h2>
 
         {/* Two-column layout */}
-        <div className="flex flex-col md:flex-row" style={{ gap: 'var(--space-6)' }}>
+        <div className="flex flex-col min-[1000px]:flex-row" style={{ gap: 'var(--space-6)' }}>
 
           {/* ── Left: browser mockup panel — desktop only ── */}
           <div
-            className="hidden md:flex shrink-0 flex-col border border-[color:var(--color-border-soft)]"
+            className="hidden min-[1000px]:flex shrink-0 flex-col border border-[color:var(--color-border-soft)]"
             style={{ width: '44%', aspectRatio: '16/10', alignSelf: 'flex-start' }}
           >
             <BrowserBar liveUrl={hoveredProject?.liveUrl} active={isHovering} />
@@ -87,11 +87,11 @@ export default function ProjectsSection() {
                 <Link
                   key={project.slug}
                   href={`/projects/${project.slug}`}
-                  className="flex items-center no-underline"
+                  className="flex flex-col no-underline"
                   style={{
                     ...firstRowStyle,
-                    gap: 'var(--space-4)',
                     paddingBlock: 'var(--space-4)',
+                    gap: 'var(--space-3)',
                     borderBottomWidth: '1px',
                     borderBottomStyle: 'solid',
                     borderBottomColor: isRowHovered
@@ -102,46 +102,67 @@ export default function ProjectsSection() {
                   onMouseEnter={() => setHoveredSlug(project.slug)}
                   onMouseLeave={() => setHoveredSlug(null)}
                 >
-                  {/* Index */}
-                  <span
-                    className="font-display shrink-0 text-[color:var(--color-muted)]"
-                    style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em', width: '28px' }}
-                  >
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
+                  {/* Info row */}
+                  <div className="flex items-center" style={{ gap: 'var(--space-4)' }}>
+                    {/* Index */}
+                    <span
+                      className="font-display shrink-0 text-[color:var(--color-muted)]"
+                      style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em', width: '28px' }}
+                    >
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
 
-                  {/* Title */}
-                  <span
-                    className="font-display uppercase text-[color:var(--color-fg)] flex-1"
-                    style={{ fontSize: 'var(--text-h1)', letterSpacing: '-0.01em', lineHeight: 1 }}
-                  >
-                    {project.title}
-                  </span>
+                    {/* Title */}
+                    <span
+                      className="font-display uppercase text-[color:var(--color-fg)] flex-1 text-center text-[length:var(--text-h2)] min-[1000px]:text-[length:var(--text-h1)] min-[1000px]:text-left"
+                      style={{ letterSpacing: '-0.01em', lineHeight: 1 }}
+                    >
+                      {project.title}
+                    </span>
 
-                  {/* Category */}
-                  <span
-                    className="font-display uppercase text-[color:var(--color-muted)] shrink-0"
-                    style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em' }}
-                  >
-                    {project.category}
-                  </span>
+                    {/* Category — desktop only */}
+                    <span
+                      className="hidden min-[1000px]:block font-display uppercase text-[color:var(--color-muted)] shrink-0"
+                      style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em' }}
+                    >
+                      {project.category}
+                    </span>
 
-                  {/* Arrow */}
-                  <span
-                    className="shrink-0 flex items-center justify-center border border-[color:var(--color-border)]"
-                    style={{
-                      width: 'var(--space-7)',
-                      height: 'var(--space-7)',
-                      fontSize: 'var(--text-small)',
-                      borderRadius: 'var(--border-radius-md)',
-                      background: isRowHovered ? 'var(--color-fg)' : 'transparent',
-                      color: isRowHovered ? 'var(--color-bg)' : 'var(--color-fg)',
-                      transition:
-                        'background-color var(--duration-fast) var(--ease-inout), color var(--duration-fast) var(--ease-inout)',
-                    }}
-                  >
-                    ↗
-                  </span>
+                    {/* Arrow */}
+                    <span
+                      className="shrink-0 flex items-center justify-center border border-[color:var(--color-border)]"
+                      style={{
+                        width: 'var(--space-7)',
+                        height: 'var(--space-7)',
+                        fontSize: 'var(--text-small)',
+                        borderRadius: 'var(--border-radius-md)',
+                        background: isRowHovered ? 'var(--color-fg)' : 'transparent',
+                        color: isRowHovered ? 'var(--color-bg)' : 'var(--color-fg)',
+                        transition:
+                          'background-color var(--duration-fast) var(--ease-inout), color var(--duration-fast) var(--ease-inout)',
+                      }}
+                    >
+                      ↗
+                    </span>
+                  </div>
+
+                  {/* Image preview — mobile only */}
+                  {project.image && (
+                    <div
+                      className="min-[1000px]:hidden flex flex-col overflow-hidden border border-[color:var(--color-border-soft)]"
+                    >
+                      <BrowserBar liveUrl={project.liveUrl} active={true} />
+                      <div className="relative w-full overflow-hidden" style={{ aspectRatio: '16/10' }}>
+                        <Image
+                          src={project.image}
+                          alt={project.title}
+                          fill
+                          sizes="(min-width: 1000px) 0px, 100vw"
+                          style={{ objectFit: 'cover', objectPosition: 'top center' }}
+                        />
+                      </div>
+                    </div>
+                  )}
                 </Link>
               )
             })}
