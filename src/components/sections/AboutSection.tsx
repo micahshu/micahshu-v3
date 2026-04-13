@@ -1,7 +1,7 @@
 const DETAILS = [
   { label: 'Years Experience', value: '5' },
   { label: 'Based In',         value: 'Berthoud, CO' },
-  { label: 'Focus',            value: 'Local Business' },
+  { label: 'Specialty',        value: 'Custom Websites' },
 ]
 
 export default function AboutSection() {

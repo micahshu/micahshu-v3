@@ -4,19 +4,19 @@ const SERVICES = [
   {
     name: 'Lump Sum',
     price: '$3,000',
-    description: 'Own your site outright. One payment, no surprises.',
+    description: 'Own your site outright. One payment covers everything.',
     details: [
-      '$500 setup fee',
       '$25/mo hosting after launch',
       '$100/page after 5 pages',
+      'Add Maintenance for the full package',
     ],
   },
   {
     name: 'Monthly',
     price: '$200/mo',
-    description: 'Low upfront cost, everything bundled.',
+    description: 'Spread the cost over time. Hosting, support, and updates included.',
     details: [
-      '$500 setup fee',
+      '$500 due at signing',
       '12-month minimum',
       'Drops to $100/mo after year one',
     ],
@@ -24,7 +24,7 @@ const SERVICES = [
   {
     name: 'Maintenance',
     price: '$100/mo',
-    description: 'Keep your site updated and running.',
+    description: 'Keep your existing site updated, secure, and running smoothly.',
     details: [
       'Up to 5 hrs/mo of edits',
       'Hosting included',

@@ -9,14 +9,14 @@ export default function CTASection() {
   return (
     <section
       className="w-full"
-      style={{ overflow: 'hidden', background: 'var(--color-fg)' }}
+      style={{ background: 'var(--color-fg)' }}
     >
-      {/* Runoff heading — no container, bleeds right */}
-      <div style={{ paddingTop: 'var(--space-9)', paddingLeft: 'var(--space-7)' }}>
+      {/* Heading */}
+      <div style={{ paddingTop: 'var(--space-9)', paddingInline: 'var(--space-5)' }}>
         <h2
-          className="font-display uppercase whitespace-nowrap"
+          className="font-display uppercase"
           style={{
-            fontSize: 'clamp(96px, 16vw, 220px)',
+            fontSize: 'clamp(72px, 16vw, 220px)',
             letterSpacing: '-0.02em',
             lineHeight: 0.9,
             color: 'var(--color-bg)',

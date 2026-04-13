@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { RevealImage } from '@/components/ui/RevealImage'
 
 const HERO_LINKS = [
-  { label: 'About',    description: 'Background, skills & story',            href: '/about'    },
+  { label: 'About',    description: 'Who I am & how I work',            href: '/about'    },
   { label: 'Projects', description: 'Selected design & development work',    href: '/projects' },
   { label: 'Contact',  description: 'Open to new projects & collaborations', href: '/contact'  },
 ]
@@ -30,20 +30,26 @@ export default function HeroSection() {
       </div>
 
       {/* Middle band: hero name left, portrait right */}
-      <div className="flex w-full animate-hero-2" style={{ height: '33.333vw', alignItems: 'stretch' }}>
-        <div className="flex-1 flex items-center container-px">
+      <div className="flex w-full animate-hero-2 md:h-[33.333vw]" style={{ alignItems: 'stretch' }}>
+        <div className="flex-1 flex items-center container-px" style={{ paddingBlock: 'var(--space-7)' }}>
           <div className="flex flex-col" style={{ gap: 'var(--space-3)' }}>
             <h1
+              className="font-display uppercase text-[color:var(--color-muted)]"
+              style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em' }}
+            >
+              Freelance Web Developer
+            </h1>
+            <p
               className="font-display text-[color:var(--color-fg)]"
               style={{ fontSize: 'var(--text-hero)', letterSpacing: '-0.02em', lineHeight: 0.9 }}
             >
               MICAH SHU
-            </h1>
+            </p>
             <p
               className="font-body text-[color:var(--color-muted)]"
               style={{ fontSize: 'var(--text-small)', paddingLeft: '3px' }}
             >
-              Developer at your service
+              Building websites for local businesses, without the agency overhead.
             </p>
           </div>
         </div>
@@ -70,7 +76,7 @@ export default function HeroSection() {
         style={{ height: '100vw' }}
       >
         <RevealImage
-          src="/images/micah.jpg"
+          src="/images/micah.webp"
           alt="Micah Shu"
           fill
           sizes="100vw"
@@ -97,7 +103,7 @@ export default function HeroSection() {
           >
             {/* Arrow — absolute so it doesn't affect centering */}
             <span
-              className="absolute font-body opacity-0 group-hover:opacity-100 text-[color:var(--color-bg)]"
+              className="absolute font-body opacity-100 md:opacity-0 md:group-hover:opacity-100 text-[color:var(--color-muted)] md:text-[color:var(--color-bg)]"
               style={{
                 top: 'var(--space-5)',
                 right: 'var(--space-5)',
