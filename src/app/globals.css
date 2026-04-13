@@ -7,6 +7,9 @@
   --color-paper-pure: #FFFFFF;
   --color-accent:     #C8A96E;
   --color-accent-dim: #E8D9BC;
+  --color-mac-red:    #FF5F57;
+  --color-mac-yellow: #FFBD2E;
+  --color-mac-green:  #28C840;
   --color-muted:      #6B6B6B;
   --color-subtle:     #D0D0CE;
   --color-surface:    #E8E8E6;
@@ -170,6 +173,37 @@
 .btn-ghost:hover {
   background-color: var(--color-fg);
   color: var(--color-bg);
+}
+
+/* ── Container ── */
+.container-px {
+  padding-inline: var(--space-5);
+}
+
+/* ── Section ── */
+.section-py {
+  padding-block: var(--space-8);
+}
+
+@media (min-width: 768px) {
+  .container-px {
+    padding-inline: var(--space-7);
+  }
+  .section-py {
+    padding-block: var(--space-9);
+  }
+}
+
+/* ── Hero enter animation ── */
+@keyframes hero-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-hero-1 { animation: hero-enter var(--duration-enter) var(--ease-out) both; }
+  .animate-hero-2 { animation: hero-enter var(--duration-enter) var(--ease-out) 120ms both; }
+  .animate-hero-3 { animation: hero-enter var(--duration-enter) var(--ease-out) 240ms both; }
 }
 
 /* ── Base styles ── */

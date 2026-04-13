@@ -9,6 +9,11 @@ structural, type does the heavy lifting, and the grid breaks on purpose.
 Black and white is the foundation. One warm accent color keeps it from reading as sterile.
 Motion is subtle but present — it signals craft without showing off.
 
+**Tonal principle: intimidating at scale, friendly in the details.**
+The macro view — large type, hard borders, tight grid — should feel confident and authoritative.
+The micro view — copy voice, small interactions, easter eggs — should feel human and approachable.
+These two registers work together; neither softens the other.
+
 ---
 
 ## 1. Color Tokens
@@ -30,6 +35,11 @@ All colors defined as CSS custom properties. Tailwind v4 maps these via `@theme`
   --color-muted:      #6B6B6B;   /* secondary text, captions, metadata */
   --color-subtle:     #D0D0CE;   /* dividers, inactive borders */
   --color-surface:    #E8E8E6;   /* card backgrounds, code blocks, section fills */
+
+  /* UI chrome — not brand colors, used only in the browser mockup dots */
+  --color-mac-red:    #FF5F57;
+  --color-mac-yellow: #FFBD2E;
+  --color-mac-green:  #28C840;
 
   /* Semantic */
   --color-border:     var(--color-ink);      /* primary borders */
@@ -197,6 +207,9 @@ Subtle. Purposeful. Nothing bounces or springs. The tone is calm and confident.
 - Never animate `height`, `top`, `left`, or any property that triggers layout reflow — only `transform` and `opacity` on layout elements
 - Respect `prefers-reduced-motion` — wrap all enter animations in a media query check
 
+**Reveal interaction pattern:**
+Content-heavy sections default to a clean, typographic rest state. Visual richness (images, color) enters on interaction. This keeps the page readable at a glance and makes hover a moment of discovery rather than decoration. Applied to: project card images (hidden by default, full color on hover). Extend this pattern to future sections where imagery would otherwise compete with typographic hierarchy at rest.
+
 ---
 
 ## 7. Component Defaults
@@ -271,6 +284,21 @@ Full-width block, padding: --space-5 top/bottom
 Active: color-accent
 Resting: color-fg
 ```
+
+**Nav item list — intentional decisions:**
+- "Home" is included in NAV_LINKS even though the logo also links home. This is intentional —
+  it gives the sliding indicator a valid starting position on the home route. Do not remove it.
+- "Resume" is not a top-level nav item — surface resume/CV content within `/about` instead.
+
+---
+
+## Content Conventions
+
+### Arrow
+
+Use **↗ (U+2197)** site-wide for all navigation arrows, CTAs, and external links.
+Never use → or any other arrow variant. The northeast arrow signals "outward motion" — going
+somewhere, opening something — which is semantically correct for links and CTAs.
 
 ---
 

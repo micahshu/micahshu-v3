@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Funnel_Sans, Bebas_Neue } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer'
 
 const funnelSans = Funnel_Sans({
   subsets: ['latin'],
@@ -37,7 +38,8 @@ export default function RootLayout({
       </head>
       <body>
         <Header />
-        <main id="main-content">{children}</main>
+        <main id="main-content" style={{ flex: 1 }}>{children}</main>
+        <Footer />
       </body>
     </html>
   )
