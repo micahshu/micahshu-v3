@@ -204,6 +204,7 @@
   .animate-hero-1 { animation: hero-enter var(--duration-enter) var(--ease-out) both; }
   .animate-hero-2 { animation: hero-enter var(--duration-enter) var(--ease-out) 120ms both; }
   .animate-hero-3 { animation: hero-enter var(--duration-enter) var(--ease-out) 240ms both; }
+  .animate-hero-4 { animation: hero-enter var(--duration-enter) var(--ease-out) 360ms both; }
 }
 
 /* ── Base styles ── */
