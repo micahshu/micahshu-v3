@@ -1,16 +1,35 @@
 import PageHero from '@/components/ui/PageHero'
 import { RevealImage } from '@/components/ui/RevealImage'
+import CTASection from '@/components/sections/CTASection'
+import BlogSection from '@/components/sections/BlogSection'
 import { getYearsExperience, toWord } from '@/lib/utils'
-
 const yearsWord = toWord(getYearsExperience())
 
 const subtitle = (
   <>
-    {yearsWord} years in agencies taught me one thing:<br />
-    the best work happens when there&apos;s no one between the developer and the client.<br />
-    <span style={{ color: 'var(--color-fg)' }}>That&apos;s the model now.</span>
+    Full-stack developer. Father of four.<br />
+    <span style={{ color: 'var(--color-fg)' }}>Based in Berthoud, CO.</span>
   </>
 )
+
+
+const APPROACH = [
+  {
+    index: '01',
+    title: 'Direct',
+    body: 'One developer, one point of contact. From first conversation to final deploy.',
+  },
+  {
+    index: '02',
+    title: 'Opinionated',
+    body: "I'll tell you what I think will work. You hired an expert, not an order-taker — expect a recommendation, not just a quote.",
+  },
+  {
+    index: '03',
+    title: 'Iterative',
+    body: 'Work ships in stages. You see real progress early and often — not a big reveal at the end of a long build.',
+  },
+]
 
 const EXPERTISE = [
   {
@@ -81,19 +100,19 @@ export default function AboutPage() {
                 className="font-display uppercase text-[color:var(--color-fg)]"
                 style={{ fontSize: 'var(--text-display)', letterSpacing: '-0.02em', lineHeight: 1.05 }}
               >
-                Lorem ipsum dolor sit amet consectetur adipiscing.
+                Two agencies. {yearsWord} years. A family of six in Berthoud.
               </p>
               <p
                 className="font-body text-[color:var(--color-muted)]"
                 style={{ fontSize: 'var(--text-body)', lineHeight: 1.7 }}
               >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                Got a full-stack cert from the University of Denver, landed a job at a marketing agency in Fort Collins, and never really left the Front Range. The work grew into a tech lead role — and so did life outside of it.
               </p>
               <p
                 className="font-body text-[color:var(--color-muted)]"
                 style={{ fontSize: 'var(--text-body)', lineHeight: 1.7 }}
               >
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                Agency work taught me how to scope a project, talk to clients, and ship under pressure. It also showed me what happens when you strip out the overhead. The work is still one developer, one problem. Everything else is noise.
               </p>
             </div>
 
@@ -192,6 +211,122 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      {/* Stack philosophy section */}
+      <section className="w-full border-b border-[color:var(--color-border)]">
+        <div
+          style={{
+            maxWidth: 'var(--container-max)',
+            marginInline: 'auto',
+            padding: 'var(--space-7) var(--space-7) var(--space-9)',
+          }}
+        >
+          {/* Eyebrow */}
+          <span
+            className="block font-display uppercase text-[color:var(--color-muted)]"
+            style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em', marginBottom: 'var(--space-7)' }}
+          >
+            Stack
+          </span>
+
+          {/* Two-column layout */}
+          <div
+            className="flex flex-col min-[900px]:grid"
+            style={{ gridTemplateColumns: '1fr 1fr', gap: 'var(--space-8)' }}
+          >
+            <p
+              className="font-display uppercase text-[color:var(--color-fg)]"
+              style={{ fontSize: 'var(--text-h1)', letterSpacing: '-0.01em', lineHeight: 1.1 }}
+            >
+              Tools follow the problem.
+            </p>
+            <div className="flex flex-col" style={{ gap: 'var(--space-5)', justifyContent: 'center' }}>
+              <p
+                className="font-body text-[color:var(--color-muted)]"
+                style={{ fontSize: 'var(--text-body)', lineHeight: 1.7 }}
+              >
+                React is home base — Next.js, Node, Tailwind. Mature, well-documented, and easy to hand off.
+              </p>
+              <p
+                className="font-body text-[color:var(--color-muted)]"
+                style={{ fontSize: 'var(--text-body)', lineHeight: 1.7 }}
+              >
+                But defaults aren&apos;t doctrine. WordPress when the client needs to own their content. Python when the problem is data. The stack fits the work, not the other way around.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Approach section */}
+      <section className="w-full border-b border-[color:var(--color-border)]">
+        <div
+          style={{
+            maxWidth: 'var(--container-max)',
+            marginInline: 'auto',
+            padding: 'var(--space-7) var(--space-7) var(--space-9)',
+          }}
+        >
+          {/* Eyebrow */}
+          <span
+            className="block font-display uppercase text-[color:var(--color-muted)]"
+            style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em', marginBottom: 'var(--space-5)' }}
+          >
+            Approach
+          </span>
+
+          {/* Heading */}
+          <h2
+            className="font-display uppercase text-[color:var(--color-fg)]"
+            style={{ fontSize: 'var(--text-display)', letterSpacing: '-0.02em', lineHeight: 1, marginBottom: 'var(--space-7)' }}
+          >
+            How I Work
+          </h2>
+
+          {/* Three-column grid */}
+          <div
+            className="grid grid-cols-1 md:grid-cols-3"
+            style={{ borderTop: '1px solid var(--color-border)' }}
+          >
+            {APPROACH.map((item, i) => (
+              <div
+                key={item.index}
+                className={`flex flex-col${i > 0 ? ' border-t md:border-t-0 md:border-l border-[color:var(--color-border)]' : ''}`}
+                style={{ padding: 'var(--space-5)' }}
+              >
+                {/* Index */}
+                <span
+                  className="block font-display uppercase text-[color:var(--color-muted)]"
+                  style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em', marginBottom: 'var(--space-4)' }}
+                >
+                  {item.index}
+                </span>
+
+                {/* Principle */}
+                <span
+                  className="block font-display uppercase text-[color:var(--color-fg)]"
+                  style={{ fontSize: 'var(--text-h1)', letterSpacing: '-0.01em', lineHeight: 1, marginBottom: 'var(--space-4)' }}
+                >
+                  {item.title}
+                </span>
+
+                {/* Divider */}
+                <div style={{ borderTop: '1px solid var(--color-border-soft)', marginBottom: 'var(--space-4)' }} />
+
+                {/* Description */}
+                <p
+                  className="font-body text-[color:var(--color-muted)]"
+                  style={{ fontSize: 'var(--text-small)', lineHeight: 1.65 }}
+                >
+                  {item.body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <CTASection />
+      <BlogSection />
     </main>
   )
 }
