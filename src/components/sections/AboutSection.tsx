@@ -1,5 +1,7 @@
+import { getYearsExperience, toWord } from '@/lib/utils'
+
 const DETAILS = [
-  { label: 'Years Experience', value: '5' },
+  { label: 'Years Experience', value: String(getYearsExperience()) },
   { label: 'Based In',         value: 'Berthoud, CO' },
   { label: 'Specialty',        value: 'Custom Websites' },
 ]
@@ -27,7 +29,7 @@ export default function AboutSection() {
             className="font-body text-[color:var(--color-fg)]"
             style={{ fontSize: 'var(--text-h2)', lineHeight: 1.35, letterSpacing: '-0.01em', maxWidth: '720px' }}
           >
-            Five years of professional experience building sites. Now working directly with local businesses, without the agency overhead.
+            {toWord(getYearsExperience())} years of professional experience building sites. Now working directly with local businesses, without the agency overhead.
           </p>
         </div>
 
