@@ -53,10 +53,8 @@ export function getBlogPostBySlug(slug: string): BlogPost | null {
   return null
 }
 
-export function getCaseStudy(projectSlug: string): Omit<BlogPost, 'content'> | null {
-  return (
-    getBlogPosts().find(
-      (p) => p.projectSlug === projectSlug && p.categories.includes('case-study'),
-    ) ?? null
+export function getCaseStudies(projectSlug: string): Omit<BlogPost, 'content'>[] {
+  return getBlogPosts().filter(
+    (p) => p.projectSlug === projectSlug && p.categories.includes('case-study'),
   )
 }

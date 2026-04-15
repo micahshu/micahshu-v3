@@ -10,7 +10,7 @@ import { ProjectCard } from '@/components/ui/ProjectCard'
 import Container from '@/components/layout/Container'
 import CTASection from '@/components/sections/CTASection'
 import BlogSection from '@/components/sections/BlogSection'
-import { getCaseStudy } from '@/lib/content'
+import { getCaseStudies } from '@/lib/content'
 
 function getRelatedProjects(current: Project, limit = 3): Project[] {
   return projects
@@ -37,8 +37,14 @@ export async function generateMetadata({
   const { slug } = await params
   const project = projects.find((p) => p.slug === slug)
   if (!project) return {}
+  const categoryLabel: Record<string, string> = {
+    'Full-Stack': 'Full-Stack Development',
+    'Front-End': 'Front-End Development',
+    'E-Commerce': 'E-Commerce Development',
+  }
+  const label = categoryLabel[project.category] ?? project.category
   return {
-    title: `${project.title} — Micah Shu`,
+    title: `${project.title} — ${label} | Micah Shu`,
     description: project.description,
   }
 }
@@ -54,13 +60,13 @@ export default async function ProjectPage({
   if (!project) notFound()
 
   const related = getRelatedProjects(project)
-  const caseStudy = getCaseStudy(project.slug)
+  const caseStudies = getCaseStudies(project.slug)
 
   return (
     <main id="main-content">
       {/* ── Hero ── */}
-      <section className={`w-full ${!caseStudy ? 'border-b border-[color:var(--color-border)]' : ''}`}>
-        <Container style={{ paddingTop: 'var(--space-9)', paddingBottom: caseStudy ? 0 : 'var(--space-9)' }}>
+      <section className={`w-full ${caseStudies.length === 0 ? 'border-b border-[color:var(--color-border)]' : ''}`}>
+        <Container style={{ paddingTop: 'var(--space-9)', paddingBottom: caseStudies.length > 0 ? 0 : 'var(--space-9)' }}>
 
           {/* Eyebrow */}
           <span
@@ -126,46 +132,51 @@ export default async function ProjectPage({
         </Container>
       </section>
 
-      {/* ── Case study ── */}
-      {caseStudy && (
+      {/* ── Case studies ── */}
+      {caseStudies.length > 0 && (
         <section className="w-full border-b border-[color:var(--color-border)]">
           <Container style={{ paddingBlock: 'var(--space-6)' }}>
             <span
               className="block font-display uppercase text-[color:var(--color-muted)]"
               style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em', marginBottom: 'var(--space-5)' }}
             >
-              Case Study
+              Case {caseStudies.length === 1 ? 'Study' : 'Studies'}
             </span>
-            <Link
-              href={`/blog/${caseStudy.slug}`}
-              className="group flex items-baseline justify-between no-underline"
-              style={{
-                paddingBlock: 'var(--space-5)',
-                borderTop: '1px solid var(--color-border-soft)',
-                borderBottom: '1px solid var(--color-border-soft)',
-                gap: 'var(--space-6)',
-              }}
-            >
-              <h3
-                className="font-display uppercase text-[color:var(--color-fg)] flex-1"
-                style={{ fontSize: 'var(--text-h2)', letterSpacing: '-0.01em', lineHeight: 1 }}
-              >
-                {caseStudy.title}
-              </h3>
-              <span
-                className="font-display uppercase text-[color:var(--color-muted)] shrink-0 hidden md:block"
-                style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em' }}
-              >
-                Case Study&ensp;—&ensp;
-                {new Date(caseStudy.date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
-              </span>
-              <span
-                className="shrink-0 font-body text-[color:var(--color-muted)] group-hover:text-[color:var(--color-fg)]"
-                style={{ fontSize: 'var(--text-body)', transition: 'color var(--duration-fast) var(--ease-inout)' }}
-              >
-                ↗
-              </span>
-            </Link>
+            <div style={{ borderTop: '1px solid var(--color-border-soft)' }}>
+              {caseStudies.map((study) => (
+                <Link
+                  key={study.slug}
+                  href={`/blog/${study.slug}`}
+                  className="service-row flex items-baseline justify-between no-underline"
+                  style={{
+                    paddingBlock: 'var(--space-5)',
+                    paddingInline: 'var(--space-5)',
+                    borderBottom: '1px solid var(--color-border-soft)',
+                    gap: 'var(--space-6)',
+                  }}
+                >
+                  <h3
+                    className="font-display uppercase text-[color:var(--color-fg)] flex-1"
+                    style={{ fontSize: 'var(--text-h2)', letterSpacing: '-0.01em', lineHeight: 1 }}
+                  >
+                    {study.title}
+                  </h3>
+                  <span
+                    className="service-row-label font-display uppercase text-[color:var(--color-muted)] shrink-0 hidden md:block"
+                    style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em', transition: 'color var(--duration-fast) var(--ease-inout)' }}
+                  >
+                    Case Study&ensp;—&ensp;
+                    {new Date(study.date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+                  </span>
+                  <span
+                    className="service-row-label shrink-0 font-body text-[color:var(--color-muted)]"
+                    style={{ fontSize: 'var(--text-body)', transition: 'color var(--duration-fast) var(--ease-inout)' }}
+                  >
+                    ↗
+                  </span>
+                </Link>
+              ))}
+            </div>
           </Container>
         </section>
       )}

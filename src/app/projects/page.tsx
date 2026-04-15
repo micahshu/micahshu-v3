@@ -9,7 +9,7 @@ export default function ProjectsPage() {
       <PageHero
         eyebrow="Work"
         title="Projects"
-        subtitle="Selected Website & App Work"
+        subtitle="Custom websites and web apps. Built for real businesses, not portfolios."
         noBorderBottom
       />
       <ProjectsGrid />
