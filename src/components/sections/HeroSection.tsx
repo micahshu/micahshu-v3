@@ -9,10 +9,7 @@ const HERO_LINKS = [
 
 export default function HeroSection() {
   return (
-    <section
-      className="w-full flex flex-col"
-      style={{ minHeight: '100svh' }}
-    >
+    <section className="w-full flex flex-col">
       {/* Top band: location */}
       <div
         className="flex justify-end items-center container-px animate-hero-1"
@@ -64,7 +61,6 @@ export default function HeroSection() {
             fill
             sizes="33vw"
             loading="eager"
-            hoverSrc="/images/silly_micah.webp"
             style={{ objectFit: 'cover', objectPosition: 'center top' }}
           />
         </div>

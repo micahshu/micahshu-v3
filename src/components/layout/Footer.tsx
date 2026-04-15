@@ -22,10 +22,11 @@ export default function Footer() {
     <footer
       className="w-full border-t border-[color:var(--color-border)] mt-auto"
     >
-      <div className="w-full flex flex-col-reverse md:flex-row md:items-stretch">
+      <div className="w-full flex flex-col md:flex-row md:items-stretch">
         {/* Left cell — social + copyright */}
+        {/* order-last on mobile pushes this below the nav row */}
         <div
-          className="flex items-center shrink-0 border-t md:border-t-0 md:border-r border-[color:var(--color-border)]"
+          className="order-last md:order-first flex items-center justify-center md:justify-start shrink-0 md:border-r border-[color:var(--color-border)]"
           style={{ paddingInline: 'var(--space-6)', paddingBlock: 'var(--space-5)', gap: 'var(--space-6)' }}
         >
           {/* Copyright */}
@@ -57,10 +58,24 @@ export default function Footer() {
         {/* Nav links cell */}
         <nav
           aria-label="Footer navigation"
-          className="flex items-center justify-between flex-1 border-t md:border-t-0 md:border-r border-[color:var(--color-border)]"
+          className="flex items-center justify-between flex-1 border-b md:border-b-0 md:border-r border-[color:var(--color-border)]"
           style={{ paddingInline: 'var(--space-6)', paddingBlock: 'var(--space-5)' }}
         >
-          <FooterGreeting />
+          {/* Mobile-only logo — replaces the greeting on small screens */}
+          <Link
+            href="/"
+            aria-label="Micah Shu — Home"
+            className="flex md:hidden font-display text-[length:var(--text-h2)] text-[color:var(--color-fg)] no-underline shrink-0"
+            style={{ letterSpacing: '-0.01em', lineHeight: 1 }}
+          >
+            MS
+          </Link>
+
+          {/* Desktop-only greeting */}
+          <span className="hidden md:block">
+            <FooterGreeting />
+          </span>
+
           <ul
             role="list"
             className="flex flex-wrap items-center justify-end list-none m-0 p-0"
@@ -84,9 +99,9 @@ export default function Footer() {
           </ul>
         </nav>
 
-        {/* Logo cell */}
+        {/* Logo cell — desktop only */}
         <div
-          className="flex items-center shrink-0"
+          className="hidden md:flex items-center shrink-0"
           style={{ paddingInline: 'var(--space-6)', paddingBlock: 'var(--space-5)' }}
         >
           <Link
