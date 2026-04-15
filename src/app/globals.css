@@ -230,6 +230,29 @@
   min-height: 0;
 }
 
+/* ── Service row hover indicator ── */
+.service-row {
+  position: relative;
+  overflow: hidden;
+}
+.service-row::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: var(--color-border);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-inout);
+}
+.service-row:hover::before {
+  opacity: 1;
+}
+.service-row:hover .service-row-label {
+  color: var(--color-fg);
+}
+
 /* ── FAQ hover indicator ── */
 .faq-btn::before {
   content: '';

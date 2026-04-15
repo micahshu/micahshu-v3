@@ -1,4 +1,10 @@
+import type { Metadata } from 'next'
 import PageHero from '@/components/ui/PageHero'
+
+export const metadata: Metadata = {
+  title: 'Services — Micah Shu | Web Design & Development in Fort Collins, CO',
+  description: 'Custom website design and web development for small businesses in Fort Collins and Northern Colorado. Affordable, full-stack — one developer, no handoffs.',
+}
 import CTASection from '@/components/sections/CTASection'
 import BlogSection from '@/components/sections/BlogSection'
 import ServicesSplitPanel from '@/components/sections/ServicesSplitPanel'
@@ -28,7 +34,7 @@ export default function ServicesPage() {
       <PageHero
         eyebrow="Services"
         title="What I Build"
-        subtitle="One developer. No handoffs, no overhead. Pick the engagement that fits the work."
+        subtitle="Custom websites and web apps for small businesses in Fort Collins and Northern Colorado. One developer, start to finish."
         noBorderBottom
       />
 

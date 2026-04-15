@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import PageHero from '@/components/ui/PageHero'
 import { RevealImage } from '@/components/ui/RevealImage'
@@ -6,6 +7,11 @@ import CTASection from '@/components/sections/CTASection'
 import BlogSection from '@/components/sections/BlogSection'
 import { getYearsExperience, toWord } from '@/lib/utils'
 const yearsWord = toWord(getYearsExperience())
+
+export const metadata: Metadata = {
+  title: 'About — Micah Shu | Web Developer in Fort Collins, CO',
+  description: 'Full-stack developer based in Berthoud, CO. Building custom websites and web apps for small businesses in Fort Collins and Northern Colorado. One developer, your whole project.',
+}
 
 const subtitle = (
   <>
@@ -18,18 +24,18 @@ const subtitle = (
 const APPROACH = [
   {
     index: '01',
-    title: 'Direct',
-    body: 'One developer, one point of contact. From first conversation to final deploy.',
+    title: 'Scope',
+    body: 'I ask a lot of questions up front. The goal is no surprises — for either of us.',
   },
   {
     index: '02',
-    title: 'Opinionated',
-    body: "I'll tell you what I think will work. You hired an expert, not an order-taker — expect a recommendation, not just a quote.",
+    title: 'Build',
+    body: 'You see the work in stages. Real builds, not mockups — so feedback is grounded in something real.',
   },
   {
     index: '03',
-    title: 'Iterative',
-    body: 'Work ships in stages. You see real progress early and often — not a big reveal at the end of a long build.',
+    title: 'Launch',
+    body: "I don't disappear at deploy. Handoff includes docs, credentials, and a conversation about what's next.",
   },
 ]
 
@@ -107,19 +113,25 @@ export default function AboutPage() {
                 className="font-display uppercase text-[color:var(--color-fg)] animate-hero-5"
                 style={{ fontSize: 'var(--text-display)', letterSpacing: '-0.02em', lineHeight: 1.05 }}
               >
-                Two agencies. {yearsWord} years. A family of six in Berthoud.
+                Agency trained. Freelance focused. Based in Berthoud.
               </p>
               <p
                 className="font-body text-[color:var(--color-muted)]"
                 style={{ fontSize: 'var(--text-body)', lineHeight: 1.7 }}
               >
-                Got a full-stack cert from the University of Denver, landed a job at a marketing agency in Fort Collins, and never really left the Front Range. The work grew into a tech lead role — and so did life outside of it.
+                Full-stack cert from the University of Denver. First job at a marketing agency in Fort Collins — the kind of place where you scope the project, build it, and present it yourself. That grew into a tech lead role.
               </p>
               <p
                 className="font-body text-[color:var(--color-muted)]"
                 style={{ fontSize: 'var(--text-body)', lineHeight: 1.7 }}
               >
-                Agency work taught me how to scope a project, talk to clients, and ship under pressure. It also showed me what happens when you strip out the overhead. The work is still one developer, one problem. Everything else is noise.
+                Now I freelance for small businesses across Fort Collins and Northern Colorado. Same skills, no overhead. One developer who owns the whole thing — start to finish.
+              </p>
+              <p
+                className="font-body text-[color:var(--color-muted)]"
+                style={{ fontSize: 'var(--text-body)', lineHeight: 1.7 }}
+              >
+                Outside of work, life in Berthoud is quiet — the kids are not. Father of four, which means the weekends go fast and the coffee goes faster. Small town, good neighbors, short drive to everything that matters.
               </p>
             </div>
 
@@ -248,20 +260,20 @@ export default function AboutPage() {
               className="font-display uppercase text-[color:var(--color-fg)]"
               style={{ fontSize: 'var(--text-h1)', letterSpacing: '-0.01em', lineHeight: 1.1 }}
             >
-              Tools follow the problem.
+              The stack fits the work. Not the other way around.
             </p>
             <div className="flex flex-col" style={{ gap: 'var(--space-5)', justifyContent: 'center' }}>
               <p
                 className="font-body text-[color:var(--color-muted)]"
                 style={{ fontSize: 'var(--text-body)', lineHeight: 1.7 }}
               >
-                React is home base — Next.js, Node, Tailwind. Mature, well-documented, and easy to hand off.
+                Next.js, Node, Tailwind — modern, well-documented, and easy to hand off when the project is done. Headless CMS when the client needs to own their content without owning the codebase.
               </p>
               <p
                 className="font-body text-[color:var(--color-muted)]"
                 style={{ fontSize: 'var(--text-body)', lineHeight: 1.7 }}
               >
-                But defaults aren&apos;t doctrine. WordPress when the client needs to own their content. Python when the problem is data. The stack fits the work, not the other way around.
+                WordPress when the client needs to own their content. Python when the job is data. The stack fits the project — not the other way around.
               </p>
             </div>
           </div>
@@ -282,7 +294,7 @@ export default function AboutPage() {
             className="block font-display uppercase text-[color:var(--color-muted)]"
             style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em', marginBottom: 'var(--space-5)' }}
           >
-            Approach
+            Process
           </span>
 
           {/* Heading */}

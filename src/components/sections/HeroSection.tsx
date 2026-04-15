@@ -3,7 +3,7 @@ import { RevealImage } from '@/components/ui/RevealImage'
 
 const HERO_LINKS = [
   { label: 'About',    description: 'Who I am & how I work',            href: '/about'    },
-  { label: 'Projects', description: 'Selected design & development work',    href: '/projects' },
+  { label: 'Projects', description: 'Selected websites & apps',              href: '/projects' },
   { label: 'Contact',  description: 'Open to new projects & collaborations', href: '/contact'  },
 ]
 
@@ -41,12 +41,13 @@ export default function HeroSection() {
               style={{ fontSize: 'var(--text-hero)', letterSpacing: '-0.02em', lineHeight: 0.9 }}
             >
               MICAH SHU
+              <span className="sr-only"> — Freelance Web Developer in Fort Collins, CO</span>
             </h1>
             <p
               className="font-body text-[color:var(--color-muted)]"
               style={{ fontSize: 'var(--text-small)', paddingLeft: '3px' }}
             >
-              Building websites for local businesses, without the agency overhead.
+              Websites for small businesses in Fort Collins and Northern Colorado.
             </p>
           </div>
         </div>
@@ -57,7 +58,7 @@ export default function HeroSection() {
         >
           <RevealImage
             src="/images/micah.webp"
-            alt="Micah Shu"
+            alt="Micah Shu, freelance web developer in Fort Collins, CO"
             fill
             sizes="33vw"
             loading="eager"
@@ -73,7 +74,7 @@ export default function HeroSection() {
       >
         <RevealImage
           src="/images/micah.webp"
-          alt="Micah Shu"
+          alt="Micah Shu, freelance web developer in Fort Collins, CO"
           fill
           sizes="100vw"
           style={{ objectFit: 'cover', objectPosition: 'center top' }}

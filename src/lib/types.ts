@@ -14,6 +14,12 @@ export interface ServiceFAQ {
   a: string
 }
 
+export interface ServicePricingOption {
+  label: string
+  price: string
+  detail?: string
+}
+
 export interface Service {
   name: string
   slug: string
@@ -24,6 +30,7 @@ export interface Service {
   includes: string[]
   idealFor: string[]
   startingAt: string
+  pricingOptions?: ServicePricingOption[]
   faqs: ServiceFAQ[]
   relatedTags: string[]
   relatedCategory?: string
@@ -52,6 +59,7 @@ export interface AlaCarteService {
   hook: string
   description: string
   includes: string[]
+  idealFor: string[]
   faqs: ServiceFAQ[]
   parentSlugs: string[]
 }

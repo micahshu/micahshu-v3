@@ -147,33 +147,69 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
           </div>
         </section>
 
-        {/* ── Includes ── */}
+        {/* ── Includes + Who It's For ── */}
         <section className="w-full border-b border-[color:var(--color-border)] animate-hero-5">
-          <div style={{ maxWidth: 'var(--container-max)', marginInline: 'auto', padding: 'var(--space-7)' }}>
-            <span
-              className="block font-display uppercase text-[color:var(--color-muted)]"
-              style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em', marginBottom: 'var(--space-3)' }}
+          <div
+            className="grid grid-cols-1 md:grid-cols-2"
+            style={{ maxWidth: 'var(--container-max)', marginInline: 'auto' }}
+          >
+            <div
+              className="flex flex-col md:border-r border-[color:var(--color-border)]"
+              style={{ padding: 'var(--space-7)' }}
             >
-              Deliverables
-            </span>
-            <h2
-              className="font-display uppercase text-[color:var(--color-fg)]"
-              style={{ fontSize: 'var(--text-h1)', letterSpacing: '-0.01em', lineHeight: 1, marginBottom: 'var(--space-6)' }}
+              <span
+                className="block font-display uppercase text-[color:var(--color-muted)]"
+                style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em', marginBottom: 'var(--space-3)' }}
+              >
+                Deliverables
+              </span>
+              <h2
+                className="font-display uppercase text-[color:var(--color-fg)]"
+                style={{ fontSize: 'var(--text-h1)', letterSpacing: '-0.01em', lineHeight: 1, marginBottom: 'var(--space-6)' }}
+              >
+                What's Included
+              </h2>
+              <ul className="flex flex-col list-none m-0 p-0" style={{ gap: 'var(--space-3)' }}>
+                {alacarte.includes.map((item, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start font-body text-[color:var(--color-fg)]"
+                    style={{ fontSize: 'var(--text-body)', lineHeight: 1.5, borderTop: '1px solid var(--color-border-soft)', paddingTop: 'var(--space-3)' }}
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div
+              className="flex flex-col border-t md:border-t-0 border-[color:var(--color-border)]"
+              style={{ padding: 'var(--space-7)' }}
             >
-              What's Included
-            </h2>
-            <ul className="flex flex-col list-none m-0 p-0" style={{ gap: 'var(--space-3)', maxWidth: '560px' }}>
-              {alacarte.includes.map((item, i) => (
-                <li
-                  key={i}
-                  className="flex items-start font-body text-[color:var(--color-fg)]"
-                  style={{ fontSize: 'var(--text-body)', lineHeight: 1.5, gap: 'var(--space-3)', borderTop: '1px solid var(--color-border-soft)', paddingTop: 'var(--space-3)' }}
-                >
-                  <span className="text-[color:var(--color-accent)] shrink-0" style={{ marginTop: '2px' }}>—</span>
-                  {item}
-                </li>
-              ))}
-            </ul>
+              <span
+                className="block font-display uppercase text-[color:var(--color-muted)]"
+                style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em', marginBottom: 'var(--space-3)' }}
+              >
+                Fit
+              </span>
+              <h2
+                className="font-display uppercase text-[color:var(--color-fg)]"
+                style={{ fontSize: 'var(--text-h1)', letterSpacing: '-0.01em', lineHeight: 1, marginBottom: 'var(--space-6)' }}
+              >
+                Who It's For
+              </h2>
+              <ul className="flex flex-col list-none m-0 p-0" style={{ gap: 'var(--space-3)' }}>
+                {alacarte.idealFor.map((item, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start font-body text-[color:var(--color-fg)]"
+                    style={{ fontSize: 'var(--text-body)', lineHeight: 1.5, borderTop: '1px solid var(--color-border-soft)', paddingTop: 'var(--space-3)' }}
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </section>
 
@@ -374,9 +410,8 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                 <li
                   key={i}
                   className="flex items-start font-body text-[color:var(--color-fg)]"
-                  style={{ fontSize: 'var(--text-body)', lineHeight: 1.5, gap: 'var(--space-3)', borderTop: '1px solid var(--color-border-soft)', paddingTop: 'var(--space-3)' }}
+                  style={{ fontSize: 'var(--text-body)', lineHeight: 1.5, borderTop: '1px solid var(--color-border-soft)', paddingTop: 'var(--space-3)' }}
                 >
-                  <span className="text-[color:var(--color-accent)] shrink-0" style={{ marginTop: '2px' }}>—</span>
                   {item}
                 </li>
               ))}
@@ -404,9 +439,8 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                 <li
                   key={i}
                   className="flex items-start font-body text-[color:var(--color-fg)]"
-                  style={{ fontSize: 'var(--text-body)', lineHeight: 1.5, gap: 'var(--space-3)', borderTop: '1px solid var(--color-border-soft)', paddingTop: 'var(--space-3)' }}
+                  style={{ fontSize: 'var(--text-body)', lineHeight: 1.5, borderTop: '1px solid var(--color-border-soft)', paddingTop: 'var(--space-3)' }}
                 >
-                  <span className="text-[color:var(--color-accent)] shrink-0" style={{ marginTop: '2px' }}>—</span>
                   {item}
                 </li>
               ))}
@@ -435,20 +469,53 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
               Every project is scoped individually. The starting price reflects a typical engagement — final cost depends on scope, complexity, and timeline.
             </p>
           </div>
-          <div className="flex flex-col items-start md:items-end shrink-0" style={{ gap: 'var(--space-2)' }}>
-            <span
-              className="font-display uppercase text-[color:var(--color-muted)]"
-              style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em' }}
-            >
-              Starting At
-            </span>
-            <span
-              className="font-display uppercase text-[color:var(--color-fg)]"
-              style={{ fontSize: 'var(--text-display)', letterSpacing: '-0.02em', lineHeight: 1 }}
-            >
-              {service.startingAt}
-            </span>
-          </div>
+          {service.pricingOptions ? (
+            <div className="flex items-end shrink-0" style={{ gap: 'var(--space-5)' }}>
+              {service.pricingOptions.map((option, i) => (
+                <div
+                  key={option.label}
+                  className={`flex flex-col items-start md:items-end${i > 0 ? ' border-l border-[color:var(--color-border)]' : ''}`}
+                  style={{ gap: 'var(--space-2)', ...(i > 0 ? { paddingLeft: 'var(--space-6)' } : {}) }}
+                >
+                  <span
+                    className="font-display uppercase text-[color:var(--color-muted)]"
+                    style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em' }}
+                  >
+                    {option.label}
+                  </span>
+                  <span
+                    className="font-display uppercase text-[color:var(--color-fg)]"
+                    style={{ fontSize: 'var(--text-display)', letterSpacing: '-0.02em', lineHeight: 1 }}
+                  >
+                    {option.price}
+                  </span>
+                  {option.detail && (
+                    <span
+                      className="font-body text-[color:var(--color-muted)]"
+                      style={{ fontSize: 'var(--text-small)' }}
+                    >
+                      {option.detail}
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col items-start md:items-end shrink-0" style={{ gap: 'var(--space-2)' }}>
+              <span
+                className="font-display uppercase text-[color:var(--color-muted)]"
+                style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em' }}
+              >
+                Starting At
+              </span>
+              <span
+                className="font-display uppercase text-[color:var(--color-fg)]"
+                style={{ fontSize: 'var(--text-display)', letterSpacing: '-0.02em', lineHeight: 1 }}
+              >
+                {service.startingAt}
+              </span>
+            </div>
+          )}
         </div>
       </section>
 

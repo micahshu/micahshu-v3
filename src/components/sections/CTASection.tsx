@@ -41,7 +41,7 @@ export default function CTASection() {
             className="font-body"
             style={{ fontSize: 'var(--text-body)', maxWidth: '480px', color: 'var(--color-bg)', opacity: 0.65 }}
           >
-            Open to new clients. Let's talk about what you're building.
+            Open to new projects. Tell me what you're working on.
           </p>
           <Link
             href="/contact"
