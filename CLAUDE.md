@@ -2,7 +2,7 @@
 
 # micahshu-v3
 
-Personal portfolio for Micah Shu. Minimalist editorial aesthetic — black, white, one warm accent, light/dark mode. See `SITE_BRIEF.md` for site content intent and `DESIGN_SYSTEM.md` for the full token spec.
+Personal portfolio for Micah Shu. Minimalist editorial aesthetic — black and white, light/dark mode. See `SITE_BRIEF.md` for site content intent and `DESIGN_SYSTEM.md` for the full token spec.
 
 ---
 
@@ -105,8 +105,6 @@ All tokens defined in `@theme` in `globals.css`. **Never use raw hex values in c
 --color-ink:        #0A0A0A
 --color-paper:      #F2F2F0
 --color-paper-pure: #FFFFFF
---color-accent:     #C8A96E   /* sparingly — max 2–3 uses per page */
---color-accent-dim: #E8D9BC
 --color-muted:      #6B6B6B
 --color-subtle:     #D0D0CE
 --color-surface:    #E8E8E6
@@ -140,7 +138,6 @@ Implement dark mode via:
 
 - Always use `--color-bg`, `--color-fg`, `--color-border` in components — never `--color-ink` or `--color-paper` directly.
 - Hover state is always inverted: `bg-fg text-bg` (works in both modes automatically).
-- `accent` appears max 2–3 times per page. Never on body text or large fills.
 - `paper-pure` is for cards/inputs that need to pop off `--color-bg` in light mode — in dark mode this becomes a slightly elevated surface color.
 
 ### Typography
@@ -245,7 +242,7 @@ Every section follows this structure:
 
 **Nav Link (desktop):** `font-display text-h4 uppercase tracking-wide text-fg`. Active and hover state use a sliding `bg-fg` indicator that animates via `transform: translateX()` + `width` behind the link text. Hovered/active link text inverts to `color-bg`. No accent color in the nav — inversion only. The indicator is absolutely positioned so animating `width` is acceptable (no layout reflow).
 
-**Nav Link (mobile):** Full-width block links, `font-display text-h3 uppercase`, active: `color-accent`.
+**Nav Link (mobile):** Full-width block links, `font-display text-h3 uppercase`, active: `color-fg`.
 
 **RevealImage** — `src/components/ui/RevealImage.tsx`. Wraps Next.js `<Image>` with greyscale-by-default, color-on-hover behaviour. Use this instead of `<Image>` for all content images (project thumbnails, blog covers, about photo). Do not use it for UI/chrome images (icons, logos). Accepts all standard `<Image>` props plus:
 - `groupHover` — greyscale lifts on parent `.group` hover instead of self hover
@@ -269,7 +266,7 @@ Use **Tailwind utility classes** for all static structural and layout concerns:
 
 Use **inline `style` props** only for:
 - CSS design token values where the arbitrary-value syntax would be unwieldy (`padding: 'var(--space-5)'`, `gap: 'var(--space-6)'`)
-- State-driven dynamic values that change at runtime (`color: isActive ? 'var(--color-accent)' : 'var(--color-fg)'`)
+- State-driven dynamic values that change at runtime (`color: isActive ? 'var(--color-fg)' : 'var(--color-muted)'`)
 - CSS properties with no Tailwind equivalent (`transform`, multi-property `transition` strings)
 
 **Never add utility-style rules to `globals.css`** that Tailwind handles natively (responsive breakpoints, display, flex, etc.). `globals.css` is only for: `@theme` tokens, semantic color mode overrides, the `.theme-switching` transition block, and component class blocks like `.btn`.
@@ -391,6 +388,40 @@ Light/dark toggle is a core site feature. The implementation has three parts tha
 
 ---
 
+## Email & Contact Form
+
+### Stack
+| Concern | Service |
+|---|---|
+| Transactional email (contact form) | Resend (`resend` npm package) |
+| Inbound email routing | Cloudflare Email Routing → Gmail |
+| Outbound custom-domain sending | Zoho Mail SMTP → Gmail "Send mail as" |
+| Contact form API route | `src/app/api/contact/route.ts` |
+
+### Resend
+- Used exclusively for the contact form (`POST /api/contact`)
+- `from` address is `me@micahshu.com` (domain verified in Resend dashboard)
+- `replyTo` is set to the form submitter's email
+- API key stored in `RESEND_API_KEY` env var — never hardcoded
+- Resend requires SPF include `amazonses.com` (it sends via Amazon SES)
+
+### DNS (Cloudflare)
+- **MX records** point to Cloudflare — do not change, required for Email Routing
+- **SPF** — single merged `TXT` record on root domain combining all three services:
+  ```
+  v=spf1 include:_spf.mx.cloudflare.net include:amazonses.com include:zoho.com ~all
+  ```
+- **DKIM** — two separate `TXT` entries: one from Resend, one from Zoho
+
+### Env vars
+Required in both `.env.local` and Vercel project settings:
+```
+RESEND_API_KEY      = <from Resend dashboard>
+CONTACT_TO_EMAIL    = micah.shumaker@gmail.com
+```
+
+---
+
 ## What NOT To Do
 
 - Do not create `tailwind.config.ts` or `tailwind.config.js`
@@ -399,7 +430,6 @@ Light/dark toggle is a core site feature. The implementation has three parts tha
 - Do not use Bebas Neue on mixed-case text
 - Do not use raw hex values in component files — always reference `--color-*` tokens
 - Do not use Tailwind's default spacing scale (`mt-3`, `py-5`, etc.) for layout spacing — use `--space-*` tokens
-- Do not use `--color-accent` for body text or large background fills
 - Do not use `--color-ink` / `--color-paper` directly in components — use semantic tokens (`--color-fg`, `--color-bg`) so dark mode works automatically
 - Do not use the `pages/` router — App Router only
 - Do not access `params` or `searchParams` synchronously

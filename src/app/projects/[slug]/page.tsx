@@ -173,7 +173,7 @@ export default async function ProjectPage({
       {/* ── Image + related projects ── */}
       {(project.image || related.length > 0) && (
         <section
-          className={`w-full border-b border-[color:var(--color-border)] flex flex-col ${project.image && related.length > 0 ? 'md:grid' : ''}`}
+          className={`w-full border-b border-[color:var(--color-border)] flex flex-col ${project.image && related.length > 0 ? 'lg:grid' : ''}`}
           style={
             project.image && related.length > 0
               ? { gridTemplateColumns: '1fr min(340px, 35%)' }
@@ -183,12 +183,12 @@ export default async function ProjectPage({
           {/* Browser mockup */}
           {project.image && (
             <div
-              className={`flex flex-col${related.length > 0 ? ' border-b border-[color:var(--color-border)] md:border-b-0 md:border-r' : ''}`}
+              className={`flex flex-col${related.length > 0 ? ' border-b border-[color:var(--color-border)] lg:border-b-0 lg:border-r' : ''}`}
               style={{ padding: 'var(--space-7)' }}
             >
-              <div className="flex flex-col flex-1 border border-[color:var(--color-border)] overflow-hidden">
+              <div className="flex flex-col border border-[color:var(--color-border)] overflow-hidden">
                 <BrowserBar liveUrl={project.liveUrl} active={true} />
-                <div className="relative flex-1" style={{ minHeight: '240px' }}>
+                <div className="relative w-full aspect-[16/10]">
                   <RevealImage
                     src={project.image}
                     alt={project.title}

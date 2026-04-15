@@ -73,13 +73,14 @@ export default function AboutPage() {
           { label: 'Based in', value: 'Berthoud, CO' },
           { label: 'Status', value: 'Available' },
         ]}
+        noBorderBottom
       />
 
       {/* TODO: Rewrite majority of copy — story, stack philosophy, and approach sections */}
       {/* TODO: Update family.webp in the Story section with a new image */}
       {/* TODO: Add loading/entrance animation to the Story section (pull quote + body text stagger in) */}
       {/* Story section */}
-      <section className="w-full border-b border-[color:var(--color-border)]">
+      <section className="w-full border-t border-b border-[color:var(--color-border)] animate-hero-3">
         <div
           style={{
             maxWidth: 'var(--container-max)',
@@ -89,7 +90,7 @@ export default function AboutPage() {
         >
           {/* Eyebrow */}
           <span
-            className="block font-display uppercase text-[color:var(--color-muted)]"
+            className="block font-display uppercase text-[color:var(--color-muted)] animate-hero-4"
             style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em', marginBottom: 'var(--space-7)' }}
           >
             The Story
@@ -103,7 +104,7 @@ export default function AboutPage() {
             {/* Left: pull quote + body */}
             <div className="flex flex-col" style={{ gap: 'var(--space-6)' }}>
               <p
-                className="font-display uppercase text-[color:var(--color-fg)]"
+                className="font-display uppercase text-[color:var(--color-fg)] animate-hero-5"
                 style={{ fontSize: 'var(--text-display)', letterSpacing: '-0.02em', lineHeight: 1.05 }}
               >
                 Two agencies. {yearsWord} years. A family of six in Berthoud.
@@ -124,7 +125,7 @@ export default function AboutPage() {
 
             {/* Right: image */}
             <div
-              className="relative w-full border border-[color:var(--color-border)] overflow-hidden"
+              className="relative w-full border border-[color:var(--color-border)] overflow-hidden animate-hero-6"
               style={{ aspectRatio: '4 / 5' }}
             >
               <RevealImage

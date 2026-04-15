@@ -29,11 +29,12 @@ export default function ServicesPage() {
         eyebrow="Services"
         title="What I Build"
         subtitle="One developer. No handoffs, no overhead. Pick the engagement that fits the work."
+        noBorderBottom
       />
 
       {/* Services — split panel */}
-      <section className="w-full border-b border-[color:var(--color-border)]">
-        <div style={{ maxWidth: 'var(--container-max)', marginInline: 'auto', paddingBlock: 'var(--space-9)' }}>
+      <section className="w-full border-t border-b border-[color:var(--color-border)] animate-hero-3">
+        <div className="animate-hero-4" style={{ maxWidth: 'var(--container-max)', marginInline: 'auto', paddingBlock: 'var(--space-9)' }}>
           <ServicesSplitPanel />
         </div>
       </section>

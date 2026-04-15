@@ -83,18 +83,9 @@ export default function Header() {
         href === '/' ? pathname === '/' : pathname.startsWith(href)
       )
       if (activeIndex < 0) return
-      const el = mobileItemRefs.current[activeIndex]
-      const list = mobileListRef.current
-      if (!el || !list) return
-      const elRect = el.getBoundingClientRect()
-      const listRect = list.getBoundingClientRect()
       setMobileIndicatedIdx(activeIndex)
-      setMobileIndicator({
-        x: elRect.left - listRect.left,
-        y: elRect.top - listRect.top,
-        width: elRect.width,
-        height: elRect.height,
-      })
+      const m = measureMobileItem(activeIndex)
+      if (m) setMobileIndicator(m)
     })
   }, [menuOpen, pathname])
 
@@ -113,12 +104,17 @@ export default function Header() {
     const el = mobileItemRefs.current[index]
     const list = mobileListRef.current
     if (!el || !list) return null
+    // Use the widest item's width for all positions so only Y animates
+    const maxWidth = mobileItemRefs.current.reduce((max, ref) => {
+      if (!ref) return max
+      return Math.max(max, ref.getBoundingClientRect().width)
+    }, 0)
     const elRect = el.getBoundingClientRect()
     const listRect = list.getBoundingClientRect()
     return {
-      x: elRect.left - listRect.left,
+      x: (listRect.width - maxWidth) / 2,
       y: elRect.top - listRect.top,
-      width: elRect.width,
+      width: maxWidth,
       height: elRect.height,
     }
   }
@@ -270,8 +266,7 @@ export default function Header() {
               className="relative flex flex-col items-center list-none m-0"
               style={{ paddingBlock: 'var(--space-6)', gap: 'var(--space-2)' }}
             >
-              {/* TODO: fix the weird animation when the menu item moves */}
-              {/* Sliding indicator — sized to the link, not full-width */}
+              {/* Sliding indicator — uniform width (widest item), only Y animates */}
               {mobileIndicator !== null && (
                 <span
                   aria-hidden
