@@ -1,9 +1,13 @@
+import { TAG_ICONS } from '@/lib/data/tags'
+
 interface TagProps {
   label: string
   active?: boolean
 }
 
 export function Tag({ label, active = false }: TagProps) {
+  const Icon = TAG_ICONS[label] ?? null
+
   return (
     <span
       className={[
@@ -17,9 +21,10 @@ export function Tag({ label, active = false }: TagProps) {
         letterSpacing: '0.08em',
         paddingBlock: 'var(--space-1)',
         paddingInline: 'var(--space-2)',
-        borderRadius: 'var(--border-radius-sm)',
+        gap: 'var(--space-1)',
       }}
     >
+      {Icon && <Icon size={10} style={{ flexShrink: 0 }} />}
       {label}
     </span>
   )

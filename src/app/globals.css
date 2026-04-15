@@ -146,7 +146,7 @@
   justify-content: center;
   border-width: 1px;
   border-style: solid;
-  border-radius: var(--border-radius-md);
+  border-radius: 0;
   cursor: pointer;
   transition:
     background-color var(--duration-fast) var(--ease-inout),
@@ -205,6 +205,49 @@
   .animate-hero-2 { animation: hero-enter var(--duration-enter) var(--ease-out) 120ms both; }
   .animate-hero-3 { animation: hero-enter var(--duration-enter) var(--ease-out) 240ms both; }
   .animate-hero-4 { animation: hero-enter var(--duration-enter) var(--ease-out) 360ms both; }
+}
+
+/* ── FAQ animations ── */
+@media (prefers-reduced-motion: no-preference) {
+  .animate-faq-row {
+    animation: hero-enter var(--duration-enter) var(--ease-out) both;
+  }
+}
+
+/* ── FAQ answer slide ── */
+.faq-answer-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--duration-base) var(--ease-inout);
+}
+.faq-answer-wrapper.open {
+  grid-template-rows: 1fr;
+}
+.faq-answer-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ── FAQ hover indicator ── */
+.faq-btn::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: var(--color-border);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-inout);
+}
+.faq-btn:not([aria-expanded="true"]):hover::before {
+  opacity: 1;
+}
+.faq-btn:not([aria-expanded="true"]):hover .faq-q,
+.faq-btn:not([aria-expanded="true"]):hover .faq-icon,
+.faq-btn[aria-expanded="true"] .faq-q,
+.faq-btn[aria-expanded="true"] .faq-icon {
+  color: var(--color-fg);
 }
 
 /* ── Base styles ── */

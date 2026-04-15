@@ -135,7 +135,6 @@ export default function ProjectsSection() {
                         width: 'var(--space-7)',
                         height: 'var(--space-7)',
                         fontSize: 'var(--text-small)',
-                        borderRadius: 'var(--border-radius-md)',
                         background: isRowHovered ? 'var(--color-fg)' : 'transparent',
                         color: isRowHovered ? 'var(--color-bg)' : 'var(--color-fg)',
                         transition:

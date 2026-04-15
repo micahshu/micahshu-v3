@@ -54,7 +54,6 @@ export default function CTASection() {
               padding: 'var(--space-2) var(--space-4)',
               fontSize: 'var(--text-small)',
               border: '1px solid var(--color-bg)',
-              borderRadius: 'var(--border-radius-md)',
               background: hovered ? 'transparent' : 'var(--color-bg)',
               color: hovered ? 'var(--color-bg)' : 'var(--color-fg)',
               transition:

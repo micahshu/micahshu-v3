@@ -9,6 +9,7 @@ interface ProjectCardProps {
   featured?: boolean
   layout?: 'horizontal' | 'vertical'
   imageFirst?: boolean
+  maxTags?: number
 }
 
 export function ProjectCard({
@@ -16,7 +17,10 @@ export function ProjectCard({
   featured = false,
   layout = 'horizontal',
   imageFirst = true,
+  maxTags,
 }: ProjectCardProps) {
+  const visibleTags = maxTags ? project.tags.slice(0, maxTags) : project.tags
+  const hiddenCount = maxTags ? Math.max(0, project.tags.length - maxTags) : 0
   const isVertical = layout === 'vertical'
   const showImageFirst = !isVertical || imageFirst
 
@@ -24,15 +28,20 @@ export function ProjectCard({
     ? imageFirst
       ? 'border-b border-[color:var(--color-border-soft)] group-hover:border-[color:var(--color-border)]'
       : 'border-t border-[color:var(--color-border-soft)] group-hover:border-[color:var(--color-border)]'
-    : 'border-r border-[color:var(--color-border-soft)] group-hover:border-[color:var(--color-border)]'
+    : 'border-b md:border-b-0 md:border-r border-[color:var(--color-border-soft)] group-hover:border-[color:var(--color-border)]'
 
   const browserBar = <BrowserBar liveUrl={project.liveUrl} />
 
+  const imageWidthClass = isVertical ? 'w-full' : 'md:w-1/2'
+  const imageVisibilityClass = 'hidden md:flex'
+  const sizes = isVertical
+    ? '(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw'
+    : '(min-width: 768px) 50vw, 100vw'
+
   const imageBlock = project.image ? (
     <div
-      className={`flex flex-col shrink-0 ${imageBorderClass}`}
+      className={`flex-col shrink-0 ${imageVisibilityClass} ${imageWidthClass} ${imageBorderClass}`}
       style={{
-        width: isVertical ? '100%' : '50%',
         aspectRatio: '16/10',
         transition: 'border-color var(--duration-fast) var(--ease-inout)',
       }}
@@ -43,8 +52,8 @@ export function ProjectCard({
           src={project.image}
           alt={project.title}
           fill
-          sizes="(min-width: 768px) 50vw, 100vw"
-          reveal
+          sizes={sizes}
+          groupHover
           style={{ objectFit: 'cover', objectPosition: 'top center' }}
         />
       </div>
@@ -83,7 +92,7 @@ export function ProjectCard({
         style={{
           fontSize: featured ? 'var(--text-body)' : 'var(--text-small)',
           lineHeight: 1.6,
-          marginTop: 'var(--space-3)',
+          marginTop: featured ? 'var(--space-4)' : 'var(--space-3)',
         }}
       >
         {project.description}
@@ -91,18 +100,18 @@ export function ProjectCard({
 
       {featured ? (
         /* Featured — tags + full-width ghost button */
-        <div className="flex flex-col mt-auto" style={{ gap: 'var(--space-4)', marginTop: 'var(--space-6)' }}>
+        <div className="flex flex-col mt-auto" style={{ gap: 'var(--space-5)', paddingTop: 'var(--space-5)' }}>
           <div className="flex items-center flex-wrap" style={{ gap: 'var(--space-2)' }}>
-            {project.tags.map((tag) => (
+            {visibleTags.map((tag) => (
               <Tag key={tag} label={tag} />
             ))}
+            {hiddenCount > 0 && <Tag label={`+${hiddenCount}`} />}
           </div>
           <span
             className="font-body flex items-center justify-center border border-[color:var(--color-border)] text-[color:var(--color-fg)] group-hover:bg-[color:var(--color-fg)] group-hover:text-[color:var(--color-bg)]"
             style={{
               fontSize: 'var(--text-body)',
               padding: 'var(--space-4)',
-              borderRadius: 'var(--border-radius-md)',
               transition: 'background-color var(--duration-fast) var(--ease-inout), color var(--duration-fast) var(--ease-inout)',
             }}
           >
@@ -116,9 +125,10 @@ export function ProjectCard({
           style={{ paddingTop: 'var(--space-4)', gap: 'var(--space-4)' }}
         >
           <div className="flex items-center flex-wrap" style={{ gap: 'var(--space-2)' }}>
-            {project.tags.map((tag) => (
+            {visibleTags.map((tag) => (
               <Tag key={tag} label={tag} />
             ))}
+            {hiddenCount > 0 && <Tag label={`+${hiddenCount}`} />}
           </div>
           <span
             className="shrink-0 font-body flex items-center justify-center border border-[color:var(--color-border)] text-[color:var(--color-fg)] group-hover:bg-[color:var(--color-fg)] group-hover:text-[color:var(--color-bg)]"
@@ -126,7 +136,6 @@ export function ProjectCard({
               width: 'var(--space-7)',
               height: 'var(--space-7)',
               fontSize: 'var(--text-small)',
-              borderRadius: 'var(--border-radius-md)',
               transition: 'background-color var(--duration-fast) var(--ease-inout), color var(--duration-fast) var(--ease-inout)',
             }}
           >
@@ -140,11 +149,7 @@ export function ProjectCard({
   return (
     <Link
       href={`/projects/${project.slug}`}
-      className="group flex no-underline bg-[color:var(--color-paper-pure)] border border-[color:var(--color-border)] hover:border-2"
-      style={{
-        flexDirection: isVertical ? 'column' : 'row',
-        transition: 'border-width var(--duration-fast) var(--ease-inout)',
-      }}
+      className={`group flex no-underline bg-[color:var(--color-paper-pure)] border border-[color:var(--color-border)] hover:[outline:1px_solid_var(--color-border)] hover:[outline-offset:-1px] ${isVertical ? 'flex-col' : 'flex-col md:flex-row'}`}
     >
       {showImageFirst ? imageBlock : contentBlock}
       {showImageFirst ? contentBlock : imageBlock}

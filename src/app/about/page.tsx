@@ -1,5 +1,7 @@
+import Link from 'next/link'
 import PageHero from '@/components/ui/PageHero'
 import { RevealImage } from '@/components/ui/RevealImage'
+import Button from '@/components/ui/Button'
 import CTASection from '@/components/sections/CTASection'
 import BlogSection from '@/components/sections/BlogSection'
 import { getYearsExperience, toWord } from '@/lib/utils'
@@ -35,28 +37,29 @@ const EXPERTISE = [
   {
     index: '01',
     title: 'Full-Stack Web Apps',
-    category: 'Development',
+    serviceHref: '/services/app-development',
   },
   {
     index: '02',
     title: 'WordPress & Headless CMS',
-    category: 'Development',
+    serviceHref: '/services/web-development',
   },
   {
     index: '03',
     title: 'Tools & Automation',
-    category: 'Development',
+    serviceHref: '/services/tooling-automation',
   },
   {
     index: '04',
     title: 'Local SEO',
-    category: 'Marketing',
+    serviceHref: '/services/local-seo',
   },
 ]
 
 export default function AboutPage() {
   return (
     <main id="main-content">
+      {/* TODO: Update both hero images (micah.webp + silly_micah.webp) with new photos */}
       <PageHero
         eyebrow="Micah Shu"
         title="Full Stack Developer"
@@ -72,6 +75,9 @@ export default function AboutPage() {
         ]}
       />
 
+      {/* TODO: Rewrite majority of copy — story, stack philosophy, and approach sections */}
+      {/* TODO: Update family.webp in the Story section with a new image */}
+      {/* TODO: Add loading/entrance animation to the Story section (pull quote + body text stagger in) */}
       {/* Story section */}
       <section className="w-full border-b border-[color:var(--color-border)]">
         <div
@@ -132,6 +138,7 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* TODO: Add links to /services from each EXPERTISE row (the ↗ arrows should navigate to the relevant service) */}
       {/* Expertise section */}
       <section className="w-full border-b border-[color:var(--color-border)]">
         <div
@@ -162,13 +169,16 @@ export default function AboutPage() {
             {EXPERTISE.map((item, i) => (
               <div
                 key={item.index}
-                className={`group flex items-center hover:border-[color:var(--color-border)] border-b border-[color:var(--color-border-soft)]${i === 0 ? ' border-t' : ''}`}
+                className={`group relative flex items-center border-b border-[color:var(--color-border-soft)] hover:border-[color:var(--color-border)] hover:bg-[color:var(--color-surface)]${i === 0 ? ' border-t' : ''}`}
                 style={{
                   paddingBlock: 'var(--space-4)',
                   gap: 'var(--space-4)',
-                  transition: 'border-color var(--duration-fast) var(--ease-inout)',
+                  transition: 'background-color var(--duration-fast) var(--ease-inout), border-color var(--duration-fast) var(--ease-inout)',
                 }}
               >
+                {/* Full-row link */}
+                <Link href={item.serviceHref} className="absolute inset-0" aria-label={`View ${item.title} services`} />
+
                 {/* Index */}
                 <span
                   className="font-display shrink-0 text-[color:var(--color-muted)]"
@@ -185,22 +195,13 @@ export default function AboutPage() {
                   {item.title}
                 </span>
 
-                {/* Category — desktop only */}
+                {/* Arrow indicator */}
                 <span
-                  className="hidden min-[1000px]:block font-display uppercase text-[color:var(--color-muted)] shrink-0"
-                  style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em' }}
-                >
-                  {item.category}
-                </span>
-
-                {/* Arrow */}
-                <span
-                  className="shrink-0 flex items-center justify-center border border-[color:var(--color-border)] group-hover:bg-[color:var(--color-fg)] group-hover:text-[color:var(--color-bg)]"
+                  className="shrink-0 pointer-events-none flex items-center justify-center border border-[color:var(--color-border)] text-[color:var(--color-fg)] group-hover:bg-[color:var(--color-fg)] group-hover:text-[color:var(--color-bg)]"
                   style={{
                     width: 'var(--space-7)',
                     height: 'var(--space-7)',
                     fontSize: 'var(--text-small)',
-                    borderRadius: 'var(--border-radius-md)',
                     transition: 'background-color var(--duration-fast) var(--ease-inout), color var(--duration-fast) var(--ease-inout)',
                   }}
                 >
@@ -209,8 +210,17 @@ export default function AboutPage() {
               </div>
             ))}
           </div>
+
+          {/* Bottom CTA */}
+          <div className="flex justify-start" style={{ marginTop: 'var(--space-5)' }}>
+            <Link href="/projects">
+              <Button variant="ghost" size="sm">See all projects ↗</Button>
+            </Link>
+          </div>
+
         </div>
       </section>
+      {/* TODO: Rethink section borders for visual interest — consider alternating fills, accent rules, or varied border weights */}
       {/* Stack philosophy section */}
       <section className="w-full border-b border-[color:var(--color-border)]">
         <div

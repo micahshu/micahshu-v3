@@ -8,8 +8,9 @@ import ThemeToggle from '@/components/ui/ThemeToggle'
 const NAV_LINKS = [
   { href: '/',         label: 'Home' },
   { href: '/about',    label: 'About' },
-  { href: '/projects', label: 'Projects' },
   { href: '/services', label: 'Services' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/blog',     label: 'Blog' },
   { href: '/contact',  label: 'Contact' },
 ]
 
@@ -159,7 +160,6 @@ export default function Header() {
           background: 'var(--color-fg)',
           color: 'var(--color-bg)',
           border: '1px solid var(--color-border)',
-          borderRadius: 'var(--border-radius-md)',
           textDecoration: 'none',
           transform: 'translateY(-200%)',
           transition: 'transform var(--duration-fast) var(--ease-out)',
@@ -270,6 +270,7 @@ export default function Header() {
               className="relative flex flex-col items-center list-none m-0"
               style={{ paddingBlock: 'var(--space-6)', gap: 'var(--space-2)' }}
             >
+              {/* TODO: fix the weird animation when the menu item moves */}
               {/* Sliding indicator — sized to the link, not full-width */}
               {mobileIndicator !== null && (
                 <span
@@ -282,7 +283,6 @@ export default function Header() {
                     height: mobileIndicator.height,
                     transform: `translate(${mobileIndicator.x}px, ${mobileIndicator.y}px)`,
                     transition: `transform var(--duration-slow) var(--ease-inout)`,
-                    borderRadius: 'var(--border-radius-md)',
                     zIndex: 0,
                     pointerEvents: 'none',
                   }}
@@ -396,7 +396,6 @@ function NavRail({ pathname }: { pathname: string }) {
               width: indicator.width,
               transform: `translateX(${indicator.x}px)`,
               transition: `transform var(--duration-slow) var(--ease-inout), width var(--duration-slow) var(--ease-inout)`,
-              borderRadius: 'var(--border-radius-md)',
             }}
           />
         )}

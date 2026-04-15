@@ -4,7 +4,8 @@ slug: hello-world
 date: '2026-04-11'
 excerpt: The first post on this site. A quick introduction to what this space is for.
 categories:
-  - General
+  - case-study
+projectSlug: portfolio-v2
 ---
 
 This is the first post. More to come.

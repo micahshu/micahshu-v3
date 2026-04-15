@@ -60,7 +60,6 @@ export default function ThemeToggle() {
         padding: 3,
         background: 'var(--color-bg)',
         border: '1px solid var(--color-border)',
-        borderRadius: 'var(--border-radius-md)',
         cursor: 'pointer',
         flexShrink: 0,
         // Reset button defaults
@@ -75,7 +74,6 @@ export default function ThemeToggle() {
           width: 16,
           height: 16,
           background: 'var(--color-fg)',
-          borderRadius: 'var(--border-radius-sm)',
           // 40px track - 3px*2 padding - 16px slider = 18px travel
           transform: isDark ? 'translateX(18px)' : 'translateX(0)',
           transition: `transform 400ms var(--ease-inout)`,

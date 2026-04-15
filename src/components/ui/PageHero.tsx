@@ -16,7 +16,7 @@ interface PageHeroProps {
 export default function PageHero({ eyebrow, title, subtitle, image, meta }: PageHeroProps) {
   return (
     <section
-      className="w-full border-b border-[color:var(--color-border)] grid grid-cols-1 md:grid-cols-[1fr_min(28vw,320px)]"
+      className={`w-full border-b border-[color:var(--color-border)] grid grid-cols-1 ${image ? 'md:grid-cols-[1fr_min(28vw,320px)]' : ''}`}
     >
 
       {/* Title — col 1, row 1 on desktop */}

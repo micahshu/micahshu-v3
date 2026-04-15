@@ -5,7 +5,7 @@ export default function BlogSection() {
   const posts = getBlogPosts().slice(0, 3)
 
   return (
-    <section className="w-full border-t border-b border-[color:var(--color-border)]">
+    <section className="w-full">
       <div
         className="container-px section-py"
         style={{ maxWidth: 'var(--container-max)', marginInline: 'auto' }}

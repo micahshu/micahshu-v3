@@ -15,7 +15,7 @@ export default function HeroSection() {
     >
       {/* Top band: location */}
       <div
-        className="flex justify-end items-center border-b border-[color:var(--color-border)] container-px animate-hero-1"
+        className="flex justify-end items-center container-px animate-hero-1"
         style={{
           paddingTop: 'var(--space-4)',
           paddingBottom: 'var(--space-4)',

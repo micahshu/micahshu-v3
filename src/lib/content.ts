@@ -23,6 +23,7 @@ export function getBlogPosts(): Omit<BlogPost, 'content'>[] {
         date: data.date ?? '',
         excerpt: data.excerpt ?? '',
         categories: data.categories ?? [],
+        ...(data.projectSlug ? { projectSlug: data.projectSlug } : {}),
       }
     })
     .sort((a, b) => (a.date < b.date ? 1 : -1))
@@ -44,9 +45,18 @@ export function getBlogPostBySlug(slug: string): BlogPost | null {
         excerpt: data.excerpt ?? '',
         content,
         categories: data.categories ?? [],
+        ...(data.projectSlug ? { projectSlug: data.projectSlug } : {}),
       }
     }
   }
 
   return null
+}
+
+export function getCaseStudy(projectSlug: string): Omit<BlogPost, 'content'> | null {
+  return (
+    getBlogPosts().find(
+      (p) => p.projectSlug === projectSlug && p.categories.includes('case-study'),
+    ) ?? null
+  )
 }

@@ -51,7 +51,7 @@ export function RevealImage({ hoverSrc, groupHover, reveal, ...props }: Props) {
       className={[
         'grayscale',
         hoverClass,
-        'transition-[filter] duration-[150ms] ease-in-out',
+        'transition-[filter] duration-[400ms] ease-in-out',
         props.className ?? '',
       ].join(' ')}
     />
