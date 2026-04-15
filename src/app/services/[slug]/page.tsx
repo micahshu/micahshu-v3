@@ -34,12 +34,12 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
       <main id="main-content">
 
         {/* ── Hero ── */}
-        <section className="w-full border-b border-[color:var(--color-border)]">
+        <section className="w-full">
           <div style={{ maxWidth: 'var(--container-max)', marginInline: 'auto' }}>
 
             {/* Back link */}
             <div
-              className="border-b border-[color:var(--color-border-soft)]"
+              className="border-b border-[color:var(--color-border-soft)] animate-hero-1"
               style={{ paddingBlock: 'var(--space-3)', paddingInline: 'var(--space-7)' }}
             >
               <Link
@@ -56,7 +56,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
               className="flex flex-col md:flex-row md:items-end justify-between"
               style={{ padding: 'var(--space-7) var(--space-7) var(--space-9)', gap: 'var(--space-7)' }}
             >
-              <div className="flex flex-col" style={{ gap: 'var(--space-4)' }}>
+              <div className="flex flex-col animate-hero-2" style={{ gap: 'var(--space-4)' }}>
                 <span
                   className="font-display uppercase text-[color:var(--color-muted)]"
                   style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em' }}
@@ -78,7 +78,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
               </div>
 
               {/* Price + CTA */}
-              <div className="flex flex-col items-start md:items-end shrink-0" style={{ gap: 'var(--space-4)' }}>
+              <div className="flex flex-col items-start md:items-end shrink-0 animate-hero-3" style={{ gap: 'var(--space-4)' }}>
                 <div className="flex flex-col items-start md:items-end" style={{ gap: 'var(--space-1)' }}>
                   <span
                     className="font-display uppercase text-[color:var(--color-muted)]"
@@ -114,13 +114,13 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
         </section>
 
         {/* ── Description ── */}
-        <section className="w-full border-b border-[color:var(--color-border)]">
+        <section className="w-full border-t border-b border-[color:var(--color-border)] animate-hero-3">
           <div
             className="flex flex-col md:flex-row"
             style={{ maxWidth: 'var(--container-max)', marginInline: 'auto' }}
           >
             <div
-              className="shrink-0 md:border-r border-[color:var(--color-border)]"
+              className="shrink-0 md:border-r border-[color:var(--color-border)] animate-hero-4"
               style={{ width: '280px', padding: 'var(--space-7)' }}
             >
               <span
@@ -136,7 +136,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                 What It Is
               </h2>
             </div>
-            <div className="flex-1" style={{ padding: 'var(--space-7)' }}>
+            <div className="flex-1 animate-hero-5" style={{ padding: 'var(--space-7)' }}>
               <p
                 className="font-body text-[color:var(--color-muted)]"
                 style={{ fontSize: 'var(--text-body)', lineHeight: 1.75, maxWidth: 'var(--container-prose)' }}
@@ -148,7 +148,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
         </section>
 
         {/* ── Includes ── */}
-        <section className="w-full border-b border-[color:var(--color-border)]">
+        <section className="w-full border-b border-[color:var(--color-border)] animate-hero-5">
           <div style={{ maxWidth: 'var(--container-max)', marginInline: 'auto', padding: 'var(--space-7)' }}>
             <span
               className="block font-display uppercase text-[color:var(--color-muted)]"
@@ -221,12 +221,12 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
     <main id="main-content">
 
       {/* ── Hero ── */}
-      <section className="w-full border-b border-[color:var(--color-border)]">
+      <section className="w-full">
         <div style={{ maxWidth: 'var(--container-max)', marginInline: 'auto' }}>
 
           {/* Back link */}
           <div
-            className="border-b border-[color:var(--color-border-soft)]"
+            className="border-b border-[color:var(--color-border-soft)] animate-hero-1"
             style={{ paddingBlock: 'var(--space-3)', paddingInline: 'var(--space-7)' }}
           >
             <Link
@@ -243,7 +243,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
             className="flex flex-col md:flex-row md:items-end justify-between"
             style={{ padding: 'var(--space-7) var(--space-7) var(--space-9)', gap: 'var(--space-7)' }}
           >
-            <div className="flex flex-col" style={{ gap: 'var(--space-4)' }}>
+            <div className="flex flex-col animate-hero-2" style={{ gap: 'var(--space-4)' }}>
               <span
                 className="font-display uppercase text-[color:var(--color-muted)]"
                 style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em' }}
@@ -265,7 +265,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
             </div>
 
             {/* Metadata + CTA */}
-            <div className="flex flex-col items-start md:items-end shrink-0" style={{ gap: 'var(--space-4)' }}>
+            <div className="flex flex-col items-start md:items-end shrink-0 animate-hero-3" style={{ gap: 'var(--space-4)' }}>
               <div className="flex flex-col items-start md:items-end" style={{ gap: 'var(--space-2)' }}>
                 <span
                   className="font-display uppercase text-[color:var(--color-muted)]"
@@ -307,13 +307,13 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
       </section>
 
       {/* ── Overview ── */}
-      <section className="w-full border-b border-[color:var(--color-border)]">
+      <section className="w-full border-t border-b border-[color:var(--color-border)] animate-hero-3">
         <div
           className="flex flex-col md:flex-row"
           style={{ maxWidth: 'var(--container-max)', marginInline: 'auto' }}
         >
           <div
-            className="shrink-0 md:border-r border-[color:var(--color-border)]"
+            className="shrink-0 md:border-r border-[color:var(--color-border)] animate-hero-4"
             style={{ width: '280px', padding: 'var(--space-7)' }}
           >
             <span
@@ -331,7 +331,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
           </div>
 
           <div
-            className="flex-1 flex flex-col"
+            className="flex-1 flex flex-col animate-hero-5"
             style={{ padding: 'var(--space-7)', gap: 'var(--space-5)' }}
           >
             {service.overview.map((para, i) => (
@@ -348,7 +348,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
       </section>
 
       {/* ── Includes + Who It's For ── */}
-      <section className="w-full border-b border-[color:var(--color-border)]">
+      <section className="w-full border-b border-[color:var(--color-border)] animate-hero-5">
         <div
           className="grid grid-cols-1 md:grid-cols-2"
           style={{ maxWidth: 'var(--container-max)', marginInline: 'auto' }}

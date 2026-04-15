@@ -47,9 +47,9 @@ export default function ProjectsGrid() {
   return (
     <>
       {/* ── Filter bar ── */}
-      <section className="w-full border-b border-[color:var(--color-border)]">
+      <section className="w-full border-t border-b border-[color:var(--color-border)] animate-hero-3">
         <div
-          className="container-px"
+          className="container-px animate-hero-4"
           style={{
             maxWidth: 'var(--container-max)',
             marginInline: 'auto',
@@ -87,7 +87,7 @@ export default function ProjectsGrid() {
       </section>
 
       {/* ── Project grid ── */}
-      <section className="w-full border-b border-[color:var(--color-border)]">
+      <section className="w-full border-b border-[color:var(--color-border)] animate-hero-5">
         <div
           className="container-px section-py"
           style={{ maxWidth: 'var(--container-max)', marginInline: 'auto' }}

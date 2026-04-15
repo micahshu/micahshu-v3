@@ -17,6 +17,7 @@ const bebasNeue = Bebas_Neue({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://micahshu.com'),
   title: 'Micah Shu',
   description: 'Design engineer and developer.',
 }

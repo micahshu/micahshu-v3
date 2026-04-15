@@ -10,6 +10,7 @@ export default function ProjectsPage() {
         eyebrow="Work"
         title="Projects"
         subtitle="Selected Website & App Work"
+        noBorderBottom
       />
       <ProjectsGrid />
       <CTASection />
