@@ -227,6 +227,7 @@ No `tailwind.config.ts`. All tokens in `globals.css` under `@theme`.
 
 ## What NOT To Do
 
+<<<<<<< Updated upstream
 - No `tailwind.config.ts` or `tailwind.config.js`
 - No `box-shadow` anywhere
 - No `border-radius` on sections, grids, or layout containers
@@ -239,3 +240,95 @@ No `tailwind.config.ts`. All tokens in `globals.css` under `@theme`.
 - No animating `height`, `top`, `left`, or layout-triggering properties
 - No gradients, decorative blurs, or drop shadows
 - No external state management (Zustand, Redux, etc.) — React state only
+=======
+- Do not create `tailwind.config.ts` or `tailwind.config.js`
+- Do not use `box-shadow` anywhere
+- Do not add `border-radius` to sections, grids, or layout containers
+- Do not use Bebas Neue on mixed-case text
+- Do not use raw hex values in component files — always reference `--color-*` tokens
+- Do not use Tailwind's default spacing scale (`mt-3`, `py-5`, etc.) for layout spacing — use `--space-*` tokens
+- Do not use `--color-accent` for body text or large background fills
+- Do not use `--color-ink` / `--color-paper` directly in components — use semantic tokens (`--color-fg`, `--color-bg`) so dark mode works automatically
+- Do not use the `pages/` router — App Router only
+- Do not access `params` or `searchParams` synchronously
+- Do not animate `width` on layout elements — exception: absolutely-positioned UI indicators where no reflow occurs
+- Do not animate `height`, `top`, `left`, or any property that triggers layout
+- Do not add gradients, decorative blurs, or drop shadows — this includes blur effects on decorative UI chrome elements like the browser mockup dots
+- Do not introduce external state management (Zustand, Redux, etc.) — React state only
+
+---
+
+## TODO
+
+### Content
+- [ ] Write real copy for all pages (homepage hero, about, services)
+- [ ] Swap about page photo(s) with final images
+- [ ] Update all project entries in `src/lib/data/projects.ts` — titles, descriptions, tags, images, live URLs
+- [ ] Add any new projects (see Adding a Project below)
+- [ ] Write and publish blog posts in `src/content/blog/`
+- [ ] Fill in real service copy in `src/lib/data/services.ts` (replace all `PLACEHOLDER_*` values)
+- [ ] Fill in real à la carte service copy in `src/lib/data/alacarte.ts`
+
+### Images
+- [ ] Replace all placeholder/screenshot images in `/public/images/` with final project screenshots
+- [ ] Add final about/headshot photo
+- [ ] Ensure all images are `.webp` where possible
+
+### SEO & Launch
+- [ ] Add unique `<title>` and `<meta description>` to every page via Next.js `metadata` exports
+- [ ] Add Open Graph image (`/public/og-image.png`) and wire up `og:image` metadata
+- [ ] Verify `sitemap.xml` is generated (or add `src/app/sitemap.ts`)
+- [ ] Verify `robots.txt` is present (`src/app/robots.ts` or `/public/robots.txt`)
+- [ ] Submit sitemap to Google Search Console
+- [ ] Set up and verify Google Business Profile
+- [ ] Add Google Analytics or Plausible tracking
+
+---
+
+## Content Workflows
+
+### Adding a Project
+
+Edit `src/lib/data/projects.ts` — add an entry to the `projects` array:
+
+```ts
+{
+  title: 'Project Name',
+  slug: 'project-slug',           // URL: /projects/project-slug
+  category: 'Full-Stack',         // Full-Stack | Front-End | E-Commerce
+  description: '...',
+  tags: ['Next.js', 'React'],
+  featured: true,                 // Shows on homepage — max 4 at a time
+  liveUrl: 'https://...',         // optional
+  image: '/images/filename.webp', // optional — place in /public/images/
+}
+```
+
+### Adding a Blog Post
+
+Create `src/content/blog/[slug].md`:
+
+```md
+---
+title: Post Title
+slug: post-slug
+date: 'YYYY-MM-DD'
+excerpt: One-sentence summary shown in listings.
+categories:
+  - case-study        # or: process, engineering, design
+projectSlug: project-slug   # optional — links post to a project
+---
+
+Post body in Markdown.
+```
+
+No code changes needed — `getBlogPosts()` picks it up automatically.
+
+### Adding or Editing a Service
+
+Edit `src/lib/data/services.ts`. Key fields: `name`, `slug`, `hook`, `timeframe`, `startingAt`, `description`, `overview` (string[]), `includes` (string[]), `idealFor` (string[]), `faqs` ({ q, a }[]), `relatedTags`, `relatedCategory`.
+
+### Adding a Nav Item
+
+Edit the `NAV_LINKS` array at the top of `src/components/layout/Header.tsx`. Desktop indicator and mobile menu update automatically.
+>>>>>>> Stashed changes
