@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { getYearsExperience, toWord } from '@/lib/utils'
+import { getYearsExperience } from '@/lib/utils'
 
 const STATS = [
   { label: 'Years Experience', value: String(getYearsExperience()) },
@@ -25,12 +25,12 @@ export default function AboutSection() {
           >
             About
           </span>
-          <p
+          <h2
             className="font-body text-[color:var(--color-fg)]"
             style={{ fontSize: 'var(--text-h2)', lineHeight: 1.35, letterSpacing: '-0.01em', maxWidth: '720px' }}
           >
-            {toWord(getYearsExperience())} years of professional experience building sites. Now working directly with local businesses, without the agency overhead.
-          </p>
+            Five years at a marketing agency — now I work directly with the businesses.
+          </h2>
         </div>
 
         {/* Stats strip */}

@@ -18,8 +18,15 @@ const bebasNeue = Bebas_Neue({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://micahshu.com'),
-  title: 'Micah Shu',
-  description: 'Design engineer and developer.',
+  title: {
+    default: 'Micah Shu — Web Developer in Fort Collins, CO',
+    template: '%s — Micah Shu',
+  },
+  description: 'Freelance web developer in Fort Collins and Northern Colorado.',
+  openGraph: {
+    siteName: 'Micah Shu',
+    type: 'website',
+  },
 }
 
 export default function RootLayout({
