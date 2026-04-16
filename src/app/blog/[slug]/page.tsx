@@ -57,8 +57,8 @@ const mdComponents: Components = {
   a: ({ href, children }) => (
     <a
       href={href}
-      className="text-[color:var(--color-fg)] underline underline-offset-2 hover:text-[color:var(--color-muted)]"
-      style={{ transition: 'color var(--duration-fast) var(--ease-inout)' }}
+      className="text-black decoration-black underline underline-offset-2 hover:opacity-70 dark:text-white dark:decoration-white"
+      style={{ transition: 'opacity var(--duration-fast) var(--ease-inout)' }}
     >
       {children}
     </a>

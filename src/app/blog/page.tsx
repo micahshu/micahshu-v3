@@ -1,4 +1,12 @@
+import type { Metadata } from 'next'
 import PageHero from '@/components/ui/PageHero'
+
+export const metadata: Metadata = {
+  title: 'Blog — Micah Shu | Web Development',
+  description: 'Case studies, process breakdowns, and engineering notes from a freelance web developer in Northern Colorado.',
+}
+
+
 import BlogList from '@/components/sections/BlogList'
 import CTASection from '@/components/sections/CTASection'
 import { getBlogPosts } from '@/lib/content'

@@ -6,6 +6,7 @@ import {
   SiNextdotjs,
   SiReact,
   SiPython,
+  SiExpress,
 } from 'react-icons/si'
 
 export const TAG_ICONS: Record<string, IconType | null> = {
@@ -17,4 +18,5 @@ export const TAG_ICONS: Record<string, IconType | null> = {
   'WooCommerce': SiWordpress,
   'Headless':    null,
   'Python':      SiPython,
+  'Express':     SiExpress,
 }
