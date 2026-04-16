@@ -1,0 +1,42 @@
+# Micah Shu
+
+> Freelance web developer and designer based in Berthoud, CO. Specializing in custom websites, full-stack web applications, Shopify storefronts, and workflow automation for small businesses and founders.
+
+## About
+
+Micah Shu is a developer and designer offering custom-built websites, web applications, and digital tooling. Work spans the full stack — Next.js and TypeScript on the front end, Node/serverless and PostgreSQL on the back, and WordPress when it's the right fit. Based in Northern Colorado, primarily serving small businesses and local clients in the Fort Collins area.
+
+## Services
+
+- [Web Development](/services/web-development): Custom marketing sites and content-driven builds. Starting at $3,000. Includes custom design, mobile-responsive layout, on-page SEO, contact form, Core Web Vitals optimization, and 30 days post-launch support.
+- [App Development](/services/app-development): Full-stack web applications — database, auth, APIs, admin tooling. Starting at $8,000. Built on Next.js, TypeScript, and PostgreSQL.
+- [Ecommerce](/services/ecommerce): Custom Shopify storefronts and headless builds. Starting at $4,000. Includes store setup, custom theme, checkout optimization, and on-page SEO.
+- [Tooling & Automation](/services/tooling-automation): Internal tools, scripts, and automated workflows. Starting at $1,500. API integrations, scheduled tasks, error logging, and documentation.
+- [Local SEO](/services/local-seo): Google Business Profile, local citation building, on-page SEO, and structured data for local businesses. Starting at $500/mo.
+- [Maintenance](/services/maintenance): Monthly retainer for WordPress sites — updates, security monitoring, uptime, and up to 2 hrs/mo of content edits. Starting at $200/mo. Includes hosting.
+
+## Projects
+
+- [Zero Gravity Marketing](/projects/zgm-rebuild): Full migration of a 150+ page WordPress site to a headless Next.js architecture. Tags: Headless, Next.js, React, Tailwind, WordPress.
+- [Mancini Beverage](/projects/mancini-beverage): Custom WordPress site for an alcohol beverage distributor with a custom age verification gate. Tags: PHP, WordPress.
+- [React Landing Page](/projects/react-landing-page): Conceptual landing page with full-screen menu interaction and animated section transitions. Tags: React, Tailwind.
+- [Maintenance Dashboard](/projects/maintenance-dashboard): Internal tool managing automated maintenance for 50+ WordPress sites — WP CLI updates, Sucuri scans, Ghost Inspector tests, Slack/Asana alerting. Tags: Next.js, Express, Tailwind, WordPress.
+- [Portfolio v2](/projects/portfolio-v2): Custom WordPress portfolio on the Timber framework. Twig templates, AlpineJS filtering. Tags: PHP, Tailwind, WordPress.
+- [Portfolio v1](/projects/portfolio-v1): First Next.js portfolio. Light/dark mode, clean layout. Tags: Next.js, React, Tailwind.
+- [stlpropertypros.com](/projects/stlpropertypros-com): WordPress site for a St. Louis construction company. Portfolio section and lead-gen layout. Tags: PHP, WordPress.
+- [SEO Reporting Tool](/projects/seo-reporting-tool): Internal keyword ranking tracker with scheduled reports and multi-site support. Tags: Next.js, React, Tailwind, Python.
+- [petreefs.com](/projects/petreefs): Single-page WooCommerce storefront for a specialty reef product. Tags: PHP, WooCommerce, WordPress.
+
+## Blog
+
+- [ZGM Rebuild](/blog/zgm-rebuild): Case study on migrating a 150+ page WordPress site to headless Next.js.
+- [Mancini Beverage](/blog/mancini-beverage): Project writeup for the Mancini Beverage website build.
+- [React Landing Page](/blog/react-landing-page): Behind the scenes on the React/Framer Motion landing page concept.
+- [App Router Patterns](/blog/app-router-patterns): Engineering post on Next.js App Router patterns.
+- [Design Tokens & Editorial](/blog/design-tokens-editorial): Design post on using design tokens for an editorial aesthetic.
+
+## Contact
+
+- Contact form: [/contact](/contact)
+- Email: me@micahshu.com
+- Location: Berthoud, CO (serving Fort Collins and Northern Colorado)
