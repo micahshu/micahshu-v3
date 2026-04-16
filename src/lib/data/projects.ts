@@ -1,6 +1,5 @@
 import type { Project } from '@/lib/types'
 
-// TODO: update all project info (titles, descriptions, tags, images, liveUrls, categories)
 export const projects: Project[] = [
   {
     title: 'Portfolio v2',
@@ -8,7 +7,7 @@ export const projects: Project[] = [
     featured: true,
     category: 'Full-Stack',
     description:
-      'Built using WordPress and the Timber framework, this portfolio site leverages modern development practices by incorporating AlpineJS for interactive functionality and Tailwind CSS for utility-first styling. The project architecture separates concerns through Timber\'s Twig templating system, while AlpineJS handles dynamic features like the project filtering system without the overhead of larger JavaScript frameworks.',
+      'Custom WordPress portfolio built on the Timber framework. No page builder — Twig templates, AlpineJS filtering, Tailwind for styles.',
     tags: ['PHP', 'Tailwind', 'WordPress'],
     image: '/images/portfolioV2.webp',
   },
@@ -18,7 +17,7 @@ export const projects: Project[] = [
     featured: true,
     category: 'Full-Stack',
     description:
-      'A full-scale migration of a 150+ page WordPress site — including 1,000+ blog posts — to a headless Next.js architecture. Decoupled the CMS from the front end to gain full control over performance, design, and the rendering pipeline.',
+      'Full migration of a 150+ page WordPress site to a headless Next.js architecture. Decoupled the CMS from the front end for full control over performance and the rendering pipeline.',
     tags: ['Headless', 'Next.js', 'React', 'Tailwind', 'WordPress'],
     liveUrl: 'https://zgmrebuild.wpenginepowered.com/',
     image: '/images/zerogravitymarketing.png',
@@ -29,7 +28,7 @@ export const projects: Project[] = [
     featured: true,
     category: 'Full-Stack',
     description:
-      'My first professional portfolio site built using Next.js. This project features a dynamic light/dark mode theme system, allowing visitors to toggle their preferred viewing experience. While the design has some rough edges, it represents my first deep dive into modern framework web development and stands as a testament to learning through building.',
+      'First portfolio built in Next.js. Light/dark mode, clean layout, first real dive into modern framework development.',
     tags: ['Next.js', 'React', 'Tailwind'],
     liveUrl: 'https://micah-shu-micahshus-projects.vercel.app/',
     image: '/images/portfolioV1.png',
@@ -40,16 +39,17 @@ export const projects: Project[] = [
     featured: true,
     category: 'Front-End',
     description:
-      'A custom WordPress website built with Divi Builder, featuring responsive design and streamlined user experience. The site showcases the client\'s construction portfolio while optimizing lead generation through strategic layout and clear calls-to-action.',
+      'WordPress site for a St. Louis construction company. Portfolio section and lead-gen layout built with Divi.',
     tags: ['PHP', 'WordPress'],
     liveUrl: 'https://stlpropertypros.com',
+    image: '/images/stlpropertypros.com_.webp',
   },
   {
     title: 'React Landing Page',
     slug: 'react-landing-page',
     category: 'Front-End',
     description:
-      'A landing page built using React, Tailwind CSS, and Framer Motion. Features a full-screen menu interaction element. Showcases responsive, interactive UI with modern tools while keeping performance and user experience in mind.',
+      'Conceptual landing page built with React and Framer Motion. Full-screen menu interaction and animated section transitions.',
     tags: ['React', 'Tailwind'],
     liveUrl: 'https://bloom-final-micahshus-projects.vercel.app/',
   },
@@ -58,15 +58,15 @@ export const projects: Project[] = [
     slug: 'seo-reporting-tool',
     category: 'Full-Stack',
     description:
-      'A tool that lets you find and track the rankings of website keywords. Store keywords and run scheduled reports for multiple websites with key information about how your site is currently ranking.',
-    tags: ['Next.js', 'React', 'Tailwind'],
+      'Internal tool for tracking keyword rankings across multiple sites. Scheduled reports, stored keywords, multi-site support.',
+    tags: ['Next.js', 'React', 'Tailwind', 'Python'],
   },
   {
     title: 'petreefs.com',
     slug: 'petreefs',
     category: 'E-Commerce',
     description:
-      'A custom landing page built with WordPress, combining Divi\'s design features with WooCommerce\'s shopping capabilities. The single-page design guides visitors through product offerings while maintaining a clean, engaging layout.',
+      'Single-page WooCommerce storefront for a specialty reef product. Divi build with product showcase and integrated checkout.',
     tags: ['PHP', 'WooCommerce', 'WordPress'],
     liveUrl: 'https://petreefs.com/',
   },

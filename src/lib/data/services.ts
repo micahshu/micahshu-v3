@@ -236,7 +236,7 @@ export const services: Service[] = [
     hook: 'For local businesses that need to show up when customers in their area are searching.',
     timeframe: 'Ongoing',
     startingAt: '$500/mo',
-    description: 'Google Business Profile setup, local citation building, on-page optimization, and structured data — so customers in your area find you first.',
+    description: 'Google Business Profile, local citations, on-page SEO, and structured data — so nearby customers find you first.',
     overview: [
       'Most local businesses have two problems: their Google Business Profile is incomplete, and their website doesn\'t have the signals Google needs to connect them with nearby customers. Both are fixable.',
       'Local SEO is a long game, not a one-time fix. The work compounds — citations build authority, on-page optimizations improve rankings, and a well-maintained GBP drives map pack visibility. The first 90 days establish the foundation. After that, consistent maintenance keeps you ahead of competitors who aren\'t doing it at all.',

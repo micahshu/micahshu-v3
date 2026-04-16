@@ -76,7 +76,7 @@ export default function AboutPage() {
           hoverSrc: '/images/silly_micah.webp',
         }}
         meta={[
-          { label: 'Based in', value: 'Berthoud, CO' },
+          { label: 'Serving', value: 'Northern Colorado' },
           { label: 'Status', value: 'Available' },
         ]}
         noBorderBottom
