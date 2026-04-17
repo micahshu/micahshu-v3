@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+import JsonLd from '@/components/JsonLd'
+import { buildContactPageSchema } from '@/lib/schema'
 import PageHero from '@/components/ui/PageHero'
 import ContactForm from '@/components/sections/ContactForm'
 
@@ -23,6 +25,7 @@ const INFO = [
 export default function ContactPage() {
   return (
     <main id="main-content">
+      <JsonLd schema={buildContactPageSchema()} />
       <PageHero
         eyebrow="Contact"
         title="Start a Project"

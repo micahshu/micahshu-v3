@@ -3,6 +3,7 @@ import path from 'path'
 import matter from 'gray-matter'
 import { unified } from 'unified'
 import remarkParse from 'remark-parse'
+import remarkGfm from 'remark-gfm'
 import remarkRehype from 'remark-rehype'
 import rehypePrettyCode from 'rehype-pretty-code'
 import type { Options as PrettyCodeOptions } from 'rehype-pretty-code'
@@ -23,6 +24,7 @@ const prettyCodeOptions: PrettyCodeOptions = {
 async function renderMarkdown(content: string) {
   const processor = unified()
     .use(remarkParse)
+    .use(remarkGfm)
     .use(remarkRehype)
     .use(rehypePrettyCode, prettyCodeOptions)
 
@@ -64,7 +66,7 @@ async function renderMarkdown(content: string) {
       ),
       p: ({ children, ...props }) => (
         <p
-          className="font-body text-[color:var(--color-fg)]"
+          className="font-body text-[color:var(--color-muted)]"
           style={{ fontSize: 'var(--text-body)', lineHeight: 1.75, marginBottom: 'var(--space-5)' }}
           {...props}
         >
@@ -79,7 +81,7 @@ async function renderMarkdown(content: string) {
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-solid no-underline inline-block"
-              style={{ marginBottom: 'var(--space-5)' }}
+              style={{ padding: '14px 20px', fontSize: 'var(--text-body)', marginBottom: 'var(--space-5)' }}
               {...props}
             >
               {children}
@@ -142,10 +144,10 @@ async function renderMarkdown(content: string) {
         </div>
       ),
       thead: ({ children, ...props }) => (
-        <thead className="border-b border-[color:var(--color-border)]" {...props}>{children}</thead>
+        <thead {...props}>{children}</thead>
       ),
       tbody: ({ children, ...props }) => (
-        <tbody {...props}>{children}</tbody>
+        <tbody className="border-t border-[color:var(--color-border)]" {...props}>{children}</tbody>
       ),
       tr: ({ children, ...props }) => (
         <tr className="border-b border-[color:var(--color-border-soft)]" {...props}>{children}</tr>
@@ -161,8 +163,8 @@ async function renderMarkdown(content: string) {
       ),
       td: ({ children, ...props }) => (
         <td
-          className="text-[color:var(--color-fg)]"
-          style={{ paddingBlock: 'var(--space-2)', paddingRight: 'var(--space-6)' }}
+          className="text-[color:var(--color-muted)] align-top"
+          style={{ paddingBlock: 'var(--space-3)', paddingRight: 'var(--space-7)' }}
           {...props}
         >
           {children}

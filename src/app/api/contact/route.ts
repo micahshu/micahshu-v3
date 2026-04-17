@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
     : 'New contact form submission'
 
   const { error } = await resend.emails.send({
-    from: 'Contact Form <onboarding@resend.dev>',
+    from: 'Contact Form <me@micahshu.com>',
     to: TO_EMAIL,
     replyTo: email.trim(),
     subject: `[micahshu.com] ${subjectLine}`,

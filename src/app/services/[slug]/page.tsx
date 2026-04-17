@@ -1,5 +1,7 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import JsonLd from '@/components/JsonLd'
+import { buildServiceSchema, buildAlaCarteSchema, buildFAQSchema, buildBreadcrumbSchema } from '@/lib/schema'
 import CTASection from '@/components/sections/CTASection'
 import ServiceFAQ from '@/components/sections/ServiceFAQ'
 import BlogSection from '@/components/sections/BlogSection'
@@ -52,8 +54,16 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
   // ── À La Carte detail ──────────────────────────────────────────────────────
   const alacarte = alaCarteServices.find((s) => s.slug === slug)
   if (alacarte) {
+    const alacarteCrumbs = [
+      { name: 'Home', href: '/' },
+      { name: 'Services', href: '/services' },
+      { name: alacarte.name, href: `/services/${alacarte.slug}` },
+    ]
     return (
       <main id="main-content">
+        <JsonLd schema={buildAlaCarteSchema(alacarte)} />
+        <JsonLd schema={buildFAQSchema(alacarte.faqs)} />
+        <JsonLd schema={buildBreadcrumbSchema(alacarteCrumbs)} />
 
         {/* ── Hero ── */}
         <section className="w-full">
@@ -299,8 +309,17 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
     a.parentSlugs.includes(service.slug)
   )
 
+  const serviceCrumbs = [
+    { name: 'Home', href: '/' },
+    { name: 'Services', href: '/services' },
+    { name: service.name, href: `/services/${service.slug}` },
+  ]
+
   return (
     <main id="main-content">
+      <JsonLd schema={buildServiceSchema(service)} />
+      <JsonLd schema={buildFAQSchema(service.faqs)} />
+      <JsonLd schema={buildBreadcrumbSchema(serviceCrumbs)} />
 
       {/* ── Hero ── */}
       <section className="w-full">

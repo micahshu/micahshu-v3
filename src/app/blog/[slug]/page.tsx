@@ -9,6 +9,8 @@ import { jsx, jsxs, Fragment } from 'react/jsx-runtime'
 import type { Root } from 'hast'
 import { getBlogPosts, getBlogPostBySlug } from '@/lib/content'
 import Link from 'next/link'
+import JsonLd from '@/components/JsonLd'
+import { buildArticleSchema, buildBreadcrumbSchema } from '@/lib/schema'
 import AuthorBio from '@/components/ui/AuthorBio'
 
 const prettyCodeOptions: PrettyCodeOptions = {
@@ -201,8 +203,16 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   const content = await renderMarkdown(post.content)
 
+  const blogCrumbs = [
+    { name: 'Home', href: '/' },
+    { name: 'Blog', href: '/blog' },
+    { name: post.title, href: `/blog/${post.slug}` },
+  ]
+
   return (
     <main id="main-content">
+      <JsonLd schema={buildArticleSchema(post)} />
+      <JsonLd schema={buildBreadcrumbSchema(blogCrumbs)} />
 
       {/* ── Hero ── */}
       <section className="w-full border-b border-[color:var(--color-border)]">

@@ -59,7 +59,6 @@ Full-stack developer with 5 years of experience. Started in WordPress and agency
 | **CMS** | WordPress, Headless CMS, WooCommerce, Shopify |
 | **Tooling** | GitHub Actions, Docker, Vercel, WP CLI, Git |
 
----
 
 ## Education
 

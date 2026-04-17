@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import JsonLd from '@/components/JsonLd'
+import { buildPersonSchema } from '@/lib/schema'
 import PageHero from '@/components/ui/PageHero'
 import { RevealImage } from '@/components/ui/RevealImage'
 import Button from '@/components/ui/Button'
@@ -72,26 +74,22 @@ const EXPERTISE = [
 export default function AboutPage() {
   return (
     <main id="main-content">
-      {/* TODO: Update both hero images (micah.webp + silly_micah.webp) with new photos */}
+      <JsonLd schema={buildPersonSchema()} />
       <PageHero
         eyebrow="Micah Shu"
         title="Full Stack Developer"
         subtitle={subtitle}
         image={{
-          src: '/images/micah.webp',
+          src: '/images/hazel-me.webp',
           alt: 'Micah Shu',
-          hoverSrc: '/images/silly_micah.webp',
+          
         }}
         meta={[
-          { label: 'Serving', value: 'Northern Colorado' },
-          { label: 'Status', value: 'Available' },
+          { label: 'Pictured', value: 'My newest web dev intern ↗' },
         ]}
         noBorderBottom
       />
 
-      {/* TODO: Rewrite majority of copy — story, stack philosophy, and approach sections */}
-      {/* TODO: Update family.webp in the Story section with a new image */}
-      {/* TODO: Add loading/entrance animation to the Story section (pull quote + body text stagger in) */}
       {/* Story section */}
       <section className="w-full border-t border-b border-[color:var(--color-border)] animate-hero-3">
         <div
@@ -141,7 +139,7 @@ export default function AboutPage() {
                 Outside of work, life in Berthoud is quiet — the kids are not. Father of four, which means the weekends go fast and the coffee goes faster. Small town, good neighbors, short drive to everything that matters.
               </p>
               <div>
-                <Link href="/about/resume">
+                <Link href="/resume">
                   <Button variant="ghost" size="sm">View Resume</Button>
                 </Link>
               </div>
@@ -163,7 +161,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* TODO: Add links to /services from each EXPERTISE row (the ↗︎ arrows should navigate to the relevant service) */}
       {/* Expertise section */}
       <section className="w-full border-b border-[color:var(--color-border)]">
         <div
@@ -245,7 +242,6 @@ export default function AboutPage() {
 
         </div>
       </section>
-      {/* TODO: Rethink section borders for visual interest — consider alternating fills, accent rules, or varied border weights */}
       {/* Stack philosophy section */}
       <section className="w-full border-b border-[color:var(--color-border)]">
         <div

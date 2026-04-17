@@ -1,6 +1,8 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import JsonLd from '@/components/JsonLd'
+import { buildProjectSchema, buildBreadcrumbSchema } from '@/lib/schema'
 import { projects } from '@/lib/data/projects'
 import type { Project } from '@/lib/types'
 import { Tag } from '@/components/ui/Tag'
@@ -69,8 +71,16 @@ export default async function ProjectPage({
   const related = getRelatedProjects(project)
   const caseStudies = getCaseStudies(project.slug)
 
+  const projectCrumbs = [
+    { name: 'Home', href: '/' },
+    { name: 'Projects', href: '/projects' },
+    { name: project.title, href: `/projects/${project.slug}` },
+  ]
+
   return (
     <main id="main-content">
+      <JsonLd schema={buildProjectSchema(project)} />
+      <JsonLd schema={buildBreadcrumbSchema(projectCrumbs)} />
       {/* ── Hero ── */}
       <section className={`w-full ${caseStudies.length === 0 ? 'border-b border-[color:var(--color-border)]' : ''}`}>
         <Container style={{ paddingTop: 'var(--space-9)', paddingBottom: caseStudies.length > 0 ? 0 : 'var(--space-9)' }}>
