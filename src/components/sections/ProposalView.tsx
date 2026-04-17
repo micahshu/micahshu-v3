@@ -37,11 +37,12 @@ interface Props {
   coverImage?: string
   coverImageUrl?: string
   previewUrl?: string
+  currentSiteUrl?: string
   title?: string
   items: ProposalLineItemResolved[]
 }
 
-export default function ProposalView({ slug, clientName, date, expiresAt, coverNote, coverImage, coverImageUrl, previewUrl, title, items }: Props) {
+export default function ProposalView({ slug, clientName, date, expiresAt, coverNote, coverImage, coverImageUrl, previewUrl, currentSiteUrl, title, items }: Props) {
   const [checked, setChecked] = useState<Record<string, boolean>>(
     Object.fromEntries(items.map((item) => [item.key, item.defaultChecked]))
   )
@@ -247,10 +248,19 @@ export default function ProposalView({ slug, clientName, date, expiresAt, coverN
                       />
                     </div>
                   </div>
-                  {previewUrl && (
-                    <a href={previewUrl} target="_blank" rel="noopener noreferrer">
-                      <Button variant="solid" size="lg">View Full Preview ↗︎</Button>
-                    </a>
+                  {(previewUrl || currentSiteUrl) && (
+                    <div className="flex flex-wrap" style={{ gap: 'var(--space-3)' }}>
+                      {previewUrl && (
+                        <a href={previewUrl} target="_blank" rel="noopener noreferrer">
+                          <Button variant="solid" size="lg">View Full Preview ↗︎</Button>
+                        </a>
+                      )}
+                      {currentSiteUrl && (
+                        <a href={currentSiteUrl} target="_blank" rel="noopener noreferrer">
+                          <Button variant="ghost" size="lg">Current Site ↗︎</Button>
+                        </a>
+                      )}
+                    </div>
                   )}
                 </div>
               )}
