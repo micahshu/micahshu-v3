@@ -1,3 +1,11 @@
+export function parsePrice(priceStr: string): number {
+  return parseInt(priceStr.replace(/[$,]/g, ''), 10) || 0
+}
+
+export function formatPrice(amount: number): string {
+  return `$${amount.toLocaleString()}`
+}
+
 /** Year professional web development work began. */
 const CAREER_START_YEAR = 2021
 

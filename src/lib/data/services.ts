@@ -39,7 +39,7 @@ export const services: Service[] = [
     startingAt: '$3,000',
     pricingOptions: [
       { label: 'One-time', price: '$3,000', detail: 'Half up front' },
-      { label: 'Monthly', price: '$200/mo', detail: '12-month contract' },
+      { label: 'Monthly', price: '$250/mo', detail: '12-month contract' },
     ],
     description: 'Marketing sites, landing pages, and content-driven builds. Fast by default, easy to manage, and built to last.',
     overview: [
@@ -142,10 +142,10 @@ export const services: Service[] = [
     h1: 'Ecommerce Development in Fort Collins, CO',
     hook: 'Custom storefronts built to sell — Shopify or headless, optimized for conversion from day one.',
     timeframe: '3–6 weeks',
-    startingAt: '$4,000',
+    startingAt: '$6,000',
     pricingOptions: [
-      { label: 'One-time', price: '$4,000', detail: 'Half up front' },
-      { label: 'Monthly', price: '$300/mo', detail: '12-month contract' },
+      { label: 'One-time', price: '$6,000', detail: 'Half up front' },
+      { label: 'Monthly', price: '$500/mo', detail: '12-month contract' },
     ],
     description: 'Inventory, checkout, and product pages built around your brand — not around a stock theme.',
     overview: [
