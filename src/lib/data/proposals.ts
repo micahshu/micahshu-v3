@@ -73,7 +73,7 @@ export const proposals: Proposal[] = [
         type: 'alacarte',
         slug: 'hosting',
         id: 'hosting',
-        required: true,
+        recommended: true,
         note: 'Starts after launch. Included automatically with Maintenance — or billed separately if you prefer hosting only.',
       },
     ],
