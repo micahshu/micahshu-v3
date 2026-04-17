@@ -3,6 +3,7 @@ import { Funnel_Sans, Bebas_Neue } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import { Analytics } from '@vercel/analytics/next'
 
 const funnelSans = Funnel_Sans({
   subsets: ['latin'],
@@ -48,6 +49,7 @@ export default function RootLayout({
         <Header />
         <div style={{ flex: 1 }}>{children}</div>
         <Footer />
+        <Analytics />
       </body>
     </html>
   )
