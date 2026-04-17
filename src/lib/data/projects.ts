@@ -25,7 +25,6 @@ export const projects: Project[] = [
   {
     title: 'React Landing Page',
     slug: 'react-landing-page',
-    featured: true,
     category: 'Front-End',
     description:
       'Conceptual landing page built with React and Framer Motion. Full-screen menu interaction and animated section transitions.',
@@ -35,7 +34,6 @@ export const projects: Project[] = [
   {
     title: 'Maintenance Dashboard',
     slug: 'maintenance-dashboard',
-    featured: true,
     category: 'Full-Stack',
     description:
       'Internal tool managing automated maintenance for 50+ WordPress sites. Updates plugins and core via WP CLI, then runs Sucuri malware scans and Ghost Inspector UI tests post-update. Failures route to Slack for alerts and Asana for follow-up task creation.',
@@ -54,6 +52,7 @@ export const projects: Project[] = [
   {
     title: 'Portfolio Site v1',
     slug: 'portfolio-v1',
+    featured: true,
     category: 'Full-Stack',
     description:
       'First portfolio built in Next.js. Light/dark mode, clean layout, first real dive into modern framework development.',
@@ -64,6 +63,7 @@ export const projects: Project[] = [
   {
     title: 'stlpropertypros.com',
     slug: 'stlpropertypros-com',
+    featured: true,
     category: 'Front-End',
     description:
       'WordPress site for a St. Louis construction company. Portfolio section and lead-gen layout built with Divi.',
