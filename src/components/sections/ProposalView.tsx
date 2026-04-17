@@ -47,6 +47,7 @@ export default function ProposalView({ slug, clientName, date, expiresAt, coverN
     Object.fromEntries(items.map((item) => [item.key, item.defaultChecked]))
   )
   const [acceptStatus, setAcceptStatus] = useState<AcceptStatus>('idle')
+  const [otherRequest, setOtherRequest] = useState('')
 
   function toggle(key: string) {
     const item = items.find((i) => i.key === key)
@@ -154,6 +155,7 @@ export default function ProposalView({ slug, clientName, date, expiresAt, coverN
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           slug,
+          otherRequest: otherRequest.trim() || undefined,
           items: selectedItems.map((i) => ({
             name: i.name,
             priceDisplay: i.priceDisplay,
@@ -238,7 +240,7 @@ export default function ProposalView({ slug, clientName, date, expiresAt, coverN
               {coverImage && (
                 <div className="flex flex-col" style={{ gap: 'var(--space-4)', marginBottom: 'var(--space-2)' }}>
                   <div className="w-full overflow-hidden border border-[color:var(--color-border)]">
-                    <BrowserBar liveUrl={coverImageUrl} active={false} />
+                    <BrowserBar liveUrl={coverImageUrl} active={true} />
                     <div className="relative w-full" style={{ aspectRatio: '16/9' }}>
                       <Image
                         src={coverImage}
@@ -678,6 +680,37 @@ export default function ProposalView({ slug, clientName, date, expiresAt, coverN
               </div>
             )
           })}
+
+          {/* ── Other request ── */}
+          <div style={{ padding: 'var(--space-5) var(--space-7)' }}>
+            <div className="flex flex-col" style={{ gap: 'var(--space-3)', maxWidth: 'var(--container-prose)' }}>
+              <label
+                htmlFor="other-request"
+                className="font-display uppercase text-[color:var(--color-muted)]"
+                style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em' }}
+              >
+                Request Something Else
+              </label>
+              <textarea
+                id="other-request"
+                value={otherRequest}
+                onChange={(e) => setOtherRequest(e.target.value)}
+                placeholder="Anything not listed above — describe what you're looking for."
+                rows={3}
+                className="font-body text-[color:var(--color-fg)] w-full resize-none"
+                style={{
+                  fontSize: 'var(--text-body)',
+                  lineHeight: 1.65,
+                  background: 'transparent',
+                  border: '1px solid var(--color-border)',
+                  borderRadius: 'var(--border-radius-md)',
+                  padding: 'var(--space-4)',
+                  outline: 'none',
+                  color: 'var(--color-fg)',
+                }}
+              />
+            </div>
+          </div>
 
         </div>
       </section>

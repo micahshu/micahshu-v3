@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid request body.' }, { status: 400 })
   }
 
-  const { slug, items } = body as { slug: unknown; items: unknown }
+  const { slug, items, otherRequest } = body as { slug: unknown; items: unknown; otherRequest?: unknown }
 
   if (typeof slug !== 'string' || !Array.isArray(items)) {
     return NextResponse.json({ error: 'Invalid payload.' }, { status: 422 })
@@ -73,6 +73,9 @@ export async function POST(req: NextRequest) {
       ...itemLines,
       '',
       ...summaryLines,
+      ...(typeof otherRequest === 'string' && otherRequest.trim()
+        ? ['', 'Other request:', otherRequest.trim()]
+        : []),
     ].join('\n'),
   })
 
