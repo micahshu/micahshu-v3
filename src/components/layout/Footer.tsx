@@ -5,7 +5,7 @@ import FooterGreeting from '@/components/ui/FooterGreeting'
 
 const NAV_LINKS = [
   { href: '/about',         label: 'About' },
-  { href: '/about/resume',  label: 'Resume' },
+  { href: '/resume',        label: 'Resume' },
   { href: '/services',      label: 'Services' },
   { href: '/projects',      label: 'Projects' },
   { href: '/blog',          label: 'Blog' },
