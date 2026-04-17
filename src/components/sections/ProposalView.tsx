@@ -359,6 +359,8 @@ export default function ProposalView({ slug, clientName, date, expiresAt, coverN
                         gap: 'var(--space-6)',
                         cursor: 'pointer',
                         borderTop: '1px solid var(--color-border-soft)',
+                        opacity: isChecked ? 1 : 0.45,
+                        transition: 'opacity var(--duration-fast) var(--ease-inout)',
                       }}
                     >
                       {/* Radio indicator */}
@@ -424,19 +426,30 @@ export default function ProposalView({ slug, clientName, date, expiresAt, coverN
 
                       {/* Price */}
                       <div className="flex items-baseline shrink-0" style={{ gap: 'var(--space-1)' }}>
-                        <span
-                          className="font-display uppercase text-[color:var(--color-fg)]"
-                          style={{ fontSize: 'var(--text-h4)', letterSpacing: '-0.01em', lineHeight: 1 }}
-                        >
-                          {item.priceDisplay}
-                        </span>
-                        {item.isRecurring && item.billingCycle && (
+                        {bundledItemKeys.has(item.key) ? (
                           <span
-                            className="font-body text-[color:var(--color-muted)]"
-                            style={{ fontSize: 'var(--text-caption)' }}
+                            className="font-display uppercase text-[color:var(--color-muted)]"
+                            style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em' }}
                           >
-                            /{item.billingCycle === 'per month' ? 'mo' : item.billingCycle}
+                            Included
                           </span>
+                        ) : (
+                          <>
+                            <span
+                              className="font-display uppercase text-[color:var(--color-fg)]"
+                              style={{ fontSize: 'var(--text-h4)', letterSpacing: '-0.01em', lineHeight: 1 }}
+                            >
+                              {item.priceDisplay}
+                            </span>
+                            {item.isRecurring && item.billingCycle && (
+                              <span
+                                className="font-body text-[color:var(--color-muted)]"
+                                style={{ fontSize: 'var(--text-caption)' }}
+                              >
+                                /{item.billingCycle === 'per month' ? 'mo' : item.billingCycle}
+                              </span>
+                            )}
+                          </>
                         )}
                       </div>
                     </div>
