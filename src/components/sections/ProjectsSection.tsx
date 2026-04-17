@@ -141,7 +141,7 @@ export default function ProjectsSection() {
                           'background-color var(--duration-fast) var(--ease-inout), color var(--duration-fast) var(--ease-inout)',
                       }}
                     >
-                      ↗
+                      ↗︎
                     </span>
                   </div>
 

@@ -4,11 +4,12 @@ import { FaLinkedin } from 'react-icons/fa6'
 import FooterGreeting from '@/components/ui/FooterGreeting'
 
 const NAV_LINKS = [
-  { href: '/about',    label: 'About' },
-  { href: '/services', label: 'Services' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/blog',     label: 'Blog' },
-  { href: '/contact',  label: 'Contact' },
+  { href: '/about',         label: 'About' },
+  { href: '/about/resume',  label: 'Resume' },
+  { href: '/services',      label: 'Services' },
+  { href: '/projects',      label: 'Projects' },
+  { href: '/blog',          label: 'Blog' },
+  { href: '/contact',       label: 'Contact' },
 ]
 
 
@@ -58,28 +59,40 @@ export default function Footer() {
         {/* Nav links cell */}
         <nav
           aria-label="Footer navigation"
-          className="flex items-center justify-between flex-1 border-b md:border-b-0 md:border-r border-[color:var(--color-border)]"
+          className="flex-1 border-b md:border-b-0 md:border-r border-[color:var(--color-border)]"
           style={{ paddingInline: 'var(--space-6)', paddingBlock: 'var(--space-5)' }}
         >
-          {/* Mobile-only logo — replaces the greeting on small screens */}
-          <Link
-            href="/"
-            aria-label="Micah Shu — Home"
-            className="flex md:hidden font-display text-[length:var(--text-h2)] text-[color:var(--color-fg)] no-underline shrink-0"
-            style={{ letterSpacing: '-0.01em', lineHeight: 1 }}
-          >
-            MS
-          </Link>
-
-          {/* Desktop-only greeting */}
-          <span className="hidden md:block">
+          {/* Desktop: greeting + links inline */}
+          <div className="hidden md:flex items-center justify-between">
             <FooterGreeting />
-          </span>
+            <ul
+              role="list"
+              className="flex items-center list-none m-0 p-0"
+              style={{ gap: 'var(--space-5)' }}
+            >
+              {NAV_LINKS.map(({ href, label }) => (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className="font-display uppercase no-underline text-[color:var(--color-muted)] hover:text-[color:var(--color-fg)]"
+                    style={{
+                      fontSize: 'var(--text-label)',
+                      letterSpacing: '0.08em',
+                      transition: `color var(--duration-fast) var(--ease-inout)`,
+                    }}
+                  >
+                    {label.toUpperCase()}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
+          {/* Mobile: 2-column grid */}
           <ul
             role="list"
-            className="flex flex-wrap items-center justify-end list-none m-0 p-0"
-            style={{ gap: 'var(--space-5)' }}
+            className="md:hidden grid grid-cols-2 list-none m-0 p-0 place-items-center"
+            style={{ gap: 'var(--space-3) var(--space-6)' }}
           >
             {NAV_LINKS.map(({ href, label }) => (
               <li key={href}>

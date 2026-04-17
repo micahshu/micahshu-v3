@@ -2,7 +2,10 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { services } from '@/lib/data/services'
+import { services as allServices } from '@/lib/data/services'
+
+const services = allServices.filter((s) => !s.hidden)
+
 function MobileAccordion() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
@@ -116,7 +119,7 @@ function MobileAccordion() {
                   className="btn btn-ghost inline-flex no-underline"
                   style={{ fontSize: 'var(--text-small)', padding: '10px 16px' }}
                 >
-                  Explore ↗
+                  Explore ↗︎
                 </Link>
               </div>
               </div>
@@ -268,7 +271,7 @@ export default function ServicesSplitPanel() {
               marginTop: 'var(--space-7)',
             }}
           >
-            Explore ↗
+            Explore ↗︎
           </Link>
         </div>
       </div>

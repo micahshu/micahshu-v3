@@ -162,7 +162,7 @@ export default function BlogList({ posts, categories }: BlogListProps) {
                     className="shrink-0 flex items-center justify-center border border-[color:var(--color-border)] group-hover:bg-[color:var(--color-fg)] group-hover:text-[color:var(--color-bg)]"
                     style={arrowBox}
                   >
-                    ↗
+                    ↗︎
                   </span>
                 </div>
               </Link>
@@ -217,7 +217,7 @@ export default function BlogList({ posts, categories }: BlogListProps) {
                       className="shrink-0 flex items-center justify-center border border-[color:var(--color-border)] group-hover:bg-[color:var(--color-fg)] group-hover:text-[color:var(--color-bg)]"
                       style={arrowBox}
                     >
-                      ↗
+                      ↗︎
                     </span>
                   </div>
                 </Link>

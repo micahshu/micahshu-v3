@@ -87,7 +87,7 @@ export default function AboutSection() {
                 transition: 'opacity var(--duration-fast) var(--ease-inout)',
               }}
             >
-              ↗
+              ↗︎
             </span>
           </Link>
         </div>

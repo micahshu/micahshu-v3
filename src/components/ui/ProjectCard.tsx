@@ -139,7 +139,7 @@ export function ProjectCard({
               transition: 'background-color var(--duration-fast) var(--ease-inout), color var(--duration-fast) var(--ease-inout)',
             }}
           >
-            ↗
+            ↗︎
           </span>
         </div>
       )}

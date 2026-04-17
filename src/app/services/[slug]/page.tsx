@@ -4,23 +4,45 @@ import CTASection from '@/components/sections/CTASection'
 import ServiceFAQ from '@/components/sections/ServiceFAQ'
 import BlogSection from '@/components/sections/BlogSection'
 import { ProjectCard } from '@/components/ui/ProjectCard'
-import { services } from '@/lib/data/services'
+import { services as allServices } from '@/lib/data/services'
+
+const services = allServices.filter((s) => !s.hidden)
 import { alaCarteServices } from '@/lib/data/alacarte'
 import { projects } from '@/lib/data/projects'
 
 export function generateStaticParams() {
   return [
-    ...services.map((s) => ({ slug: s.slug })),
+    ...allServices.map((s) => ({ slug: s.slug })),
     ...alaCarteServices.map((s) => ({ slug: s.slug })),
   ]
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const service = services.find((s) => s.slug === slug)
-  if (service) return { title: `${service.name} — Micah Shu`, description: service.hook }
+  const service = allServices.find((s) => s.slug === slug)
+  if (service) return {
+    title: `${service.name} — Micah Shu`,
+    description: service.hook,
+    alternates: { canonical: `/services/${slug}` },
+    openGraph: {
+      title: `${service.name} — Micah Shu`,
+      description: service.hook,
+      url: `https://micahshu.com/services/${slug}`,
+      type: 'website',
+    },
+  }
   const alacarte = alaCarteServices.find((s) => s.slug === slug)
-  if (alacarte) return { title: `${alacarte.name} — Micah Shu`, description: alacarte.hook }
+  if (alacarte) return {
+    title: `${alacarte.name} — Micah Shu`,
+    description: alacarte.hook,
+    alternates: { canonical: `/services/${slug}` },
+    openGraph: {
+      title: `${alacarte.name} — Micah Shu`,
+      description: alacarte.hook,
+      url: `https://micahshu.com/services/${slug}`,
+      type: 'website',
+    },
+  }
   return {}
 }
 
@@ -106,7 +128,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                   className="btn btn-solid no-underline"
                   style={{ padding: '14px 20px', fontSize: 'var(--text-body)', marginTop: 'var(--space-2)' }}
                 >
-                  Get Started ↗
+                  Get Started ↗︎
                 </Link>
               </div>
             </div>
@@ -232,6 +254,30 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
           </div>
         </section>
 
+        {/* ── See Also ── */}
+        {alacarte.seeAlso && (
+          <section className="w-full border-b border-[color:var(--color-border)]">
+            <div
+              className="flex flex-col md:flex-row md:items-center justify-between"
+              style={{ maxWidth: 'var(--container-max)', marginInline: 'auto', padding: 'var(--space-6) var(--space-7)', gap: 'var(--space-5)' }}
+            >
+              <p
+                className="font-body text-[color:var(--color-muted)]"
+                style={{ fontSize: 'var(--text-body)', lineHeight: 1.5 }}
+              >
+                {alacarte.seeAlso.text}
+              </p>
+              <Link
+                href={alacarte.seeAlso.href}
+                className="btn btn-ghost no-underline shrink-0"
+                style={{ fontSize: 'var(--text-small)', padding: 'var(--space-2) var(--space-4)' }}
+              >
+                Maintenance ↗︎
+              </Link>
+            </div>
+          </section>
+        )}
+
         <CTASection />
 
         <div className="border-t border-[color:var(--color-border)]">
@@ -242,7 +288,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
   }
 
   // ── Main service detail ────────────────────────────────────────────────────
-  const service = services.find((s) => s.slug === slug)
+  const service = allServices.find((s) => s.slug === slug)
   if (!service) notFound()
 
   const relatedProjects = service.relatedCategory
@@ -335,7 +381,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                 className="btn btn-solid no-underline"
                 style={{ padding: '14px 20px', fontSize: 'var(--text-body)', marginTop: 'var(--space-2)' }}
               >
-                Start a Project ↗
+                Start a Project ↗︎
               </Link>
             </div>
           </div>
@@ -519,6 +565,85 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
         </div>
       </section>
 
+      {/* ── See Also ── */}
+      {service.seeAlso && (
+        <section className="w-full border-b border-[color:var(--color-border)]">
+          <div
+            className="flex flex-col md:flex-row md:items-center justify-between"
+            style={{ maxWidth: 'var(--container-max)', marginInline: 'auto', padding: 'var(--space-6) var(--space-7)', gap: 'var(--space-5)' }}
+          >
+            <p
+              className="font-body text-[color:var(--color-muted)]"
+              style={{ fontSize: 'var(--text-body)', lineHeight: 1.5 }}
+            >
+              {service.seeAlso.text}
+            </p>
+            <Link
+              href={service.seeAlso.href}
+              className="btn btn-ghost no-underline shrink-0"
+              style={{ fontSize: 'var(--text-small)', padding: 'var(--space-2) var(--space-4)' }}
+            >
+              {service.seeAlso.label ?? 'Learn More'} ↗︎
+            </Link>
+          </div>
+        </section>
+      )}
+
+      {/* ── Sub-services ── */}
+      {service.subServices && service.subServices.length > 0 && (() => {
+        const subServiceItems = service.subServices!.map((slug) => allServices.find((s) => s.slug === slug)).filter(Boolean) as typeof allServices
+        return subServiceItems.length > 0 ? (
+          <section className="w-full border-b border-[color:var(--color-border)]">
+            <div style={{ maxWidth: 'var(--container-max)', marginInline: 'auto' }}>
+              {subServiceItems.map((sub) => (
+                <Link
+                  key={sub.slug}
+                  href={`/services/${sub.slug}`}
+                  className="flex flex-col md:flex-row md:items-center justify-between no-underline group"
+                  style={{
+                    padding: 'var(--space-6) var(--space-7)',
+                    gap: 'var(--space-5)',
+                    borderBottom: '1px solid var(--color-border-soft)',
+                    transition: 'background-color var(--duration-fast) var(--ease-inout)',
+                  }}
+                >
+                  <div className="flex flex-col" style={{ gap: 'var(--space-2)' }}>
+                    <span
+                      className="font-display uppercase text-[color:var(--color-muted)]"
+                      style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em' }}
+                    >
+                      Also Available
+                    </span>
+                    <span
+                      className="font-display uppercase text-[color:var(--color-fg)]"
+                      style={{ fontSize: 'var(--text-h2)', letterSpacing: '-0.01em', lineHeight: 1 }}
+                    >
+                      {sub.name}
+                    </span>
+                    <p
+                      className="font-body text-[color:var(--color-muted)]"
+                      style={{ fontSize: 'var(--text-small)', lineHeight: 1.5, maxWidth: '480px' }}
+                    >
+                      {sub.hook}
+                    </p>
+                  </div>
+                  <span
+                    className="font-display uppercase shrink-0 text-[color:var(--color-muted)] group-hover:text-[color:var(--color-fg)]"
+                    style={{
+                      fontSize: 'var(--text-label)',
+                      letterSpacing: '0.08em',
+                      transition: 'color var(--duration-fast) var(--ease-inout)',
+                    }}
+                  >
+                    Learn More ↗︎
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </section>
+        ) : null
+      })()}
+
       {/* ── FAQ ── */}
       <section className="w-full border-b border-[color:var(--color-border)]">
         <div style={{ maxWidth: 'var(--container-max)', marginInline: 'auto', padding: 'var(--space-7)' }}>
@@ -622,7 +747,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                 className="btn btn-ghost no-underline shrink-0"
                 style={{ fontSize: 'var(--text-small)', padding: 'var(--space-2) var(--space-4)' }}
               >
-                View All ↗
+                View All ↗︎
               </Link>
             </div>
             <div

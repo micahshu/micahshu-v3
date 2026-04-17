@@ -11,6 +11,13 @@ const yearsWord = toWord(getYearsExperience())
 export const metadata: Metadata = {
   title: 'About — Micah Shu | Web Developer in Fort Collins, CO',
   description: 'Full-stack developer based in Berthoud, CO. Building custom websites and web apps for small businesses in Fort Collins and Northern Colorado. One developer, your whole project.',
+  alternates: { canonical: '/about' },
+  openGraph: {
+    title: 'About — Micah Shu | Web Developer in Fort Collins, CO',
+    description: 'Full-stack developer based in Berthoud, CO. Building custom websites and web apps for small businesses in Fort Collins and Northern Colorado. One developer, your whole project.',
+    url: 'https://micahshu.com/about',
+    type: 'website',
+  },
 }
 
 const subtitle = (
@@ -133,6 +140,11 @@ export default function AboutPage() {
               >
                 Outside of work, life in Berthoud is quiet — the kids are not. Father of four, which means the weekends go fast and the coffee goes faster. Small town, good neighbors, short drive to everything that matters.
               </p>
+              <div>
+                <Link href="/about/resume">
+                  <Button variant="ghost" size="sm">View Resume</Button>
+                </Link>
+              </div>
             </div>
 
             {/* Right: image */}
@@ -151,7 +163,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* TODO: Add links to /services from each EXPERTISE row (the ↗ arrows should navigate to the relevant service) */}
+      {/* TODO: Add links to /services from each EXPERTISE row (the ↗︎ arrows should navigate to the relevant service) */}
       {/* Expertise section */}
       <section className="w-full border-b border-[color:var(--color-border)]">
         <div
@@ -218,7 +230,7 @@ export default function AboutPage() {
                     transition: 'background-color var(--duration-fast) var(--ease-inout), color var(--duration-fast) var(--ease-inout)',
                   }}
                 >
-                  ↗
+                  ↗︎
                 </span>
               </div>
             ))}
@@ -227,7 +239,7 @@ export default function AboutPage() {
           {/* Bottom CTA */}
           <div className="flex justify-start" style={{ marginTop: 'var(--space-5)' }}>
             <Link href="/projects">
-              <Button variant="ghost" size="sm">See all projects ↗</Button>
+              <Button variant="ghost" size="sm">See all projects</Button>
             </Link>
           </div>
 

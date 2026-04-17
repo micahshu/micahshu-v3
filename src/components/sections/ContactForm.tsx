@@ -153,7 +153,7 @@ export default function ContactForm() {
         />
       </Field>
 
-      <div className="flex items-center justify-between" style={{ gap: 'var(--space-4)' }}>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between" style={{ gap: 'var(--space-4)' }}>
         <Button
           type="submit"
           variant="solid"
@@ -161,7 +161,7 @@ export default function ContactForm() {
           disabled={status === 'submitting'}
           style={{ opacity: status === 'submitting' ? 0.6 : 1 }}
         >
-          {status === 'submitting' ? 'Sending…' : 'Send Message ↗'}
+          {status === 'submitting' ? 'Sending…' : 'Send Message ↗︎'}
         </Button>
 
         {status === 'error' && (

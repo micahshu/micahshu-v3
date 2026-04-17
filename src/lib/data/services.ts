@@ -70,7 +70,7 @@ export const services: Service[] = [
       },
       {
         q: 'Do you handle hosting?',
-        a: 'I\'ll help you set it up and point you to the right options, but you own the hosting account. No lock-in, no recurring fees to me.',
+        a: 'In most cases, yes — hosting is included as part of an ongoing maintenance plan, and I take care of everything. If you\'d prefer to own your own hosting account, or ever want to hand the site off to another developer, that\'s straightforward. Everything is set up so you\'re never locked in.',
       },
       {
         q: 'How long does it take?',
@@ -79,6 +79,7 @@ export const services: Service[] = [
     ],
     relatedTags: ['Next.js', 'React', 'TypeScript'],
     relatedCategory: 'Front-End',
+    subServices: ['wordpress-development'],
   },
   {
     name: 'App Development',
@@ -319,5 +320,60 @@ export const services: Service[] = [
       },
     ],
     relatedTags: ['WordPress'],
+    seeAlso: { text: 'Just need a place for your site to live? Hosting is available on its own — $25/mo.', href: '/services/hosting' },
+  },
+  {
+    name: 'WordPress Development',
+    slug: 'wordpress-development',
+    hidden: true,
+    hook: 'For clients who need a site that\'s easy to update themselves — on the CMS everyone already knows.',
+    timeframe: '2–4 weeks',
+    startingAt: '$3,000',
+    pricingOptions: [
+      { label: 'One-time', price: '$3,000', detail: 'Half up front' },
+      { label: 'Monthly', price: '$200/mo', detail: '12-month contract' },
+    ],
+    description: 'Custom WordPress builds for small businesses — designed from scratch, not a theme install.',
+    overview: [
+      'WordPress powers roughly 40% of the web, which means your clients know how to use it, your developer pool is deep, and plugins exist for almost everything. That\'s not a reason to avoid it — it\'s a reason to build on it correctly.',
+      'Most WordPress sites are theme installs with too many plugins and no clear architecture. A custom build is different: a clean theme built around your actual content, plugins chosen deliberately, and a setup that\'s easy to manage without becoming a maintenance liability.',
+    ],
+    includes: [
+      'Custom theme built from scratch — no theme marketplace',
+      'Mobile-responsive layout across all screen sizes',
+      'Page builder or block editor setup for self-managed content',
+      'On-page SEO: titles, meta, structured data via Yoast or Rank Math',
+      'Contact form with email delivery',
+      'Performance optimization — caching, image compression, CDN guidance',
+      'Security hardening and plugin audit',
+      'Launch support and 30 days of post-launch fixes',
+    ],
+    idealFor: [
+      'Business owners who want to update their own content without a developer',
+      'Clients already familiar with WordPress who want a custom design',
+      'Organizations that need plugin ecosystem access (events, memberships, directories)',
+      'Anyone migrating from a generic theme to a purpose-built site',
+    ],
+    faqs: [
+      {
+        q: 'Why WordPress over something like Next.js?',
+        a: 'If you need to update content yourself without touching code or a separate CMS dashboard, WordPress is often the faster path. The editing experience is familiar, the plugin ecosystem is vast, and hosting is widely available. For more complex applications, a headless or Next.js setup is usually the better call.',
+      },
+      {
+        q: 'Will I be able to manage it myself after launch?',
+        a: 'Yes — that\'s the main reason to choose WordPress. I\'ll configure the editor so adding pages, updating copy, and swapping images doesn\'t require a developer.',
+      },
+      {
+        q: 'Do you handle hosting?',
+        a: 'In most cases, yes — hosting is included as part of an ongoing maintenance plan, and I take care of everything. If you\'d prefer to own your own hosting account, or want to hand the site off to another developer down the road, that\'s easy to do. Managed WordPress hosts like WP Engine or Kinsta are great options if you go that route.',
+      },
+      {
+        q: 'What about security?',
+        a: 'WordPress is a frequent target precisely because it\'s popular. A build from me includes security hardening, a vetted plugin set, and guidance on keeping things updated. A maintenance plan is available if you\'d rather not handle that yourself.',
+      },
+    ],
+    relatedTags: ['WordPress'],
+    relatedCategory: 'Front-End',
+    seeAlso: { text: 'Want someone to keep it updated and secure after launch? See the Maintenance plan.', href: '/services/maintenance', label: 'Maintenance' },
   },
 ]

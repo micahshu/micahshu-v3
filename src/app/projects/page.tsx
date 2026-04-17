@@ -4,6 +4,13 @@ import PageHero from '@/components/ui/PageHero'
 export const metadata: Metadata = {
   title: 'Projects — Micah Shu | Web Development Portfolio',
   description: 'Custom websites and web apps built for real businesses. Full-stack, front-end, and e-commerce projects by Micah Shu, freelance developer in Northern Colorado.',
+  alternates: { canonical: '/projects' },
+  openGraph: {
+    title: 'Projects — Micah Shu | Web Development Portfolio',
+    description: 'Custom websites and web apps built for real businesses. Full-stack, front-end, and e-commerce projects by Micah Shu, freelance developer in Northern Colorado.',
+    url: 'https://micahshu.com/projects',
+    type: 'website',
+  },
 }
 
 

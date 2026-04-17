@@ -34,6 +34,9 @@ export interface Service {
   faqs: ServiceFAQ[]
   relatedTags: string[]
   relatedCategory?: string
+  seeAlso?: { text: string; href: string; label?: string }
+  hidden?: boolean
+  subServices?: string[]
 }
 
 export interface BlogPost {
@@ -62,4 +65,5 @@ export interface AlaCarteService {
   idealFor: string[]
   faqs: ServiceFAQ[]
   parentSlugs: string[]
+  seeAlso?: { text: string; href: string; label?: string }
 }

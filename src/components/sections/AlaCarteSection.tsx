@@ -79,7 +79,7 @@ export default function AlaCarteSection() {
                   transition: 'color var(--duration-fast) var(--ease-inout)',
                 }}
               >
-                Learn More ↗
+                Learn More ↗︎
               </span>
             </Link>
           ))}

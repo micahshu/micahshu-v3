@@ -2,7 +2,7 @@
 
 # micahshu-v3
 
-Personal portfolio for Micah Shu. Minimalist editorial aesthetic — black and white, light/dark mode.
+Personal portfolio for Micah Shu. Minimalist editorial aesthetic — black and white, light/dark mode. Deployed to Vercel.
 
 ---
 
@@ -14,14 +14,9 @@ Personal portfolio for Micah Shu. Minimalist editorial aesthetic — black and w
 | Language | TypeScript (strict) |
 | Styling | Tailwind CSS v4 via `@tailwindcss/postcss` — **no `tailwind.config.ts`** |
 | Fonts | `next/font/google` — Funnel Sans + Bebas Neue only |
-| Content | Markdown (`.md`) flat files — blog only |
+| Content | Markdown (`.md`) flat files in `src/content/blog/` — blog only |
+| Email | Resend — transactional via `src/app/api/contact/route.ts` |
 | Deployment | Vercel |
-
----
-
-## Pages & Routes
-
-`/` `/about` `/projects` `/projects/[slug]` `/services` `/services/[slug]` `/blog` `/blog/[slug]` `/contact`
 
 ---
 
@@ -29,21 +24,69 @@ Personal portfolio for Micah Shu. Minimalist editorial aesthetic — black and w
 
 ```
 src/
-  app/                        # All routes (App Router)
+  app/
+    page.tsx                    # / (homepage)
+    about/
+      page.tsx                  # /about
+      resume/page.tsx           # /about/resume
+    projects/
+      page.tsx                  # /projects
+      [slug]/page.tsx           # /projects/[slug]
+    services/
+      page.tsx                  # /services
+      [slug]/page.tsx           # /services/[slug]
+    blog/
+      page.tsx                  # /blog
+      [slug]/page.tsx           # /blog/[slug]
+    contact/page.tsx            # /contact
+    dev/page.tsx                # /dev (internal dev page)
+    api/contact/route.ts        # POST handler — Resend email
+    layout.tsx                  # Root layout — fonts, theme, metadata
+    globals.css                 # All design tokens (@theme), dark mode, base styles
+    opengraph-image.tsx         # OG image generator
+    robots.ts                   # robots.txt
+    sitemap.ts                  # sitemap.xml
+    not-found.tsx               # 404 page
   components/
-    ui/                       # Button, Tag, Card, Input, RevealImage
-    layout/                   # Header, Footer, Section, Container
-    sections/                 # Homepage section components
+    layout/
+      Header.tsx                # Sticky nav, mobile menu, theme toggle
+      Footer.tsx                # Footer nav, socials, greeting
+      Container.tsx             # Max-width wrapper (default/tight/prose)
+      Section.tsx               # Semantic section with border/padding
+    ui/
+      Button.tsx                # solid/ghost variants, sm/md/lg sizes
+      Tag.tsx                   # Tech badge with optional react-icon
+      ProjectCard.tsx           # Project card (horizontal/vertical layout)
+      PageHero.tsx              # Page header hero with portrait + meta
+      RevealImage.tsx           # next/image wrapper with hover/reveal
+      BrowserBar.tsx            # macOS-style browser chrome mockup
+      ThemeToggle.tsx           # Dark/light mode toggle (client)
+      AuthorBio.tsx             # Blog post author bio strip
+      FooterGreeting.tsx        # Random greeting (client)
+    sections/
+      HeroSection.tsx           # Homepage hero
+      AboutSection.tsx          # Homepage about strip
+      ProjectsSection.tsx       # Homepage featured projects
+      ProjectsGrid.tsx          # /projects full grid with tag filter
+      ServicesSection.tsx       # Homepage services row list
+      ServicesSplitPanel.tsx    # /services split-panel or mobile accordion
+      ServiceFAQ.tsx            # Expandable FAQ accordion
+      AlaCarteSection.tsx       # À la carte add-ons grid
+      BlogSection.tsx           # Homepage 3-post preview
+      BlogList.tsx              # /blog full list with category filter
+      CTASection.tsx            # Full-width dark CTA strip
+      ContactForm.tsx           # Contact form with validation + Resend
   lib/
-    content.ts                # getBlogPosts(), getBlogPost(slug) — build-time only
-    types.ts                  # All shared TypeScript interfaces
+    types.ts                    # All TypeScript interfaces
+    content.ts                  # getBlogPosts(), getBlogPostBySlug(), getCaseStudies()
+    utils.ts                    # Shared utility functions
     data/
-      projects.ts             # Static project array
-      services.ts             # Static service array
-      alacarte.ts             # Static à la carte service array
-      tags.ts                 # Tag registry
+      projects.ts               # Static Project[] array
+      services.ts               # Static Service[] array
+      alacarte.ts               # Static AlaCarteService[] array
+      tags.ts                   # Tag name → react-icon mapping
   content/
-    blog/                     # *.md — one file per post
+    blog/                       # *.md — one file per post
 ```
 
 ---
@@ -52,23 +95,25 @@ src/
 
 ### Adding a Blog Post
 
-1. Create `src/content/blog/[slug].md` with YAML frontmatter:
+1. Create `src/content/blog/[slug].md` — the filename must match `slug`:
 
 ```md
 ---
 title: Post Title
 slug: post-slug
 date: 'YYYY-MM-DD'
-excerpt: One-sentence summary shown in listings.
+excerpt: One-sentence summary shown in listings and cards.
 categories:
-  - case-study        # or: process, engineering, design
-projectSlug: project-slug   # optional — links post to a project
+  - case-study        # valid: case-study | process | engineering | design
+projectSlug: project-slug   # optional — links post to a project detail page
 ---
 
-Post body in Markdown.
+Post body in Markdown. Supports headings, code blocks, images, lists.
 ```
 
-2. No code changes needed — `getBlogPosts()` in `src/lib/content.ts` picks it up automatically.
+2. No code changes needed — `getBlogPosts()` in `src/lib/content.ts` auto-discovers all `.md` files.
+3. Syntax highlighting in code blocks is handled by `rehype-pretty-code` + Shiki — no config needed.
+4. If `projectSlug` is set, the post appears in the "Case Studies" section of `/projects/[slug]`.
 
 **Valid categories:** `case-study`, `process`, `engineering`, `design`
 
@@ -76,259 +121,402 @@ Post body in Markdown.
 
 ### Adding a Project
 
-Edit `src/lib/data/projects.ts` and add an entry to the `projects` array:
+Edit `src/lib/data/projects.ts` — add an entry to the `projects` array. Full interface from `src/lib/types.ts`:
 
 ```ts
 {
   title: 'Project Name',
   slug: 'project-slug',           // URL: /projects/project-slug
   category: 'Full-Stack',         // Full-Stack | Front-End | E-Commerce
-  description: '...',
-  tags: ['Next.js', 'React'],     // Must exist in src/lib/data/tags.ts
-  featured: true,                 // Shows on homepage — max 4 at a time
-  liveUrl: 'https://...',         // optional
-  image: '/images/filename.webp', // optional — place in /public/images/
+  description: 'One or two sentences shown on cards and the detail page.',
+  tags: ['Next.js', 'React'],     // Must exist in src/lib/data/tags.ts — see Adding a Tag
+  featured: true,                 // Shows on homepage ProjectsSection — max 4 at a time
+  liveUrl: 'https://example.com', // optional — enables live site link
+  image: '/images/filename.webp', // optional — place file in /public/images/
 }
 ```
 
-- Images go in `/public/images/`. Prefer `.webp` for photos, `.png` for screenshots.
-- The project detail page at `/projects/[slug]` is generated automatically via `generateStaticParams`.
-- To link a blog post to this project, set `projectSlug` in the post's frontmatter.
+**Image guidelines:**
+- Place images in `/public/images/`. Prefer `.webp` for photos, `.png` for screenshots.
+- Recommended dimensions: 1200×800px minimum. The `ProjectCard` uses `aspect-video` (16:9).
+- The `BrowserBar` + `RevealImage` combo on the homepage uses these images — test both.
+
+**Featured limit:** Only 4 projects show on the homepage. If more than 4 have `featured: true`, extras are hidden. Check `src/components/sections/ProjectsSection.tsx` for the slice logic.
+
+**Detail page:** Generated automatically via `generateStaticParams` in `src/app/projects/[slug]/page.tsx`. No extra work needed.
+
+**Linking blog posts:** Set `projectSlug` in any blog post's frontmatter to the project's `slug`. It will appear in the "Related Writing" section of the project detail page.
 
 ---
 
 ### Adding or Editing a Service
 
-Services are in `src/lib/data/services.ts`. Each entry matches the `Service` interface in `src/lib/types.ts`:
+Services live in `src/lib/data/services.ts`. Full `Service` interface (`src/lib/types.ts`):
 
 ```ts
 {
   name: 'Service Name',
   slug: 'service-slug',           // URL: /services/service-slug
-  hook: 'One-line client hook.',
-  timeframe: '2–4 weeks',
-  startingAt: '$3,000',
-  description: 'Short description for listing card.',
-  overview: ['Paragraph one.', 'Paragraph two.'],
-  includes: ['Deliverable one', 'Deliverable two'],
-  idealFor: ['Client type one', 'Client type two'],
+  hook: 'One-line client-facing pitch.',
+  timeframe: '2–4 weeks',         // Shown in listings and detail page
+  startingAt: '$3,000',           // Primary price shown in listings
+  description: 'Short paragraph for the listing card.',
+  overview: [
+    'First paragraph of service overview.',
+    'Second paragraph.',
+  ],
+  includes: [
+    'Deliverable or feature one',
+    'Deliverable or feature two',
+  ],
+  idealFor: [
+    'Client type or use case one',
+    'Client type or use case two',
+  ],
   faqs: [
     { q: 'Question?', a: 'Answer.' },
   ],
-  relatedTags: ['Next.js'],       // Cross-links to related projects
-  relatedCategory: 'Front-End',  // optional
+  pricingOptions: [               // optional — replaces startingAt display on detail page
+    { label: 'Starter', price: '$3,000', detail: 'Up to 5 pages' },
+    { label: 'Growth',  price: '$6,000', detail: 'Up to 12 pages' },
+  ],
+  relatedTags: ['Next.js', 'React'], // Cross-links to projects using these tags
+  relatedCategory: 'Front-End',      // optional — filters related projects by category
+  seeAlso: { text: 'See also', href: '/services/other', label: 'Other Service' }, // optional
+  hidden: false,                     // true = exists at /services/[slug] but not listed
+  subServices: ['add-on-slug'],      // optional — slugs of related AlaCarteServices
 }
 ```
 
-À la carte add-ons live in `src/lib/data/alacarte.ts` and follow the `AlaCarteService` interface.
+**Updating a price:** Change `startingAt` for the simple listed price, or add/update `pricingOptions` for tiered pricing on the detail page.
+
+**Hiding a service:** Set `hidden: true`. The service is still accessible at its URL but won't appear in listings or the `ServicesSplitPanel`.
+
+---
+
+### Adding an À La Carte Add-On
+
+Add-ons live in `src/lib/data/alacarte.ts`. Full `AlaCarteService` interface:
+
+```ts
+{
+  name: 'Add-On Name',
+  slug: 'addon-slug',             // URL: /services/addon-slug
+  price: '$25',
+  billingCycle: '/mo',            // '/mo' | '/hr' | 'one-time' | etc.
+  hook: 'One-line pitch.',
+  description: 'Short description for the listing card.',
+  includes: ['Feature one', 'Feature two'],
+  idealFor: ['Use case one'],
+  faqs: [{ q: 'Question?', a: 'Answer.' }],
+  parentSlugs: ['web-development'], // Slugs of services this add-on belongs to
+  seeAlso: { text: 'See also', href: '/services/web-development' }, // optional
+}
+```
+
+**Linking to a service:** Add the add-on's `slug` to the parent service's `subServices` array in `services.ts`, and add the parent service's `slug` to the add-on's `parentSlugs` array.
+
+---
+
+### Adding a Tag
+
+Tags are used on projects and services for cross-linking. To add a new tag:
+
+1. Open `src/lib/data/tags.ts`
+2. Add an entry: `'Tag Name': SiIconName` using an icon from `react-icons/si`
+3. Use the exact tag name string when adding it to `project.tags` or `service.relatedTags`
+
+Tags without an entry in `tags.ts` will still render as text-only badges — the icon is optional.
 
 ---
 
 ### Adding a Nav Item
 
-Edit the `NAV_LINKS` array at the top of `src/components/layout/Header.tsx`. The desktop sliding indicator and mobile menu update automatically.
+Edit the `NAV_LINKS` array near the top of `src/components/layout/Header.tsx`:
+
+```ts
+const NAV_LINKS = [
+  { href: '/',         label: 'Home' },
+  { href: '/about',    label: 'About' },
+  { href: '/services', label: 'Services' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/blog',     label: 'Blog' },
+  { href: '/contact',  label: 'Contact' },
+]
+```
+
+The desktop sliding indicator and mobile dropdown menu both derive from this array — no other changes needed.
+
+---
+
+### Adding a New Page
+
+1. Create `src/app/[route]/page.tsx` — Server Component by default.
+2. Export a `metadata` object for SEO (`title`, `description`).
+3. Use `<Section>` and `<Container>` for layout consistency.
+4. If the route is dynamic, export `generateStaticParams()`.
+5. Always `await` params: `const { slug } = await params`.
+
+**Style reference:** See `src/app/services/[slug]/page.tsx` for a full dynamic page example.
+
+---
+
+### Adding a New Component
+
+Follow the patterns in existing components. Style references by type:
+
+| Need | Reference file |
+|---|---|
+| Full-page section with eyebrow/heading/CTA | `src/components/sections/AboutSection.tsx` |
+| Card component | `src/components/ui/ProjectCard.tsx` |
+| Interactive accordion | `src/components/sections/ServiceFAQ.tsx` |
+| Split panel / responsive layout | `src/components/sections/ServicesSplitPanel.tsx` |
+| Form with validation + API | `src/components/sections/ContactForm.tsx` |
+| Page hero with portrait | `src/components/ui/PageHero.tsx` |
+| Image with hover swap | `src/components/ui/RevealImage.tsx` |
+| Responsive grid with filter | `src/components/sections/ProjectsGrid.tsx` |
+| Button | `src/components/ui/Button.tsx` |
+| Inline badge/tag | `src/components/ui/Tag.tsx` |
+| Layout wrapper | `src/components/layout/Section.tsx`, `src/components/layout/Container.tsx` |
 
 ---
 
 ## Design System
 
-### Colors — semantic tokens only in components
+All tokens live in `src/app/globals.css` under `@theme`. Never define colors, spacing, or type sizes outside of this file.
 
+### Color Tokens
+
+**Base (fixed, not theme-aware — do not use in components):**
 ```
---color-bg / --color-fg          # Background and foreground (theme-aware)
---color-border / --color-border-soft  # Border weight
---color-muted                    # Subdued text
---color-surface                  # Slightly elevated surface (tags, chrome)
---color-paper-pure               # Cards/inputs — pops off bg in light mode
+--color-ink        #0A0A0A
+--color-paper      #F2F2F0
+--color-accent-dim #E8D9BC   muted accent (dark: #3D2E12)
+--color-muted      #6B6B6B   subdued text
+--color-subtle     #D0D0CE   soft dividers
+--color-surface    #E8E8E6   slightly elevated surfaces
+--color-paper-pure #FFFFFF   cards/inputs (dark: #141414)
 ```
 
-- Never use `--color-ink` or `--color-paper` directly in components.
-- Hover state: always `bg-fg text-bg` (inversion works in both modes).
-- All base tokens and dark mode overrides live in `globals.css` under `@theme`.
+**Semantic (theme-aware — use these in all components):**
+```
+--color-fg           foreground text / borders
+--color-bg           page background
+--color-border       primary 1px border color
+--color-border-soft  subtle / secondary borders
+--color-muted        subdued text (same token, readable in both modes)
+--color-surface      tag backgrounds, chrome
+--color-paper-pure   card/input backgrounds
+```
+
+Rules:
+- Always use semantic tokens in components — never `--color-ink` or `--color-paper` directly.
+- Hover inversion: `background: var(--color-fg); color: var(--color-bg)` — works in both modes.
+- `--color-accent` is for highlights only — never body text or large fills.
+- Dark mode is applied via `.dark` class on `<html>` (manual toggle) and `@media (prefers-color-scheme: dark)` (system).
 
 ### Typography
 
-| Font | Variable | Role |
-|---|---|---|
-| Bebas Neue | `font-display` | Hero, eyebrows, nav, labels |
-| Funnel Sans | `font-body` | Everything else |
+| Font | Tailwind class | CSS var | Role |
+|---|---|---|---|
+| Bebas Neue | `font-display` | `--font-display` | Hero, eyebrows, nav labels, display headings |
+| Funnel Sans | `font-body` | `--font-body` | Body copy, UI text, everything else |
 
-- Bebas Neue is uppercase only — never on mixed-case text.
-- `--text-hero` / `--text-display`: `letter-spacing: -0.02em`
-- `--text-h1` through `--text-h3`: `letter-spacing: -0.01em`
-- `--text-label`: uppercase + `letter-spacing: 0.08em`
+**Type scale:**
+```
+--text-hero    clamp(72px, 10vw, 144px)   letter-spacing: -0.02em
+--text-display clamp(48px, 6vw, 96px)     letter-spacing: -0.02em
+--text-h1      48px                        letter-spacing: -0.01em
+--text-h2      32px                        letter-spacing: -0.01em
+--text-h3      22px                        letter-spacing: -0.01em
+--text-h4      18px
+--text-body    16px
+--text-small   14px
+--text-caption 12px
+--text-label   13px   uppercase + letter-spacing: 0.08em
+```
+
+Rules:
+- Bebas Neue is all-caps only — never use it on mixed-case text.
+- Apply type scale via Tailwind arbitrary value: `text-[length:var(--text-display)]`.
+- `--text-label` always goes with `uppercase tracking-[0.08em]`.
 
 ### Spacing
 
-Use `--space-1` through `--space-11` (4px base). Never raw pixel values in layout.
+Base unit: 4px. 11 levels:
+```
+--space-1   4px     --space-5   24px    --space-9   96px
+--space-2   8px     --space-6   32px    --space-10  128px
+--space-3   12px    --space-7   48px    --space-11  192px
+--space-4   16px    --space-8   64px
+```
 
-- Section vertical padding: `--space-8` mobile, `--space-9` desktop
-- Container horizontal padding: `--space-5` mobile, `--space-7` desktop
-- Card padding: `--space-5`. Grid gap: `--space-1`.
+- Section vertical padding: `--space-8` mobile → `--space-9` desktop (handled by `.section-py` in globals.css).
+- Container horizontal padding: `--space-5` mobile → `--space-7` desktop (handled by `.container-px`).
+- Card padding: `--space-5`. Grid gap between cards: `--space-1` (4px border-gap effect).
+- Never use Tailwind's spacing scale (`mt-4`, `py-6`) for layout — use inline `style` props with `var(--space-*)`.
+- Never use Tailwind arbitrary value classes with CSS vars (e.g. `px-[var(--space-5)]`) — they don't work with Tailwind v4. Use `style={{ paddingInline: 'var(--space-5)' }}` instead.
+
+### Layout Containers
+
+```
+--container-max    1280px    default Container
+--container-tight   960px    Container size="tight"
+--container-prose   720px    Container size="prose"  (blog, long-form)
+```
 
 ### Borders & Surfaces
 
-- Primary: `1px solid var(--color-border)`. Active: `2px`.
-- No `box-shadow`, no `border-radius` on layout elements.
-- Sections separated by full-width `1px` horizontal rules — no margin gaps.
-- `border-radius` only on interactive components: buttons `4px`, tags `2px`, inputs `4px`.
+- Primary border: `1px solid var(--color-border)`. Active/selected: `2px`.
+- No `box-shadow` anywhere — ever.
+- No `border-radius` on layout elements, sections, grids, or cards.
+- `border-radius` only on interactive components: buttons `4px` (`--border-radius-md`), tags `2px` (`--border-radius-sm`), inputs `4px`.
+- Sections are separated by full-width `1px` horizontal rules via `<Section border="bottom">` — no margin gaps between sections.
 
 ### Motion
 
-- Hover: `--duration-fast` (150ms) + `--ease-inout`
-- Page enter: `--duration-enter` (500ms) + `--ease-out` — `opacity` + `translateY(8px)` only
-- Only animate `transform` and `opacity`. Exception: `width` on absolutely-positioned indicators (no reflow).
-- Never animate `height`, `top`, `left`. Wrap enter animations in `prefers-reduced-motion`.
+```
+--duration-instant  80ms
+--duration-fast    150ms    hover transitions
+--duration-base    250ms
+--duration-slow    400ms    theme switch
+--duration-enter   500ms    page enter animations
+
+--ease-out   cubic-bezier(0.0, 0.0, 0.2, 1.0)
+--ease-in    cubic-bezier(0.4, 0.0, 1.0, 1.0)
+--ease-inout cubic-bezier(0.4, 0.0, 0.2, 1.0)
+```
+
+Rules:
+- Only animate `transform` and `opacity`. Exception: `width` on absolutely-positioned indicators only (no layout reflow).
+- Never animate `height`, `top`, `left`, or any property that triggers layout.
+- Page-enter animations use `.animate-hero-1` through `.animate-hero-6` CSS classes (staggered via globals.css).
+- All enter animations must be wrapped in `@media (prefers-reduced-motion: no-preference)`.
+- Hover: `--duration-fast` + `--ease-inout`. Page enter: `--duration-enter` + `--ease-out`.
 
 ### Section Anatomy
 
+Every new section should follow this structure:
+
+```tsx
+<Section border="bottom">
+  <Container>
+    {/* Eyebrow */}
+    <p className="font-display text-[length:var(--text-label)] uppercase tracking-[0.08em]"
+       style={{ color: 'var(--color-muted)' }}>
+      EYEBROW LABEL
+    </p>
+
+    {/* Heading — use font-display for display headings, font-body for editorial h1 */}
+    <h2 className="font-display text-[length:var(--text-display)] tracking-[-0.02em]">
+      SECTION HEADING
+    </h2>
+
+    {/* Subtext */}
+    <p className="font-body text-[length:var(--text-body)]"
+       style={{ color: 'var(--color-muted)', maxWidth: 'var(--container-prose)' }}>
+      Supporting copy goes here.
+    </p>
+
+    {/* Content */}
+    ...
+
+    {/* CTA — ghost button, right-aligned or centered */}
+    <Button variant="ghost">VIEW ALL ↗</Button>
+  </Container>
+</Section>
 ```
-[eyebrow]   font-display, --text-label, uppercase, tracking-[0.08em], color-muted
-[heading]   font-display (--text-display) or font-body (--text-h1)
-[subtext]   font-body, --text-body, color-muted, max-width --container-prose
-[content]
-[CTA]       ghost button, right-aligned or centered
+
+Arrow convention: always use `↗` (U+2197) for navigation/CTA arrows. Never `→`.
+
+---
+
+## Tailwind + CSS Token Rules
+
+No `tailwind.config.ts`. All design tokens live in `globals.css` under `@theme`.
+
+| Use Tailwind for | Use inline `style` for |
+|---|---|
+| Layout: `flex`, `grid`, `relative`, `absolute` | Spacing: `var(--space-*)` |
+| Sizing: `w-full`, `h-px`, `aspect-video` | Color tokens: `var(--color-*)` |
+| Responsive visibility: `hidden md:block` | Type scale: `var(--text-*)` |
+| Position and z-index | Dynamic runtime values |
+| Group/peer utilities | Transitions with token durations |
+
+```tsx
+// Correct — type scale via Tailwind arbitrary length
+<h1 className="font-display text-[length:var(--text-display)] tracking-[-0.02em]">TITLE</h1>
+
+// Correct — spacing via inline style
+<section style={{ paddingBlock: 'var(--space-9)' }}>
+
+// Correct — color via inline style
+<p style={{ color: 'var(--color-muted)' }}>Subdued text</p>
+
+// WRONG — Tailwind spacing scale
+<section className="py-24">
+
+// WRONG — arbitrary CSS var in Tailwind class (broken in v4)
+<div className="px-[var(--space-5)]">
 ```
 
 ---
 
-## Tailwind + Tokens
+## TypeScript Interfaces
 
-No `tailwind.config.ts`. All tokens in `globals.css` under `@theme`.
+All interfaces are in `src/lib/types.ts`. Quick reference:
 
-- Use Tailwind for structure/layout: flex, grid, sizing, positioning, responsive visibility.
-- Use inline `style` props for: spacing tokens (`var(--space-*)`) and dynamic runtime values.
-- Never add responsive/utility rules to `globals.css` — Tailwind handles that.
-
-```tsx
-<h1 className="font-display text-[length:var(--text-display)] tracking-[-0.02em]">TITLE</h1>
-<section style={{ paddingBlock: 'var(--space-9)' }}>
+```ts
+Project          { title, slug, category, description, tags[], featured?, liveUrl?, image? }
+Service          { name, slug, hook, timeframe, startingAt, description, overview[], includes[],
+                   idealFor[], faqs[], pricingOptions?, relatedTags[], relatedCategory?,
+                   seeAlso?, hidden?, subServices? }
+AlaCarteService  { name, slug, price, billingCycle, hook, description, includes[], idealFor[],
+                   faqs[], parentSlugs[], seeAlso? }
+BlogPost         { title, slug, date, excerpt, content, categories[], projectSlug? }
+ServiceFAQ       { q, a }
+ServicePricingOption  { label, price, detail? }
 ```
 
 ---
 
 ## Next.js App Router
 
-- `params` / `searchParams` are **Promises** — always `await` them.
-- Server Components by default. `'use client'` only for state, effects, event handlers, browser APIs.
-- Use `generateStaticParams()` for all dynamic routes.
-- Read `node_modules/next/dist/docs/` before using any API you're unsure about.
+- `params` and `searchParams` are **Promises** — always `await` them: `const { slug } = await params`.
+- Server Components by default. Add `'use client'` only when you need: `useState`, `useEffect`, `useRef`, event handlers, or browser APIs.
+- Dynamic routes require `generateStaticParams()` — see `src/app/projects/[slug]/page.tsx`.
+- Export `metadata` (static) or `generateMetadata` (dynamic) from every page.
+- When unsure about an API, read `node_modules/next/dist/docs/` before writing code.
 
 ---
 
 ## Email & Contact Form
 
 - API route: `src/app/api/contact/route.ts`
-- Transactional email via Resend — `from: me@micahshu.com`, `replyTo` set to submitter
-- Required env vars: `RESEND_API_KEY`, `CONTACT_TO_EMAIL`
-- Never hardcode API keys.
+- Email service: Resend — `from: me@micahshu.com`, `replyTo` set to the form submitter's email
+- Required env vars (set in Vercel dashboard and `.env.local`):
+  - `RESEND_API_KEY` — Resend API key
+  - `CONTACT_TO_EMAIL` — recipient address for contact form submissions
+- Never hardcode API keys in source files.
 
 ---
 
 ## What NOT To Do
 
-<<<<<<< Updated upstream
-- No `tailwind.config.ts` or `tailwind.config.js`
-- No `box-shadow` anywhere
-- No `border-radius` on sections, grids, or layout containers
-- No Bebas Neue on mixed-case text
-- No raw hex values in component files — use `--color-*` tokens
-- No Tailwind default spacing (`mt-3`, `py-5`) for layout — use `--space-*` tokens
-- No `--color-ink` / `--color-paper` directly in components — use `--color-fg` / `--color-bg`
-- No `pages/` router — App Router only
-- No synchronous `params` / `searchParams` access
-- No animating `height`, `top`, `left`, or layout-triggering properties
-- No gradients, decorative blurs, or drop shadows
-- No external state management (Zustand, Redux, etc.) — React state only
-=======
 - Do not create `tailwind.config.ts` or `tailwind.config.js`
 - Do not use `box-shadow` anywhere
-- Do not add `border-radius` to sections, grids, or layout containers
+- Do not add `border-radius` to sections, grids, cards, or layout containers
 - Do not use Bebas Neue on mixed-case text
 - Do not use raw hex values in component files — always reference `--color-*` tokens
-- Do not use Tailwind's default spacing scale (`mt-3`, `py-5`, etc.) for layout spacing — use `--space-*` tokens
-- Do not use `--color-accent` for body text or large background fills
-- Do not use `--color-ink` / `--color-paper` directly in components — use semantic tokens (`--color-fg`, `--color-bg`) so dark mode works automatically
+- Do not use Tailwind's default spacing scale (`mt-3`, `py-5`, etc.) for layout — use inline style + `--space-*`
+- Do not use Tailwind arbitrary value classes with CSS variables (`px-[var(--space-5)]`) — broken in v4
+- Do not use `--color-accent` for body text or large fills — highlights only
+- Do not use `--color-ink` or `--color-paper` directly in components — use `--color-fg` / `--color-bg`
 - Do not use the `pages/` router — App Router only
-- Do not access `params` or `searchParams` synchronously
-- Do not animate `width` on layout elements — exception: absolutely-positioned UI indicators where no reflow occurs
-- Do not animate `height`, `top`, `left`, or any property that triggers layout
-- Do not add gradients, decorative blurs, or drop shadows — this includes blur effects on decorative UI chrome elements like the browser mockup dots
+- Do not access `params` or `searchParams` synchronously — they are Promises
+- Do not animate `height`, `top`, `left`, or any layout-triggering property
+- Do not animate `width` on layout elements (only on absolutely-positioned UI indicators)
+- Do not add gradients, decorative blurs, or drop shadows
+- Do not use `→` for arrows — use `↗` (U+2197)
 - Do not introduce external state management (Zustand, Redux, etc.) — React state only
-
----
-
-## TODO
-
-### Content
-- [ ] Write real copy for all pages (homepage hero, about, services)
-- [ ] Swap about page photo(s) with final images
-- [ ] Update all project entries in `src/lib/data/projects.ts` — titles, descriptions, tags, images, live URLs
-- [ ] Add any new projects (see Adding a Project below)
-- [ ] Write and publish blog posts in `src/content/blog/`
-- [ ] Fill in real service copy in `src/lib/data/services.ts` (replace all `PLACEHOLDER_*` values)
-- [ ] Fill in real à la carte service copy in `src/lib/data/alacarte.ts`
-
-### Images
-- [ ] Replace all placeholder/screenshot images in `/public/images/` with final project screenshots
-- [ ] Add final about/headshot photo
-- [ ] Ensure all images are `.webp` where possible
-
-### SEO & Launch
-- [ ] Add unique `<title>` and `<meta description>` to every page via Next.js `metadata` exports
-- [ ] Add Open Graph image (`/public/og-image.png`) and wire up `og:image` metadata
-- [ ] Verify `sitemap.xml` is generated (or add `src/app/sitemap.ts`)
-- [ ] Verify `robots.txt` is present (`src/app/robots.ts` or `/public/robots.txt`)
-- [ ] Submit sitemap to Google Search Console
-- [ ] Set up and verify Google Business Profile
-- [ ] Add Google Analytics or Plausible tracking
-
----
-
-## Content Workflows
-
-### Adding a Project
-
-Edit `src/lib/data/projects.ts` — add an entry to the `projects` array:
-
-```ts
-{
-  title: 'Project Name',
-  slug: 'project-slug',           // URL: /projects/project-slug
-  category: 'Full-Stack',         // Full-Stack | Front-End | E-Commerce
-  description: '...',
-  tags: ['Next.js', 'React'],
-  featured: true,                 // Shows on homepage — max 4 at a time
-  liveUrl: 'https://...',         // optional
-  image: '/images/filename.webp', // optional — place in /public/images/
-}
-```
-
-### Adding a Blog Post
-
-Create `src/content/blog/[slug].md`:
-
-```md
----
-title: Post Title
-slug: post-slug
-date: 'YYYY-MM-DD'
-excerpt: One-sentence summary shown in listings.
-categories:
-  - case-study        # or: process, engineering, design
-projectSlug: project-slug   # optional — links post to a project
----
-
-Post body in Markdown.
-```
-
-No code changes needed — `getBlogPosts()` picks it up automatically.
-
-### Adding or Editing a Service
-
-Edit `src/lib/data/services.ts`. Key fields: `name`, `slug`, `hook`, `timeframe`, `startingAt`, `description`, `overview` (string[]), `includes` (string[]), `idealFor` (string[]), `faqs` ({ q, a }[]), `relatedTags`, `relatedCategory`.
-
-### Adding a Nav Item
-
-Edit the `NAV_LINKS` array at the top of `src/components/layout/Header.tsx`. Desktop indicator and mobile menu update automatically.
->>>>>>> Stashed changes
+- Do not add comments that describe what the code does — only comment non-obvious constraints or workarounds

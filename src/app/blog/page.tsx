@@ -4,6 +4,13 @@ import PageHero from '@/components/ui/PageHero'
 export const metadata: Metadata = {
   title: 'Blog — Micah Shu | Web Development',
   description: 'Case studies, process breakdowns, and engineering notes from a freelance web developer in Northern Colorado.',
+  alternates: { canonical: '/blog' },
+  openGraph: {
+    title: 'Blog — Micah Shu | Web Development',
+    description: 'Case studies, process breakdowns, and engineering notes from a freelance web developer in Northern Colorado.',
+    url: 'https://micahshu.com/blog',
+    type: 'website',
+  },
 }
 
 

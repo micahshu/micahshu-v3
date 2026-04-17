@@ -34,7 +34,8 @@ export const alaCarteServices: AlaCarteService[] = [
         a: "Yes. Migration is included if you're moving from another host.",
       },
     ],
-    parentSlugs: ['maintenance'],
+    parentSlugs: ['web-development', 'ecommerce'],
+    seeAlso: { text: 'Need updates, security patches, and content edits too? Maintenance covers hosting plus everything else — $200/mo.', href: '/services/maintenance' },
   },
   {
     name: 'CMS Integration',

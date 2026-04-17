@@ -1,5 +1,7 @@
 import Link from 'next/link'
-import { services } from '@/lib/data/services'
+import { services as allServices } from '@/lib/data/services'
+
+const services = allServices.filter((s) => !s.hidden)
 
 export default function ServicesSection() {
   return (
@@ -85,7 +87,7 @@ export default function ServicesSection() {
                   transition: 'color var(--duration-fast) var(--ease-inout)',
                 }}
               >
-                ↗
+                ↗︎
               </span>
             </Link>
           ))}
@@ -98,7 +100,7 @@ export default function ServicesSection() {
             className="btn btn-ghost font-body no-underline"
             style={{ fontSize: 'var(--text-small)', padding: 'var(--space-2) var(--space-4)' }}
           >
-            View All Services ↗
+            View All Services ↗︎
           </Link>
         </div>
       </div>

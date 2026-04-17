@@ -31,4 +31,4 @@ It's a concept. The content is placeholder, the brand is made up, and it's a sin
 
 I still link to it because the interaction work is real, and it's a cleaner signal of what I can do with [front-end animation and component work](/services/web-development) than any description I could write. Just don't judge the lorem ipsum.
 
-[See it live ↗](https://bloom.micahshu.com/)
+[See it live ↗︎](https://bloom.micahshu.com/)

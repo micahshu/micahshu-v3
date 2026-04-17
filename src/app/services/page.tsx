@@ -4,6 +4,13 @@ import PageHero from '@/components/ui/PageHero'
 export const metadata: Metadata = {
   title: 'Services — Micah Shu | Web Design & Development in Fort Collins, CO',
   description: 'Custom website design and web development for small businesses in Fort Collins and Northern Colorado. Affordable, full-stack — one developer, no handoffs.',
+  alternates: { canonical: '/services' },
+  openGraph: {
+    title: 'Services — Micah Shu | Web Design & Development in Fort Collins, CO',
+    description: 'Custom website design and web development for small businesses in Fort Collins and Northern Colorado. Affordable, full-stack — one developer, no handoffs.',
+    url: 'https://micahshu.com/services',
+    type: 'website',
+  },
 }
 import CTASection from '@/components/sections/CTASection'
 import BlogSection from '@/components/sections/BlogSection'

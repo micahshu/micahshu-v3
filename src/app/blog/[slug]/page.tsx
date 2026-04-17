@@ -1,8 +1,162 @@
 import { notFound } from 'next/navigation'
-import ReactMarkdown from 'react-markdown'
-import type { Components } from 'react-markdown'
+import { unified } from 'unified'
+import remarkParse from 'remark-parse'
+import remarkRehype from 'remark-rehype'
+import rehypePrettyCode from 'rehype-pretty-code'
+import type { Options as PrettyCodeOptions } from 'rehype-pretty-code'
+import { toJsxRuntime } from 'hast-util-to-jsx-runtime'
+import { jsx, jsxs, Fragment } from 'react/jsx-runtime'
+import type { Root } from 'hast'
 import { getBlogPosts, getBlogPostBySlug } from '@/lib/content'
 import Link from 'next/link'
+import AuthorBio from '@/components/ui/AuthorBio'
+
+const prettyCodeOptions: PrettyCodeOptions = {
+  theme: { light: 'github-light', dark: 'github-dark-dimmed' },
+  keepBackground: false,
+}
+
+async function renderMarkdown(content: string) {
+  const processor = unified()
+    .use(remarkParse)
+    .use(remarkRehype)
+    .use(rehypePrettyCode, prettyCodeOptions)
+
+  const mdastTree = processor.parse(content)
+  const hastTree = await processor.run(mdastTree) as Root
+
+  return toJsxRuntime(hastTree, {
+    Fragment,
+    development: false,
+    jsx: jsx as Parameters<typeof toJsxRuntime>[1]['jsx'],
+    jsxs: jsxs as Parameters<typeof toJsxRuntime>[1]['jsxs'],
+    components: {
+      h1: ({ children, ...props }) => (
+        <h1
+          className="font-body font-semibold text-[color:var(--color-fg)]"
+          style={{ fontSize: 'var(--text-h1)', letterSpacing: '-0.01em', lineHeight: 1.15, marginTop: 'var(--space-8)', marginBottom: 'var(--space-4)' }}
+          {...props}
+        >
+          {children}
+        </h1>
+      ),
+      h2: ({ children, ...props }) => (
+        <h2
+          className="font-body font-semibold text-[color:var(--color-fg)]"
+          style={{ fontSize: 'var(--text-h2)', letterSpacing: '-0.01em', lineHeight: 1.2, marginTop: 'var(--space-7)', marginBottom: 'var(--space-3)' }}
+          {...props}
+        >
+          {children}
+        </h2>
+      ),
+      h3: ({ children, ...props }) => (
+        <h3
+          className="font-body font-semibold text-[color:var(--color-fg)]"
+          style={{ fontSize: 'var(--text-h3)', letterSpacing: '-0.01em', lineHeight: 1.3, marginTop: 'var(--space-6)', marginBottom: 'var(--space-3)' }}
+          {...props}
+        >
+          {children}
+        </h3>
+      ),
+      p: ({ children, ...props }) => (
+        <p
+          className="font-body text-[color:var(--color-fg)]"
+          style={{ fontSize: 'var(--text-body)', lineHeight: 1.75, marginBottom: 'var(--space-5)' }}
+          {...props}
+        >
+          {children}
+        </p>
+      ),
+      a: ({ href, children, ...props }) => (
+        <a
+          href={href as string}
+          className="text-black decoration-black underline underline-offset-2 hover:opacity-70 dark:text-white dark:decoration-white"
+          style={{ transition: 'opacity var(--duration-fast) var(--ease-inout)' }}
+          {...props}
+        >
+          {children}
+        </a>
+      ),
+      ul: ({ children, ...props }) => (
+        <ul
+          className="font-body text-[color:var(--color-fg)]"
+          style={{ fontSize: 'var(--text-body)', lineHeight: 1.75, paddingLeft: 'var(--space-5)', marginBottom: 'var(--space-5)', listStyleType: 'disc' }}
+          {...props}
+        >
+          {children}
+        </ul>
+      ),
+      ol: ({ children, ...props }) => (
+        <ol
+          className="font-body text-[color:var(--color-fg)]"
+          style={{ fontSize: 'var(--text-body)', lineHeight: 1.75, paddingLeft: 'var(--space-5)', marginBottom: 'var(--space-5)', listStyleType: 'decimal' }}
+          {...props}
+        >
+          {children}
+        </ol>
+      ),
+      li: ({ children, ...props }) => (
+        <li style={{ marginBottom: 'var(--space-2)' }} {...props}>{children}</li>
+      ),
+      blockquote: ({ children, ...props }) => (
+        <blockquote
+          className="text-[color:var(--color-muted)] border-l-2 border-[color:var(--color-border)]"
+          style={{ paddingLeft: 'var(--space-5)', marginBlock: 'var(--space-6)' }}
+          {...props}
+        >
+          {children}
+        </blockquote>
+      ),
+      // inline code only — block code is handled by rehype-pretty-code + CSS
+      code: ({ children, className, ...props }) => {
+        if (className || ('data-language' in props)) {
+          return <code className={className} {...props}>{children}</code>
+        }
+        return (
+          <code
+            className="font-mono text-[color:var(--color-fg)] bg-[color:var(--color-surface)]"
+            style={{ fontSize: '0.875em', paddingBlock: '2px', paddingInline: 'var(--space-2)' }}
+          >
+            {children}
+          </code>
+        )
+      },
+      pre: ({ children, ...props }) => <pre {...props}>{children}</pre>,
+      hr: () => (
+        <hr
+          className="border-t border-[color:var(--color-border-soft)]"
+          style={{ marginBlock: 'var(--space-7)' }}
+        />
+      ),
+      img: ({ src, alt, ...props }) => (
+        <figure style={{ marginBlock: 'var(--space-7)' }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={src as string}
+            alt={alt as string ?? ''}
+            className="w-full block"
+            style={{ border: '1px solid var(--color-border-soft)' }}
+            {...props}
+          />
+          {alt && (
+            <figcaption
+              className="font-body text-[color:var(--color-muted)]"
+              style={{ fontSize: 'var(--text-caption)', marginTop: 'var(--space-2)' }}
+            >
+              {alt as string}
+            </figcaption>
+          )}
+        </figure>
+      ),
+      strong: ({ children, ...props }) => (
+        <strong className="font-semibold text-[color:var(--color-fg)]" {...props}>{children}</strong>
+      ),
+      em: ({ children, ...props }) => (
+        <em className="italic" {...props}>{children}</em>
+      ),
+    },
+  })
+}
 
 export async function generateStaticParams() {
   return getBlogPosts().map((post) => ({ slug: post.slug }))
@@ -12,144 +166,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const post = getBlogPostBySlug(slug)
   if (!post) return {}
-  return { title: post.title, description: post.excerpt }
-}
-
-const mdComponents: Components = {
-  h1: ({ children }) => (
-    <h1
-      className="font-body font-semibold text-[color:var(--color-fg)]"
-      style={{ fontSize: 'var(--text-h1)', letterSpacing: '-0.01em', lineHeight: 1.15, marginTop: 'var(--space-8)', marginBottom: 'var(--space-4)' }}
-    >
-      {children}
-    </h1>
-  ),
-  h2: ({ children }) => (
-    <h2
-      className="font-body font-semibold text-[color:var(--color-fg)]"
-      style={{ fontSize: 'var(--text-h2)', letterSpacing: '-0.01em', lineHeight: 1.2, marginTop: 'var(--space-7)', marginBottom: 'var(--space-3)' }}
-    >
-      {children}
-    </h2>
-  ),
-  h3: ({ children }) => (
-    <h3
-      className="font-body font-semibold text-[color:var(--color-fg)]"
-      style={{ fontSize: 'var(--text-h3)', letterSpacing: '-0.01em', lineHeight: 1.3, marginTop: 'var(--space-6)', marginBottom: 'var(--space-3)' }}
-    >
-      {children}
-    </h3>
-  ),
-  p: ({ children, node }) => {
-    const hasImage = node?.children.some(
-      (child) => child.type === 'element' && child.tagName === 'img',
-    )
-    if (hasImage) return <>{children}</>
-    return (
-      <p
-        className="font-body text-[color:var(--color-fg)]"
-        style={{ fontSize: 'var(--text-body)', lineHeight: 1.75, marginBottom: 'var(--space-5)' }}
-      >
-        {children}
-      </p>
-    )
-  },
-  a: ({ href, children }) => (
-    <a
-      href={href}
-      className="text-black decoration-black underline underline-offset-2 hover:opacity-70 dark:text-white dark:decoration-white"
-      style={{ transition: 'opacity var(--duration-fast) var(--ease-inout)' }}
-    >
-      {children}
-    </a>
-  ),
-  ul: ({ children }) => (
-    <ul
-      className="font-body text-[color:var(--color-fg)]"
-      style={{ fontSize: 'var(--text-body)', lineHeight: 1.75, paddingLeft: 'var(--space-5)', marginBottom: 'var(--space-5)', listStyleType: 'disc' }}
-    >
-      {children}
-    </ul>
-  ),
-  ol: ({ children }) => (
-    <ol
-      className="font-body text-[color:var(--color-fg)]"
-      style={{ fontSize: 'var(--text-body)', lineHeight: 1.75, paddingLeft: 'var(--space-5)', marginBottom: 'var(--space-5)', listStyleType: 'decimal' }}
-    >
-      {children}
-    </ol>
-  ),
-  li: ({ children }) => (
-    <li style={{ marginBottom: 'var(--space-2)' }}>{children}</li>
-  ),
-  blockquote: ({ children }) => (
-    <blockquote
-      className="text-[color:var(--color-muted)] border-l-2 border-[color:var(--color-border)]"
-      style={{ paddingLeft: 'var(--space-5)', marginBlock: 'var(--space-6)' }}
-    >
-      {children}
-    </blockquote>
-  ),
-  code: ({ children, className }) => {
-    const isBlock = className?.includes('language-')
-    if (isBlock) {
-      return (
-        <code
-          className="font-mono block text-[color:var(--color-fg)] bg-[color:var(--color-surface)]"
-          style={{ fontSize: 'var(--text-small)', lineHeight: 1.7, padding: 'var(--space-5)', overflowX: 'auto' }}
-        >
-          {children}
-        </code>
-      )
-    }
-    return (
-      <code
-        className="font-mono text-[color:var(--color-fg)] bg-[color:var(--color-surface)]"
-        style={{ fontSize: '0.875em', paddingBlock: '2px', paddingInline: 'var(--space-2)' }}
-      >
-        {children}
-      </code>
-    )
-  },
-  pre: ({ children }) => (
-    <pre
-      className="bg-[color:var(--color-surface)]"
-      style={{ marginBlock: 'var(--space-6)', overflowX: 'auto' }}
-    >
-      {children}
-    </pre>
-  ),
-  hr: () => (
-    <hr
-      className="border-t border-[color:var(--color-border-soft)]"
-      style={{ marginBlock: 'var(--space-7)' }}
-    />
-  ),
-  img: ({ src, alt }) => (
-    <figure style={{ marginBlock: 'var(--space-7)' }}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={src}
-        alt={alt ?? ''}
-        className="w-full block"
-        style={{ border: '1px solid var(--color-border-soft)' }}
-      />
-      {alt && (
-        <figcaption
-          className="font-body text-[color:var(--color-muted)]"
-          style={{ fontSize: 'var(--text-caption)', marginTop: 'var(--space-2)' }}
-        >
-          {alt}
-        </figcaption>
-      )}
-    </figure>
-  ),
-  strong: ({ children }) => (
-    <strong className="font-semibold text-[color:var(--color-fg)]">{children}</strong>
-  ),
-  em: ({ children }) => (
-    <em className="italic">{children}</em>
-  ),
+  return {
+    title: post.title,
+    description: post.excerpt,
+    alternates: { canonical: `/blog/${slug}` },
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      url: `https://micahshu.com/blog/${slug}`,
+      type: 'article',
+    },
+  }
 }
 
 function formatDate(dateStr: string) {
@@ -171,6 +198,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const { slug } = await params
   const post = getBlogPostBySlug(slug)
   if (!post) notFound()
+
+  const content = await renderMarkdown(post.content)
 
   return (
     <main id="main-content">
@@ -230,11 +259,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             paddingBlock: 'var(--space-9)',
           }}
         >
-          <ReactMarkdown components={mdComponents}>
-            {post.content}
-          </ReactMarkdown>
+          {content}
         </div>
       </section>
+
+      {/* ── Author bio ── */}
+      <AuthorBio />
 
       {/* ── Back nav ── */}
       <section className="w-full border-b border-[color:var(--color-border)]">

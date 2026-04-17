@@ -1,9 +1,17 @@
+import type { Metadata } from 'next'
 import PageHero from '@/components/ui/PageHero'
 import ContactForm from '@/components/sections/ContactForm'
 
-export const metadata = {
-  title: 'Contact — Micah Shu',
-  description: 'Start a project or ask a question.',
+export const metadata: Metadata = {
+  title: 'Contact — Micah Shu | Start a Web Project',
+  description: 'Ready to build something? Reach out to Micah Shu, freelance web developer in Northern Colorado. Response within one business day.',
+  alternates: { canonical: '/contact' },
+  openGraph: {
+    title: 'Contact — Micah Shu | Start a Web Project',
+    description: 'Ready to build something? Reach out to Micah Shu, freelance web developer in Northern Colorado. Response within one business day.',
+    url: 'https://micahshu.com/contact',
+    type: 'website',
+  },
 }
 
 const INFO = [
@@ -28,12 +36,14 @@ export default function ContactPage() {
           style={{
             maxWidth: 'var(--container-max)',
             marginInline: 'auto',
-            padding: 'var(--space-7)',
+            paddingInline: 'var(--space-7)',
+            paddingTop: 'var(--space-7)',
+            paddingBottom: 'var(--space-9)',
           }}
         >
           <div
-            className="flex flex-col min-[900px]:grid"
-            style={{ gridTemplateColumns: '2fr 3fr', gap: 'var(--space-10)', alignItems: 'start' }}
+            className="flex flex-col min-[900px]:grid min-[900px]:items-start"
+            style={{ gridTemplateColumns: '2fr 3fr', gap: 'var(--space-8)', maxWidth: 'var(--container-tight)', marginInline: 'auto' }}
           >
             {/* Left — info panel */}
             <div className="flex flex-col animate-hero-4" style={{ gap: 'var(--space-6)', paddingBottom: 'var(--space-7)' }}>
@@ -99,7 +109,7 @@ export default function ContactPage() {
             </div>
 
             {/* Right — form */}
-            <div className="animate-hero-5" style={{ paddingBottom: 'var(--space-7)' }}>
+            <div className="animate-hero-5 order-first min-[900px]:order-none" style={{ paddingBottom: 'var(--space-7)' }}>
               <ContactForm />
             </div>
           </div>

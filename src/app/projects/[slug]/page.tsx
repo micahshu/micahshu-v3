@@ -46,6 +46,13 @@ export async function generateMetadata({
   return {
     title: `${project.title} — ${label} | Micah Shu`,
     description: project.description,
+    alternates: { canonical: `/projects/${slug}` },
+    openGraph: {
+      title: `${project.title} — ${label} | Micah Shu`,
+      description: project.description,
+      url: `https://micahshu.com/projects/${slug}`,
+      type: 'website',
+    },
   }
 }
 
@@ -125,7 +132,7 @@ export default async function ProjectPage({
                 className="btn btn-ghost font-body no-underline"
                 style={{ fontSize: 'var(--text-small)', padding: 'var(--space-2) var(--space-4)' }}
               >
-                Live Site ↗
+                Live Site ↗︎
               </a>
             )}
           </div>
@@ -172,7 +179,7 @@ export default async function ProjectPage({
                     className="service-row-label shrink-0 font-body text-[color:var(--color-muted)]"
                     style={{ fontSize: 'var(--text-body)', transition: 'color var(--duration-fast) var(--ease-inout)' }}
                   >
-                    ↗
+                    ↗︎
                   </span>
                 </Link>
               ))}

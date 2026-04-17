@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { getBlogPosts } from '@/lib/content'
 import { projects } from '@/lib/data/projects'
-import { services } from '@/lib/data/services'
+import { services as allServices } from '@/lib/data/services'
 import { alaCarteServices } from '@/lib/data/alacarte'
 
 const BASE_URL = 'https://micahshu.com'
@@ -14,7 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/services`, priority: 0.8 },
     { url: `${BASE_URL}/blog`, priority: 0.8 },
     { url: `${BASE_URL}/contact`, priority: 0.7 },
-    { url: `${BASE_URL}/resume`, priority: 0.5 },
+    { url: `${BASE_URL}/about/resume`, priority: 0.5 },
   ]
 
   const projectRoutes: MetadataRoute.Sitemap = projects.map((p) => ({
@@ -23,7 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }))
 
   const serviceRoutes: MetadataRoute.Sitemap = [
-    ...services.map((s) => ({
+    ...allServices.map((s) => ({
       url: `${BASE_URL}/services/${s.slug}`,
       priority: 0.7,
     })),

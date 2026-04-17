@@ -59,7 +59,7 @@ export default function BlogSection() {
                   transition: 'color var(--duration-fast) var(--ease-inout)',
                 }}
               >
-                ↗
+                ↗︎
               </span>
             </Link>
           ))}

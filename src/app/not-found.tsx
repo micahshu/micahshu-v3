@@ -130,7 +130,7 @@ export default function NotFound() {
                     transition: 'background-color var(--duration-fast) var(--ease-inout), color var(--duration-fast) var(--ease-inout)',
                   }}
                 >
-                  ↗
+                  ↗︎
                 </span>
               </div>
             ))}

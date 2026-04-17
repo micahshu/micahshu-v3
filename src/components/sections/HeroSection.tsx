@@ -109,7 +109,7 @@ export default function HeroSection() {
                 transition: 'opacity var(--duration-fast) var(--ease-inout)',
               }}
             >
-              ↗
+              ↗︎
             </span>
 
             <span
