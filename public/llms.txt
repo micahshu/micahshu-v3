@@ -1,15 +1,14 @@
 # Micah Shu
 
-> Freelance web developer and designer based in Berthoud, CO. Specializing in custom websites, full-stack web applications, Shopify storefronts, WordPress builds, and workflow automation for small businesses and founders.
+> Freelance web developer based in Berthoud, CO. Specializing in custom websites, full-stack web applications, Shopify storefronts, WordPress builds, and workflow automation for small businesses and founders.
 
 ## About
 
-Micah Shu is a developer and designer offering custom-built websites, web applications, and digital tooling. Work spans the full stack — Next.js and TypeScript on the front end, Node/serverless and PostgreSQL on the back, and WordPress when it's the right fit. Based in Northern Colorado, primarily serving small businesses and local clients in the Fort Collins area.
+Micah Shu is a developer offering custom-built websites, web applications, and digital tooling. Work spans the full stack — Next.js and TypeScript on the front end, Node/serverless and PostgreSQL on the back, and WordPress when it's the right fit. Based in Northern Colorado, primarily serving small businesses and local clients in the Fort Collins area.
 
 ## Services
 
-- [Web Development](/services/web-development): Custom marketing sites and content-driven builds. Starting at $3,000 one-time or $200/mo. Includes custom design, mobile-responsive layout, on-page SEO, contact form, Core Web Vitals optimization, and 30 days post-launch support.
-- [WordPress Development](/services/wordpress-development): Custom WordPress builds for clients who need to manage their own content. Starting at $3,000 one-time or $200/mo. Includes custom theme (no templates), block editor setup, on-page SEO, security hardening, and 30 days post-launch support. Sub-service of Web Development.
+- [Web Development](/services/web-development): Custom marketing sites and content-driven builds. Starting at $3,000 one-time or $200/mo. Includes custom design, mobile-responsive layout, on-page SEO, contact form, Core Web Vitals optimization, and 30 days post-launch support. WordPress builds available as a sub-service.
 - [App Development](/services/app-development): Full-stack web applications — database, auth, APIs, admin tooling. Starting at $8,000 one-time or $600/mo. Built on Next.js, TypeScript, and PostgreSQL.
 - [Ecommerce](/services/ecommerce): Custom Shopify storefronts and headless builds. Starting at $4,000 one-time or $300/mo. Includes store setup, custom theme, checkout optimization, and on-page SEO.
 - [Tooling & Automation](/services/tooling-automation): Internal tools, scripts, and automated workflows. Starting at $1,500. API integrations, scheduled tasks, error logging, and documentation.
@@ -18,9 +17,9 @@ Micah Shu is a developer and designer offering custom-built websites, web applic
 
 ## À La Carte Add-Ons
 
-- [Web Hosting](/services/hosting): Managed hosting for small sites. $25/mo. Includes SSL, uptime monitoring, and DNS configuration. Pairs with any web project or maintenance plan.
+- [Web Hosting](/services/hosting): Managed hosting for small sites. $25 per month. Includes SSL, uptime monitoring, and DNS configuration. Pairs with any web project or maintenance plan.
 - [CMS Integration](/services/cms-integration): Add content management (WordPress or headless) to an existing site. $400 one-time. Includes setup, content entry, training walkthrough, and documentation.
-- [Hourly Work](/services/hourly): For one-off fixes, consults, and tasks that don't fit a full project. $75/hr. No minimum commitment.
+- [Hourly Work](/services/hourly): For one-off fixes, consults, and tasks that don't fit a full project. $75 per hour. No minimum commitment.
 
 ## Projects
 
@@ -36,15 +35,16 @@ Micah Shu is a developer and designer offering custom-built websites, web applic
 
 ## Blog
 
-- [ZGM Rebuild](/blog/zgm-rebuild): Case study on migrating a 150+ page WordPress site to headless Next.js.
-- [Mancini Beverage](/blog/mancini-beverage): Project writeup for the Mancini Beverage website build.
-- [React Landing Page](/blog/react-landing-page): Behind the scenes on the React/Framer Motion landing page concept.
-- [App Router Patterns](/blog/app-router-patterns): Engineering post on Next.js App Router patterns.
-- [Design Tokens & Editorial](/blog/design-tokens-editorial): Design post on using design tokens for an editorial aesthetic.
+- [Migrating Zero Gravity Marketing to Headless Next.js](/blog/zgm-rebuild): Case study on migrating a 150+ page WordPress site to headless Next.js.
+- [Building Mancini Beverage with Bricks Builder](/blog/mancini-beverage): Project writeup for the Mancini Beverage website build and why Bricks Builder has become a go-to for WordPress projects.
+- [Pushing Limits with React and Framer Motion](/blog/react-landing-page): Behind the scenes on the React/Framer Motion conceptual landing page.
+- [How I Built a WordPress Maintenance Pipeline That Runs Itself](/blog/maintenance-dashboard): Case study on scaling WordPress maintenance across 50 clients with automated updates, scans, and alerting.
+- [What Headless CMS Actually Means for Your Small Business](/blog/what-headless-cms-actually-means): Engineering explainer on headless CMS tradeoffs for small business owners.
+- [Elementor Didn't Break Your Site. Your Agency Did.](/blog/elementor-didnt-break-your-site): Why Elementor gets blamed for agency mistakes, and what actually causes bloated WordPress sites.
 
 ## Contact
 
-- Resume: [/about/resume](/about/resume)
+- Resume: [/resume](/resume)
 - Contact form: [/contact](/contact)
 - Email: me@micahshu.com
 - Location: Berthoud, CO (serving Fort Collins and Northern Colorado)

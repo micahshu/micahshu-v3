@@ -14,7 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/services`, priority: 0.8 },
     { url: `${BASE_URL}/blog`, priority: 0.8 },
     { url: `${BASE_URL}/contact`, priority: 0.7 },
-    { url: `${BASE_URL}/about/resume`, priority: 0.5 },
+    { url: `${BASE_URL}/resume`, priority: 0.5 },
   ]
 
   const projectRoutes: MetadataRoute.Sitemap = projects.map((p) => ({
