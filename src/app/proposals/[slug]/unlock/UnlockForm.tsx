@@ -2,6 +2,7 @@
 
 import { useState, FormEvent } from 'react'
 import { unlockProposal } from './actions'
+import Button from '@/components/ui/Button'
 
 const FIELD_STYLE: React.CSSProperties = {
   backgroundColor: 'var(--color-paper-pure)',
@@ -65,17 +66,17 @@ export default function UnlockForm({ slug }: { slug: string }) {
         )}
       </div>
 
-      <button
+      <Button
         type="submit"
+        variant="solid"
         disabled={loading || !passphrase}
-        className="btn btn-solid"
         style={{
           opacity: loading || !passphrase ? 0.5 : 1,
           cursor: loading || !passphrase ? 'not-allowed' : 'pointer',
         }}
       >
-        {loading ? 'Unlocking…' : 'View Proposal ↗'}
-      </button>
+        {loading ? 'Unlocking…' : 'View Proposal ↗︎'}
+      </Button>
     </form>
   )
 }

@@ -40,7 +40,13 @@ src/
       [slug]/page.tsx           # /blog/[slug]
     contact/page.tsx            # /contact
     dev/page.tsx                # /dev (internal dev page)
+    proposals/
+      [slug]/page.tsx           # /proposals/[slug] — passphrase-gated proposal view
+      [slug]/unlock/page.tsx    # /proposals/[slug]/unlock — passphrase entry
+      [slug]/unlock/UnlockForm.tsx  # Client form — calls unlockProposal action
+      [slug]/unlock/actions.ts  # unlockProposal() — validates passphrase, sets cookie
     api/contact/route.ts        # POST handler — Resend email
+    api/proposals/accept/route.ts  # POST handler — sends acceptance email via Resend
     layout.tsx                  # Root layout — fonts, theme, metadata
     globals.css                 # All design tokens (@theme), dark mode, base styles
     opengraph-image.tsx         # OG image generator
@@ -76,6 +82,7 @@ src/
       BlogList.tsx              # /blog full list with category filter
       CTASection.tsx            # Full-width dark CTA strip
       ContactForm.tsx           # Contact form with validation + Resend
+      ProposalView.tsx          # Interactive proposal UI — line items, totals, accept button
   lib/
     types.ts                    # All TypeScript interfaces
     content.ts                  # getBlogPosts(), getBlogPostBySlug(), getCaseStudies()
@@ -84,6 +91,7 @@ src/
       projects.ts               # Static Project[] array
       services.ts               # Static Service[] array
       alacarte.ts               # Static AlaCarteService[] array
+      proposals.ts              # Static Proposal[] array
       tags.ts                   # Tag name → react-icon mapping
   content/
     blog/                       # *.md — one file per post
@@ -215,6 +223,54 @@ Add-ons live in `src/lib/data/alacarte.ts`. Full `AlaCarteService` interface:
 ```
 
 **Linking to a service:** Add the add-on's `slug` to the parent service's `subServices` array in `services.ts`, and add the parent service's `slug` to the add-on's `parentSlugs` array.
+
+---
+
+### Adding or Editing a Proposal
+
+Proposals live in `src/lib/data/proposals.ts`. They are passphrase-gated — clients visit `/proposals/[slug]`, enter their passphrase at the unlock page, and get a 7-day cookie. Full `Proposal` interface (`src/lib/types.ts`):
+
+```ts
+{
+  slug: 'client-name-month-year',   // URL: /proposals/[slug]
+  passphrase: 'client-passphrase',  // Case-sensitive; shared with client out of band
+  clientName: 'Client Name',
+  date: 'YYYY-MM-DD',
+  expiresAt: 'YYYY-MM-DD',          // optional — shown on proposal
+  status: 'draft' | 'sent' | 'accepted',
+  title?: 'Website Design & Development', // optional — shown as H1; auto-derived from recommended items if omitted
+  coverNote: 'Multi-paragraph intro shown at top of proposal.',
+  coverImage: '/images/filename.png',   // optional — macOS browser mockup hero
+  coverImageUrl: 'https://...',         // optional — URL the cover image links to
+  previewUrl: 'https://...',            // optional — enables "View Full Preview ↗︎" button
+  items: ProposalLineItem[],
+}
+```
+
+**`ProposalLineItem` fields:**
+
+```ts
+{
+  type: 'service' | 'alacarte',   // resolves from services.ts or alacarte.ts by slug
+  slug: 'service-slug',
+  id?: 'unique-id',               // required when other items reference this via peerOf/includesItem
+  peerOf?: 'parent-item-id',      // renders as a linked add-on below the parent item's group
+  pricingOptionLabel?: 'Monthly', // selects a pricingOption from the service by label
+  required?: true,                // cannot be deselected
+  recommended?: true,             // pre-checked, highlighted badge
+  note?: 'Shown below item name.',
+  customPrice?: 1000,             // overrides resolved price (number, not string)
+  customName?: 'Override Name',   // overrides resolved service name
+  customDescription?: 'Override.', // overrides resolved service description
+  group?: 'group-key',            // items sharing a group are mutually exclusive (radio)
+  groupOptional?: false,          // if true, client can deselect all options in the group
+  includesItem?: 'other-item-id', // when this item is checked, the target is auto-checked + shown as "Included"
+}
+```
+
+**Auth flow:** `src/middleware.ts` intercepts `/proposals/[slug]` and redirects unauthenticated requests to `/proposals/[slug]/unlock`. The unlock page calls `unlockProposal()` (server action in `actions.ts`), which validates the passphrase and sets an `httpOnly` cookie for 7 days. Full validation also runs server-side in the page component.
+
+**Acceptance:** When the client accepts, `POST /api/proposals/accept` sends an email via Resend to the owner summarising selected items.
 
 ---
 
@@ -427,7 +483,7 @@ Every new section should follow this structure:
 </Section>
 ```
 
-Arrow convention: always use `↗` (U+2197) for navigation/CTA arrows. Never `→`.
+Arrow convention: always use `↗︎` (U+2197 + U+FE0E text variation selector) for navigation/CTA arrows. The variation selector prevents iOS from rendering it as an emoji. Never `→`, and never `↗` without the variation selector.
 
 ---
 
@@ -476,6 +532,12 @@ AlaCarteService  { name, slug, price, billingCycle, hook, description, includes[
 BlogPost         { title, slug, date, excerpt, content, categories[], projectSlug? }
 ServiceFAQ       { q, a }
 ServicePricingOption  { label, price, detail? }
+Proposal         { slug, passphrase, clientName, date, status, coverNote, items[],
+                   expiresAt?, coverImage?, coverImageUrl?, previewUrl? }
+ProposalLineItem { type, slug, id?, peerOf?, pricingOptionLabel?, required?, recommended?,
+                   note?, customPrice?, customName?, customDescription?, group?,
+                   groupOptional?, includesItem? }
+ProposalLineItemResolved  — resolved at render time in proposals/[slug]/page.tsx; do not construct manually
 ```
 
 ---
@@ -517,6 +579,8 @@ ServicePricingOption  { label, price, detail? }
 - Do not animate `height`, `top`, `left`, or any layout-triggering property
 - Do not animate `width` on layout elements (only on absolutely-positioned UI indicators)
 - Do not add gradients, decorative blurs, or drop shadows
-- Do not use `→` for arrows — use `↗` (U+2197)
+- Do not use `→` for arrows — use `↗︎` (U+2197 + U+FE0E)
+- Do not use `↗` without the U+FE0E variation selector — iOS renders it as an emoji
+- Do not use a raw `<button>` element — always use `<Button>` from `src/components/ui/Button.tsx`
 - Do not introduce external state management (Zustand, Redux, etc.) — React state only
 - Do not add comments that describe what the code does — only comment non-obvious constraints or workarounds

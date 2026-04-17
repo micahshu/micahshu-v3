@@ -37,10 +37,11 @@ interface Props {
   coverImage?: string
   coverImageUrl?: string
   previewUrl?: string
+  title?: string
   items: ProposalLineItemResolved[]
 }
 
-export default function ProposalView({ slug, clientName, date, expiresAt, coverNote, coverImage, coverImageUrl, previewUrl, items }: Props) {
+export default function ProposalView({ slug, clientName, date, expiresAt, coverNote, coverImage, coverImageUrl, previewUrl, title, items }: Props) {
   const [checked, setChecked] = useState<Record<string, boolean>>(
     Object.fromEntries(items.map((item) => [item.key, item.defaultChecked]))
   )
@@ -166,6 +167,18 @@ export default function ProposalView({ slug, clientName, date, expiresAt, coverN
     }
   }
 
+  const displayTitle = (() => {
+    if (title) return title
+    const seen = new Set<string>()
+    const names: string[] = []
+    for (const item of items) {
+      if (!item.recommended || item.peerOf) continue
+      const label = item.group ? (item.groupLabel ?? item.name) : item.name
+      if (!seen.has(label)) { seen.add(label); names.push(label) }
+    }
+    return names.join(' & ')
+  })()
+
   const formattedDate = new Date(date + 'T00:00:00').toLocaleDateString('en-US', {
     month: 'long', day: 'numeric', year: 'numeric',
   })
@@ -189,13 +202,13 @@ export default function ProposalView({ slug, clientName, date, expiresAt, coverN
               className="font-display uppercase text-[color:var(--color-muted)]"
               style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em' }}
             >
-              Proposal
+              Proposal for {clientName}
             </span>
             <h1
               className="font-display uppercase text-[color:var(--color-fg)]"
               style={{ fontSize: 'var(--text-display)', letterSpacing: '-0.02em', lineHeight: 1 }}
             >
-              {clientName}
+              {displayTitle}
             </h1>
           </div>
 
@@ -211,19 +224,6 @@ export default function ProposalView({ slug, clientName, date, expiresAt, coverN
                 {formattedDate}
               </span>
             </div>
-            {formattedExpiry && (
-              <div className="flex flex-col items-start md:items-end" style={{ gap: 'var(--space-1)' }}>
-                <span
-                  className="font-display uppercase text-[color:var(--color-muted)]"
-                  style={{ fontSize: 'var(--text-label)', letterSpacing: '0.08em' }}
-                >
-                  Valid Until
-                </span>
-                <span className="font-body text-[color:var(--color-fg)]" style={{ fontSize: 'var(--text-body)' }}>
-                  {formattedExpiry}
-                </span>
-              </div>
-            )}
           </div>
         </div>
       </section>
@@ -249,7 +249,7 @@ export default function ProposalView({ slug, clientName, date, expiresAt, coverN
                   </div>
                   {previewUrl && (
                     <a href={previewUrl} target="_blank" rel="noopener noreferrer">
-                      <Button variant="solid" size="lg">View Full Preview ↗</Button>
+                      <Button variant="solid" size="lg">View Full Preview ↗︎</Button>
                     </a>
                   )}
                 </div>
@@ -769,7 +769,7 @@ export default function ProposalView({ slug, clientName, date, expiresAt, coverN
                     cursor: acceptStatus === 'submitting' || selectedItems.length === 0 ? 'not-allowed' : 'pointer',
                   }}
                 >
-                  {acceptStatus === 'submitting' ? 'Sending…' : 'Accept Proposal ↗'}
+                  {acceptStatus === 'submitting' ? 'Sending…' : 'Accept Proposal ↗︎'}
                 </Button>
                 {acceptStatus === 'error' && (
                   <p className="font-body text-[color:var(--color-muted)]" style={{ fontSize: 'var(--text-small)' }}>

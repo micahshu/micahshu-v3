@@ -9,7 +9,7 @@ categories: []
 
 Full-stack developer · Berthoud, CO · me@micahshu.com · (720) 737-4825 · [micahshu.com](https://micahshu.com) · [github.com/micahshu](https://github.com/micahshu)
 
-[Download PDF ↗](/resume.pdf)
+[Download PDF ↗︎](/resume.pdf)
 
 ---
 

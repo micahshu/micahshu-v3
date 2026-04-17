@@ -113,6 +113,7 @@ export interface Proposal {
   expiresAt?: string
   status: 'draft' | 'sent' | 'accepted'
   coverNote: string
+  title?: string
   items: ProposalLineItem[]
 }
 

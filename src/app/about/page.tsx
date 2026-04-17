@@ -85,7 +85,7 @@ export default function AboutPage() {
           
         }}
         meta={[
-          { label: 'Pictured', value: 'My newest web dev intern ↗' },
+          { label: 'Pictured', value: 'My newest web dev intern ↗︎' },
         ]}
         noBorderBottom
       />
