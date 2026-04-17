@@ -48,6 +48,7 @@ export const projects: Project[] = [
     description:
       'Custom WordPress portfolio built on the Timber framework. No page builder — Twig templates, AlpineJS filtering, Tailwind for styles.',
     tags: ['PHP', 'Tailwind', 'WordPress'],
+    liveUrl: 'https://v1.micahshu.com/',
     image: '/images/portfolioV2.webp',
   },
   {

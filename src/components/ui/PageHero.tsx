@@ -44,7 +44,7 @@ export default function PageHero({ eyebrow, title, subtitle, image, meta, noBord
       {/* Portrait — aspect ratio on mobile, spans rows 1–2 on desktop */}
       {image && (
         <div
-          className="relative border-t border-[color:var(--color-border)] overflow-hidden animate-hero-3 aspect-[4/5] md:aspect-auto md:border-t-0 md:border-b md:border-l md:col-start-2 md:row-start-1 md:row-end-3"
+          className="relative hidden md:block border-t border-[color:var(--color-border)] overflow-hidden animate-hero-3 aspect-[4/5] md:aspect-auto md:border-t-0 md:border-b md:border-l md:col-start-2 md:row-start-1 md:row-end-3"
         >
           <RevealImage
             src={image.src}
@@ -61,7 +61,7 @@ export default function PageHero({ eyebrow, title, subtitle, image, meta, noBord
       {/* Meta — visible on mobile and desktop */}
       {meta && meta.length > 0 && (
         <div
-          className="flex items-center border-t border-[color:var(--color-border)] animate-hero-3 container-px md:border-l md:col-start-1 md:row-start-2 md:justify-self-end md:w-[min(28vw,320px)]"
+          className="hidden md:flex items-center border-t border-[color:var(--color-border)] animate-hero-3 container-px md:border-l md:col-start-1 md:row-start-2 md:justify-self-end md:w-[min(28vw,320px)]"
           style={{ gap: 'var(--space-7)', paddingBlock: 'var(--space-5)' }}
         >
           {meta.map(({ label, value }) => (
