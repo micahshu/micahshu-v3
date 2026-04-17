@@ -8,6 +8,7 @@ export const proposals: Proposal[] = [
     coverImage: '/images/hidonut.com.png',
     coverImageUrl: 'https://hidonut.com',
     previewUrl: 'https://hi-donuts.vercel.app/',
+    currentSiteUrl: 'https://hidonuts.com/',
     date: '2026-04-17',
     expiresAt: '2026-05-17',
     status: 'sent',

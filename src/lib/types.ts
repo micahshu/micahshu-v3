@@ -108,6 +108,7 @@ export interface Proposal {
   coverImage?: string
   coverImageUrl?: string
   previewUrl?: string
+  currentSiteUrl?: string
   clientName: string
   date: string
   expiresAt?: string
