@@ -22,16 +22,19 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const service = allServices.find((s) => s.slug === slug)
-  if (service) return {
-    title: `${service.name} — Micah Shu`,
-    description: service.hook,
-    alternates: { canonical: `/services/${slug}` },
-    openGraph: {
-      title: `${service.name} — Micah Shu`,
+  if (service) {
+    const title = service.seoTitle ?? `${service.name} in Fort Collins, CO — Micah Shu`
+    return {
+      title,
       description: service.hook,
-      url: `https://micahshu.com/services/${slug}`,
-      type: 'website',
-    },
+      alternates: { canonical: `/services/${slug}` },
+      openGraph: {
+        title,
+        description: service.hook,
+        url: `https://micahshu.com/services/${slug}`,
+        type: 'website',
+      },
+    }
   }
   const alacarte = alaCarteServices.find((s) => s.slug === slug)
   if (alacarte) return {
@@ -355,7 +358,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                 className="font-display uppercase text-[color:var(--color-fg)]"
                 style={{ fontSize: 'var(--text-display)', letterSpacing: '-0.02em', lineHeight: 1 }}
               >
-                {service.name}
+                {service.h1 ?? service.name}
               </h1>
               <p
                 className="font-body text-[color:var(--color-muted)]"

@@ -32,6 +32,8 @@ export const services: Service[] = [
   {
     name: 'Web Development',
     slug: 'web-development',
+    h1: 'Web Development for Small Businesses in Fort Collins',
+    seoTitle: 'Web Development in Fort Collins, CO — Micah Shu',
     hook: 'Custom website design for small businesses in Fort Collins and Northern Colorado — built from scratch, not a template.',
     timeframe: '2–4 weeks',
     startingAt: '$3,000',
@@ -84,6 +86,7 @@ export const services: Service[] = [
   {
     name: 'App Development',
     slug: 'app-development',
+    h1: 'App Development in Fort Collins, CO',
     hook: 'For founders and teams who need a real web application — not a website with some features bolted on.',
     timeframe: '4–12 weeks',
     startingAt: '$8,000',
@@ -136,6 +139,7 @@ export const services: Service[] = [
   {
     name: 'Ecommerce',
     slug: 'ecommerce',
+    h1: 'Ecommerce Development in Fort Collins, CO',
     hook: 'Custom storefronts built to sell — Shopify or headless, optimized for conversion from day one.',
     timeframe: '3–6 weeks',
     startingAt: '$4,000',
@@ -143,7 +147,7 @@ export const services: Service[] = [
       { label: 'One-time', price: '$4,000', detail: 'Half up front' },
       { label: 'Monthly', price: '$300/mo', detail: '12-month contract' },
     ],
-    description: 'Custom storefronts and Shopify builds optimized for conversion. Inventory, checkout, and everything between.',
+    description: 'Inventory, checkout, and product pages built around your brand — not around a stock theme.',
     overview: [
       'Most ecommerce stores are set up once and never really optimized. They\'re slow, generic, and treat checkout like an afterthought. A store built right does the opposite — fast load times, clean UX, and a checkout that gets out of the customer\'s way.',
       'Shopify for most clients — it\'s the right tool for the majority of product-based businesses. Headless Shopify when you need full frontend control without giving up the commerce backend. Either way, the store is built around your products and your customers, not a theme.',
@@ -188,6 +192,7 @@ export const services: Service[] = [
   {
     name: 'Tooling & Automation',
     slug: 'tooling-automation',
+    h1: 'Tooling & Automation in Fort Collins, CO',
     hook: 'For teams wasting hours on work a script could handle in seconds.',
     timeframe: '1–3 weeks',
     startingAt: '$1,500',
@@ -234,6 +239,8 @@ export const services: Service[] = [
   {
     name: 'Local SEO',
     slug: 'local-seo',
+    h1: 'Local SEO for Fort Collins Small Businesses',
+    seoTitle: 'Local SEO for Fort Collins Small Businesses — Micah Shu',
     hook: 'For local businesses that need to show up when customers in their area are searching.',
     timeframe: 'Ongoing',
     startingAt: '$500/mo',
@@ -279,6 +286,7 @@ export const services: Service[] = [
   {
     name: 'Maintenance',
     slug: 'maintenance',
+    h1: 'WordPress Maintenance in Fort Collins, CO',
     hook: 'For sites that need to stay updated, secure, and fast without becoming a second job.',
     timeframe: 'Ongoing',
     startingAt: '$200/mo',
@@ -326,6 +334,8 @@ export const services: Service[] = [
     name: 'WordPress Development',
     slug: 'wordpress-development',
     hidden: true,
+    h1: 'WordPress Development in Fort Collins, CO',
+    seoTitle: 'WordPress Developer in Fort Collins, CO — Micah Shu',
     hook: 'For clients who need a site that\'s easy to update themselves — on the CMS everyone already knows.',
     timeframe: '2–4 weeks',
     startingAt: '$3,000',

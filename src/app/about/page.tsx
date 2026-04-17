@@ -281,7 +281,7 @@ export default function AboutPage() {
                 className="font-body text-[color:var(--color-muted)]"
                 style={{ fontSize: 'var(--text-body)', lineHeight: 1.7 }}
               >
-                WordPress when the client needs to own their content. Python when the job is data. The stack fits the project — not the other way around.
+                WordPress when the client needs to own their content. Python when the job is data.
               </p>
             </div>
           </div>

@@ -23,6 +23,8 @@ export interface ServicePricingOption {
 export interface Service {
   name: string
   slug: string
+  h1?: string
+  seoTitle?: string
   hook: string
   timeframe: string
   description: string
