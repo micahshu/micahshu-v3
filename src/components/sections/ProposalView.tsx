@@ -1,8 +1,10 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import type { ProposalLineItemResolved } from '@/lib/types'
 import Button from '@/components/ui/Button'
+import { BrowserBar } from '@/components/ui/BrowserBar'
 
 function renderWithLinks(text: string) {
   const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g
@@ -32,10 +34,13 @@ interface Props {
   expiresAt?: string
   status: string
   coverNote: string
+  coverImage?: string
+  coverImageUrl?: string
+  previewUrl?: string
   items: ProposalLineItemResolved[]
 }
 
-export default function ProposalView({ slug, clientName, date, expiresAt, coverNote, items }: Props) {
+export default function ProposalView({ slug, clientName, date, expiresAt, coverNote, coverImage, coverImageUrl, previewUrl, items }: Props) {
   const [checked, setChecked] = useState<Record<string, boolean>>(
     Object.fromEntries(items.map((item) => [item.key, item.defaultChecked]))
   )
@@ -228,6 +233,28 @@ export default function ProposalView({ slug, clientName, date, expiresAt, coverN
         <section className="w-full border-b border-[color:var(--color-border)] animate-hero-2">
           <div style={{ maxWidth: 'var(--container-max)', marginInline: 'auto', padding: 'var(--space-7)' }}>
             <div className="flex flex-col" style={{ maxWidth: 'var(--container-prose)', gap: 'var(--space-5)' }}>
+
+              {coverImage && (
+                <div className="flex flex-col" style={{ gap: 'var(--space-4)', marginBottom: 'var(--space-2)' }}>
+                  <div className="w-full overflow-hidden border border-[color:var(--color-border)]">
+                    <BrowserBar liveUrl={coverImageUrl} active={false} />
+                    <div className="relative w-full" style={{ aspectRatio: '16/9' }}>
+                      <Image
+                        src={coverImage}
+                        alt="Current site preview"
+                        fill
+                        style={{ objectFit: 'cover', objectPosition: 'top' }}
+                      />
+                    </div>
+                  </div>
+                  {previewUrl && (
+                    <a href={previewUrl} target="_blank" rel="noopener noreferrer">
+                      <Button variant="solid" size="lg">View Full Preview ↗</Button>
+                    </a>
+                  )}
+                </div>
+              )}
+
               {coverNote.split('\n\n').map((para, i) => (
                 <p
                   key={i}
@@ -237,6 +264,7 @@ export default function ProposalView({ slug, clientName, date, expiresAt, coverN
                   {renderWithLinks(para)}
                 </p>
               ))}
+
             </div>
           </div>
         </section>

@@ -105,6 +105,9 @@ export interface ProposalLineItemResolved {
 export interface Proposal {
   slug: string
   passphrase: string
+  coverImage?: string
+  coverImageUrl?: string
+  previewUrl?: string
   clientName: string
   date: string
   expiresAt?: string

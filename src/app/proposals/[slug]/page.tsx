@@ -124,6 +124,9 @@ export default async function ProposalPage({ params }: { params: Promise<{ slug:
       expiresAt={proposal.expiresAt}
       status={proposal.status}
       coverNote={proposal.coverNote}
+      coverImage={proposal.coverImage}
+      coverImageUrl={proposal.coverImageUrl}
+      previewUrl={proposal.previewUrl}
       items={resolvedItems}
     />
   )
