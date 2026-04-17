@@ -37,6 +37,33 @@ export function buildPersonSchema() {
   }
 }
 
+export function buildProfessionalServiceSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    name: 'Micah Shu — Web Developer',
+    url: BASE_URL,
+    email: 'me@micahshu.com',
+    description: 'Freelance web developer in Fort Collins and Northern Colorado. Custom websites and web apps for small businesses — one developer, start to finish.',
+    founder: PERSON,
+    priceRange: '$$$',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Berthoud',
+      addressRegion: 'CO',
+      addressCountry: 'US',
+    },
+    areaServed: [
+      { '@type': 'City', name: 'Fort Collins' },
+      { '@type': 'AdministrativeArea', name: 'Northern Colorado' },
+    ],
+    sameAs: [
+      'https://github.com/micahshu',
+      'https://linkedin.com/in/micahshu',
+    ],
+  }
+}
+
 export function buildServiceSchema(service: SiteService) {
   return {
     '@context': 'https://schema.org',
@@ -91,11 +118,13 @@ export function buildFAQSchema(faqs: { q: string; a: string }[]) {
 export function buildArticleSchema(post: BlogPost) {
   return {
     '@context': 'https://schema.org',
-    '@type': 'Article',
+    '@type': 'BlogPosting',
     headline: post.title,
     url: `${BASE_URL}/blog/${post.slug}`,
     datePublished: post.date,
+    dateModified: post.date,
     description: post.excerpt,
+    image: `${BASE_URL}/opengraph-image`,
     author: PERSON,
     publisher: PERSON,
   }

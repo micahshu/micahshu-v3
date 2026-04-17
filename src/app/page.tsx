@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import JsonLd from '@/components/JsonLd'
-import { buildWebSiteSchema, buildPersonSchema } from '@/lib/schema'
+import { buildWebSiteSchema, buildProfessionalServiceSchema } from '@/lib/schema'
 import HeroSection from '@/components/sections/HeroSection'
 
 export const metadata: Metadata = {
@@ -31,7 +31,7 @@ export default function HomePage() {
   return (
     <main id="main-content">
       <JsonLd schema={buildWebSiteSchema()} />
-      <JsonLd schema={buildPersonSchema()} />
+      <JsonLd schema={buildProfessionalServiceSchema()} />
       <HeroSection />
       <AboutSection />
       <ProjectsSection />

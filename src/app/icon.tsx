@@ -4,13 +4,7 @@ export const runtime = 'edge'
 export const size = { width: 32, height: 32 }
 export const contentType = 'image/png'
 
-export default async function Icon() {
-  const css = await fetch('https://fonts.googleapis.com/css2?family=Bebas+Neue').then(r => r.text())
-  const fontUrl = css.match(/url\(([^)]+)\)/)?.[1]
-  const fontData = fontUrl
-    ? await fetch(fontUrl).then(r => r.arrayBuffer())
-    : null
-
+export default function Icon() {
   return new ImageResponse(
     (
       <div
@@ -25,11 +19,11 @@ export default async function Icon() {
       >
         <span
           style={{
-            fontFamily: fontData ? 'Bebas Neue' : 'sans-serif',
-            fontWeight: 400,
-            fontSize: '20px',
+            fontFamily: 'sans-serif',
+            fontWeight: 700,
+            fontSize: '14px',
             color: '#F2F2F0',
-            letterSpacing: '-0.01em',
+            letterSpacing: '-0.02em',
             lineHeight: 1,
           }}
         >
@@ -37,11 +31,6 @@ export default async function Icon() {
         </span>
       </div>
     ),
-    {
-      ...size,
-      fonts: fontData
-        ? [{ name: 'Bebas Neue', data: fontData, style: 'normal' }]
-        : [],
-    }
+    { ...size }
   )
 }
