@@ -267,15 +267,24 @@ export default function ProposalView({ slug, clientName, date, expiresAt, coverN
                 </div>
               )}
 
-              {coverNote.split('\n\n').map((para, i) => (
-                <p
-                  key={i}
-                  className="font-body text-[color:var(--color-muted)]"
-                  style={{ fontSize: 'var(--text-body)', lineHeight: 1.75 }}
-                >
-                  {renderWithLinks(para)}
-                </p>
-              ))}
+              {coverNote.split('\n\n').map((block, i) => {
+                const lines = block.split('\n')
+                const isList = lines.every(l => l.startsWith('- '))
+                if (isList) {
+                  return (
+                    <ul key={i} className="font-body text-[color:var(--color-muted)]" style={{ fontSize: 'var(--text-body)', lineHeight: 1.75, paddingLeft: 'var(--space-5)', listStyleType: 'disc', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+                      {lines.map((line, j) => (
+                        <li key={j}>{renderWithLinks(line.slice(2))}</li>
+                      ))}
+                    </ul>
+                  )
+                }
+                return (
+                  <p key={i} className="font-body text-[color:var(--color-muted)]" style={{ fontSize: 'var(--text-body)', lineHeight: 1.75 }}>
+                    {renderWithLinks(block)}
+                  </p>
+                )
+              })}
 
             </div>
           </div>
